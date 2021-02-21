@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.border.EmptyBorder;
+
+import database.DBConnect;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -67,9 +70,8 @@ public class HomeWindow extends JFrame {
 		setTitle("Forza Timetable Management System");
 		
 		//set Icon to the window
-		ImageIcon img = new ImageIcon("images/icon.png");
+		ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
 		setIconImage(img.getImage());
-		
 		
 		//inner contentPane
 		contentPane = new JPanel();
@@ -106,11 +108,13 @@ public class HomeWindow extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		btnNewButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnNewButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("addNew2.png")));
 		btnNewButton.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
 		btnNewButton.setBounds(33, 10, 250, 50);
 		btnNewButton.setFocusable(false);
 		panel.add(btnNewButton);
+		
+		
 		
 		JButton btnManageExisting = new JButton(" Manage Existing");
 		btnManageExisting.addActionListener(new ActionListener() {
@@ -129,7 +133,7 @@ public class HomeWindow extends JFrame {
 		});
 		btnManageExisting.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	//	btnManageExisting.setIcon(new ImageIcon(ImageIO.read(new File("images/manage.png")).getScaledInstance(40, 40,Image.SCALE_SMOOTH)));
-		btnManageExisting.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnManageExisting.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manage.png")));
 		btnManageExisting.setBounds(303, 10, 250, 50);
 		btnManageExisting.setFocusable(false);
 		panel.add(btnManageExisting);
@@ -143,7 +147,7 @@ public class HomeWindow extends JFrame {
 		JButton btnGenerateTimetable = new JButton(" Generate Timetable");
 		btnGenerateTimetable.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		//btnGenerateTimetable.setIcon(new ImageIcon(ImageIO.read(new File("images/generate.png")).getScaledInstance(40, 40,Image.SCALE_SMOOTH)));
-		btnGenerateTimetable.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnGenerateTimetable.setIcon(new ImageIcon(getClass().getClassLoader().getResource("generate.png")));
 		
 		btnGenerateTimetable.setFocusable(false);
 		btnGenerateTimetable.setBounds(937, 10, 297, 50);
@@ -164,7 +168,7 @@ public class HomeWindow extends JFrame {
 		registeredLecturesText.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		registeredLecturesText.setBounds(10, 22, 272, 51);
 		//registeredLecturesText.setIcon(new ImageIcon(ImageIO.read(new File("images/lecturer.png")).getScaledInstance(50, 50,Image.SCALE_SMOOTH)));
-		registeredLecturesText.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		registeredLecturesText.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecturer.png")));
 		panel_1.add(registeredLecturesText);
 		
 		
@@ -172,21 +176,21 @@ public class HomeWindow extends JFrame {
 		JLabel registeredLecturesText_1 = new JLabel(" Registered Students");
 		registeredLecturesText_1.setHorizontalAlignment(SwingConstants.CENTER);
 		registeredLecturesText_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		registeredLecturesText_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		registeredLecturesText_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("student.png")));
 		registeredLecturesText_1.setBounds(10, 149, 272, 51);
 		panel_1.add(registeredLecturesText_1);
 		
 		JLabel registeredLecturesText_1_1 = new JLabel(" Registered Subjects");
 		registeredLecturesText_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		registeredLecturesText_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		registeredLecturesText_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		registeredLecturesText_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("subject1.png")));
 		registeredLecturesText_1_1.setBounds(10, 285, 272, 51);
 		panel_1.add(registeredLecturesText_1_1);
 		
 		JLabel registeredLecturesText_1_1_1 = new JLabel(" Registered Rooms");
 		registeredLecturesText_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		registeredLecturesText_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		registeredLecturesText_1_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		registeredLecturesText_1_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lectureRoom.png")));
 		registeredLecturesText_1_1_1.setBounds(10, 411, 272, 51);
 		panel_1.add(registeredLecturesText_1_1_1);
 		

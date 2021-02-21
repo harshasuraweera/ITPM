@@ -52,7 +52,7 @@ public class ManageExisiting extends JFrame {
 		setTitle("Forza Timetable Management System - Manage");
 		
 		//set Icon to the window
-		ImageIcon img = new ImageIcon("images/icon.png");
+		ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
 		setIconImage(img.getImage());
 		
 		
@@ -89,7 +89,7 @@ public class ManageExisiting extends JFrame {
 		});
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
-		btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
 		btnNewButton_1.setBounds(38, 10, 225, 50);
 		panel.add(btnNewButton_1);
 		
@@ -108,7 +108,7 @@ public class ManageExisiting extends JFrame {
 			}
 		});
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		btnNewButton_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnNewButton_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("addNew2.png")));
 		btnNewButton_1_1.setBounds(973, 10, 250, 50);
 		btnNewButton_1_1.setFocusable(false);
 		panel.add(btnNewButton_1_1);
@@ -122,42 +122,42 @@ public class ManageExisiting extends JFrame {
 		});
 		btnManageWorkingDays.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageWorkingDays.setFocusable(false);
-		btnManageWorkingDays.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnManageWorkingDays.setIcon(new ImageIcon(getClass().getClassLoader().getResource("workingDaysAndHours2.png")));
 		btnManageWorkingDays.setBounds(104, 173, 445, 100);
 		contentPane.add(btnManageWorkingDays);
 		
 		JButton btnManageNewLecturer = new JButton(" Manage Lecturers");
 		btnManageNewLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageNewLecturer.setFocusable(false);
-		btnManageNewLecturer.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnManageNewLecturer.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecturer3.png")));
 		btnManageNewLecturer.setBounds(104, 322, 445, 100);
 		contentPane.add(btnManageNewLecturer);
 		
 		JButton btnManageSubject = new JButton(" Manage Subjects");
 		btnManageSubject.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageSubject.setFocusable(false);
-		btnManageSubject.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnManageSubject.setIcon(new ImageIcon(getClass().getClassLoader().getResource("subject4.png")));
 		btnManageSubject.setBounds(104, 471, 445, 100);
 		contentPane.add(btnManageSubject);
 		
 		JButton btnManageLocations = new JButton(" Manage Locations");
 		btnManageLocations.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageLocations.setFocusable(false);
-		btnManageLocations.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnManageLocations.setIcon(new ImageIcon(getClass().getClassLoader().getResource("location2.png")));
 		btnManageLocations.setBounds(674, 471, 445, 100);
 		contentPane.add(btnManageLocations);
 		
 		JButton btnManageTags = new JButton(" Manage Tags");
 		btnManageTags.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageTags.setFocusable(false);
-		btnManageTags.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnManageTags.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tags3.png")));
 		btnManageTags.setBounds(674, 322, 445, 100);
 		contentPane.add(btnManageTags);
 		
 		JButton btnManageStudentGroups = new JButton(" Manage Student Groups");
 		btnManageStudentGroups.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageStudentGroups.setFocusable(false);
-		btnManageStudentGroups.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnManageStudentGroups.setIcon(new ImageIcon(getClass().getClassLoader().getResource("studentGroup2.png")));
 		btnManageStudentGroups.setBounds(674, 173, 445, 100);
 		contentPane.add(btnManageStudentGroups);
 		

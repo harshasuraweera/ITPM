@@ -54,7 +54,7 @@ public class AddSomething extends JFrame {
 		setTitle("ForzaTimetable Management System - Add New");
 		
 		//set Icon to the window
-		ImageIcon img = new ImageIcon("images/icon.png");
+		ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
 		setIconImage(img.getImage());
 		
 		
@@ -89,7 +89,7 @@ public class AddSomething extends JFrame {
 		});
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
-		btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
 		btnNewButton_1.setBounds(38, 10, 225, 50);
 		panel.add(btnNewButton_1);
 		
@@ -107,7 +107,7 @@ public class AddSomething extends JFrame {
 			}
 		});
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		btnNewButton_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		btnNewButton_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manage.png")));
 		btnNewButton_1_1.setBounds(973, 10, 250, 50);
 		btnNewButton_1_1.setFocusable(false);
 		panel.add(btnNewButton_1_1);
@@ -122,7 +122,7 @@ public class AddSomething extends JFrame {
 		});
 		addWorkingDaysAndHours.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		addWorkingDaysAndHours.setFocusable(false);
-		addWorkingDaysAndHours.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		addWorkingDaysAndHours.setIcon(new ImageIcon(getClass().getClassLoader().getResource("workingDaysAndHours.png")));
 		addWorkingDaysAndHours.setBounds(111, 165, 445, 100);
 		contentPane.add(addWorkingDaysAndHours);
 		
@@ -136,7 +136,7 @@ public class AddSomething extends JFrame {
 		});
 		addNewLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		addNewLecturer.setFocusable(false);
-		addNewLecturer.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		addNewLecturer.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecturer2.png")));
 		addNewLecturer.setBounds(111, 314, 445, 100);
 		contentPane.add(addNewLecturer);
 		
@@ -152,7 +152,7 @@ public class AddSomething extends JFrame {
 		});
 		addNewSubject.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		addNewSubject.setFocusable(false);
-		addNewSubject.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		addNewSubject.setIcon(new ImageIcon(getClass().getClassLoader().getResource("subject2.png")));
 		addNewSubject.setBounds(111, 463, 445, 100);
 		contentPane.add(addNewSubject);
 		
@@ -165,7 +165,7 @@ public class AddSomething extends JFrame {
 		});
 		addStudentGroup.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		addStudentGroup.setFocusable(false);
-		addStudentGroup.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		addStudentGroup.setIcon(new ImageIcon(getClass().getClassLoader().getResource("studentGroup.png")));
 		addStudentGroup.setBounds(681, 165, 445, 100);
 		contentPane.add(addStudentGroup);
 		
@@ -180,7 +180,7 @@ public class AddSomething extends JFrame {
 		});
 		addTags.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		addTags.setFocusable(false);
-		addTags.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		addTags.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tags.png")));
 		addTags.setBounds(681, 314, 445, 100);
 		contentPane.add(addTags);
 		
@@ -194,7 +194,7 @@ public class AddSomething extends JFrame {
 		});
 		addLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		addLocation.setFocusable(false);
-		addLocation.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+		addLocation.setIcon(new ImageIcon(getClass().getClassLoader().getResource("location.png")));
 		addLocation.setBounds(681, 463, 445, 100);
 		contentPane.add(addLocation);
 		
