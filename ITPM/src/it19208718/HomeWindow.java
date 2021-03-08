@@ -33,6 +33,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
 
 @SuppressWarnings({ "unused", "serial" })
 public class HomeWindow extends JFrame {
@@ -88,6 +89,8 @@ public class HomeWindow extends JFrame {
 		
 		//end default
 		
+		
+		
 		//navigation buttons
 		JButton btnNewButton = new JButton(" Add New");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -113,6 +116,8 @@ public class HomeWindow extends JFrame {
 		btnNewButton.setBounds(33, 10, 250, 50);
 		btnNewButton.setFocusable(false);
 		panel.add(btnNewButton);
+		
+		//end navignation button 01
 		
 		
 		
@@ -173,12 +178,12 @@ public class HomeWindow extends JFrame {
 		
 		
 		//number of students
-		JLabel registeredLecturesText_1 = new JLabel(" Registered Students");
-		registeredLecturesText_1.setHorizontalAlignment(SwingConstants.CENTER);
-		registeredLecturesText_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		registeredLecturesText_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("student.png")));
-		registeredLecturesText_1.setBounds(10, 149, 272, 51);
-		panel_1.add(registeredLecturesText_1);
+		JLabel studentGroupsText_1 = new JLabel(" Student Groups");
+		studentGroupsText_1.setHorizontalAlignment(SwingConstants.CENTER);
+		studentGroupsText_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		studentGroupsText_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("student.png")));
+		studentGroupsText_1.setBounds(10, 149, 272, 51);
+		panel_1.add(studentGroupsText_1);
 		
 		JLabel registeredLecturesText_1_1 = new JLabel(" Registered Subjects");
 		registeredLecturesText_1_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -200,7 +205,7 @@ public class HomeWindow extends JFrame {
 		lblNewLabel.setBounds(115, 83, 45, 32);
 		panel_1.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("346");
+		JLabel lblNewLabel_1 = new JLabel("15");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
 		lblNewLabel_1.setBounds(115, 210, 45, 32);
@@ -230,6 +235,12 @@ public class HomeWindow extends JFrame {
 		separator_2.setBounds(10, 397, 272, 2);
 		panel_1.add(separator_2);
 		
+		JLabel lblNewLabel_2 = new JLabel("24");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		lblNewLabel_2.setBounds(115, 83, 45, 32);
+		panel_1.add(lblNewLabel_2);
+		
 		
 		
 		
@@ -240,8 +251,8 @@ public class HomeWindow extends JFrame {
 		panel_2.setLayout(null);
 		
 		JProgressBar progressBar = new JProgressBar();
-		progressBar.setValue(80);
-		progressBar.setBounds(218, 48, 329, 17);
+		progressBar.setValue(60);
+		progressBar.setBounds(218, 55, 437, 34);
 		panel_2.add(progressBar);
 		
 		JLabel registeredLecturesText_1_1_1_1 = new JLabel(" Lecture Rooms");
@@ -253,23 +264,34 @@ public class HomeWindow extends JFrame {
 		JLabel registeredLecturesText_1_1_1_1_1 = new JLabel("Laboratories");
 		registeredLecturesText_1_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 		registeredLecturesText_1_1_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		registeredLecturesText_1_1_1_1_1.setBounds(29, 104, 179, 51);
+		registeredLecturesText_1_1_1_1_1.setBounds(697, 30, 121, 51);
 		panel_2.add(registeredLecturesText_1_1_1_1_1);
 		
-		JProgressBar progressBar_1 = new JProgressBar();
-		progressBar_1.setValue(50);
-		progressBar_1.setBounds(218, 122, 329, 17);
-		panel_2.add(progressBar_1);
-		
 		JSeparator separator_3 = new JSeparator();
-		separator_3.setBounds(29, 195, 789, 2);
+		separator_3.setBounds(29, 139, 789, 2);
 		panel_2.add(separator_3);
 		
-		JLabel registeredLecturesText_1_1_1_1_1_1 = new JLabel("Last Update");
-		registeredLecturesText_1_1_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		registeredLecturesText_1_1_1_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		registeredLecturesText_1_1_1_1_1_1.setBounds(29, 222, 179, 51);
-		panel_2.add(registeredLecturesText_1_1_1_1_1_1);
+		JLabel lblNewLabel_2_1 = new JLabel("60%");
+		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2_1.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		lblNewLabel_2_1.setBounds(50, 67, 100, 32);
+		panel_2.add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_2_1_1 = new JLabel("40 %");
+		lblNewLabel_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		lblNewLabel_2_1_1.setBounds(707, 67, 100, 32);
+		panel_2.add(lblNewLabel_2_1_1);
+		
+		JSeparator separator_3_1 = new JSeparator();
+		separator_3_1.setOrientation(SwingConstants.VERTICAL);
+		separator_3_1.setBounds(29, 275, 789, 2);
+		panel_2.add(separator_3_1);
+		
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setOrientation(SwingConstants.VERTICAL);
+		separator_4.setBounds(421, 139, 2, 364);
+		panel_2.add(separator_4);
 		
 		
 		
