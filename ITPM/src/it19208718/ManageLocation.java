@@ -91,11 +91,9 @@ public class ManageLocation extends JFrame {
 		setLocationRelativeTo(null);
 		setTitle("Forza Timetable Management System - Manage Location");
 		
-		//set Icon to the window
 		ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
 		setIconImage(img.getImage());
-		
-		//inner contentPane
+
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(153, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -164,6 +162,7 @@ public class ManageLocation extends JFrame {
 		
 		locationTable = new JTable();
 		scrollPane.setViewportView(locationTable);
+		locationTable.getTableHeader().setFont(new Font("Kristen ITC", Font.BOLD, 12));
 		
 		JButton updateLocation = new JButton("Update");
 		updateLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -238,6 +237,15 @@ public class ManageLocation extends JFrame {
 		operationStatus.setBounds(917, 420, 287, 65);
 		contentPane.add(operationStatus);
 		
+		JLabel lblFilterRoomType = new JLabel("Room Type");
+		lblFilterRoomType.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblFilterRoomType.setBounds(917, 179, 120, 46);
+		contentPane.add(lblFilterRoomType);
+		
+		JLabel lblBuilding = new JLabel("Building");
+		lblBuilding.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblBuilding.setBounds(917, 262, 120, 46);
+		contentPane.add(lblBuilding);
 		
 		String roomType [] = {"Any","Lecture Halls", "Laboratories"};
 		JComboBox<Object> roomTypeFilter = new JComboBox<Object>(roomType);
@@ -255,6 +263,8 @@ public class ManageLocation extends JFrame {
 		buildingTypeFilter.setBounds(1043, 267, 161, 36);
 		contentPane.add(buildingTypeFilter);
 		
+		
+		//filter locations according to the room type
 		roomTypeFilter.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    
@@ -273,6 +283,8 @@ public class ManageLocation extends JFrame {
 		    }
 		});
 		
+
+		//filter locations according to the building name
 		buildingTypeFilter.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    
@@ -295,22 +307,12 @@ public class ManageLocation extends JFrame {
 		
 		
 		
-		JLabel lblFilterRoomType = new JLabel("Room Type");
-		lblFilterRoomType.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		lblFilterRoomType.setBounds(917, 179, 120, 46);
-		contentPane.add(lblFilterRoomType);
-		
-		JLabel lblBuilding = new JLabel("Building");
-		lblBuilding.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		lblBuilding.setBounds(917, 262, 120, 46);
-		contentPane.add(lblBuilding);
-		
-		
+		//update selected location
 		updateLocation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				
+				//validate selection and the input fields before do the update
 				if(locationTable.getSelectionModel().isSelectionEmpty()) {
 					JOptionPane.showMessageDialog(new JFrame(), "You should select a row to update!", "Error",
 					        JOptionPane.ERROR_MESSAGE);
@@ -323,18 +325,21 @@ public class ManageLocation extends JFrame {
 				}else if(roomCapacity.getValue().toString().isEmpty() || roomCapacity.getValue().toString().equals("0")) {
 					JOptionPane.showMessageDialog(new JFrame(), "Capacity should be grater than 0 and cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
 				}else {
+					//show warning before update
 					int dialogButton = JOptionPane.YES_NO_OPTION;
 					int dialogResult = JOptionPane.showConfirmDialog (null, "Operation cannot be undone! Do you want to continue?","Warning",dialogButton);
 					
 					if(dialogResult == JOptionPane.YES_OPTION){
 						
 						
+						//do the update operation
 						boolean isSuccess = updateLocation(Integer.valueOf(locationTable.getValueAt(locationTable.getSelectedRow(), 0).toString()),
 								buildingNameTxt.getText().toString(), 
 								roomNameTxt.getText().toString(),
 								buttonGroup.getSelection().getActionCommand(),
 								Integer.parseInt(roomCapacity.getValue().toString()));
 						
+						//according to the operation status shows the success or unsuccess message
 						if(isSuccess) {
 							
 							buildingNameTxt.setText(null);
@@ -359,20 +364,27 @@ public class ManageLocation extends JFrame {
 			}
 		});
 		
+		
+		//delete locations from the system
 		deleteLocation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				//selection validation before do the update 
 				if(locationTable.getSelectionModel().isSelectionEmpty()) {
 					JOptionPane.showMessageDialog(new JFrame(), "You should select a row to delete!", "Error",
 					        JOptionPane.ERROR_MESSAGE);
 				}else {
+					//show warning before delete
 					int dialogButton = JOptionPane.YES_NO_OPTION;
 					int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to permanently delete this location?","Warning",dialogButton);
 					
 					if(dialogResult == JOptionPane.YES_OPTION){
 						
-						
+						//do the delete operation
 						boolean isSuccess = deleteLocation(Integer.valueOf(locationTable.getValueAt(locationTable.getSelectedRow(), 0).toString()));
+						
+						
+						//according to the operation status shows the success or unsuccess message
 						if(isSuccess) {
 							
 							buildingNameTxt.setText(null);
@@ -398,8 +410,7 @@ public class ManageLocation extends JFrame {
 		});
 		
 		
-		locationTable.getTableHeader().setFont(new Font("Kristen ITC", Font.BOLD, 12));
-		
+		//on select a row, load data into text fields
 		locationTable.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -419,38 +430,24 @@ public class ManageLocation extends JFrame {
 			}
 			
 			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
+			public void mousePressed(MouseEvent e) {}
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
+			public void mouseExited(MouseEvent e) {}
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
+			public void mouseEntered(MouseEvent e) {}
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseClicked(MouseEvent e) {}
 		});
 		
 		
 	}
 	
 	
+	
+	//show the locations according to the filters 
 	private void showLocations(String buildingName, String roomType) {
 
 
-		
 		Connection conn = DBConnect.getConnection();
 		
 		DefaultTableModel model = new DefaultTableModel();
@@ -464,15 +461,15 @@ public class ManageLocation extends JFrame {
 		
 		if(buildingName.equals("Any") && roomType.equals("Any")) {
 			sql = "SELECT * FROM Locations";
-		}else if(!buildingName.equals("Any") && roomType.equals("Lecture Hall")){						//lec halls in specific building
+		}else if(!buildingName.equals("Any") && roomType.equals("Lecture Hall")){//lec halls in specific building
 			sql = "SELECT * FROM Locations WHERE roomType = 'Lecture Hall' and buildingName = '"+buildingName+"' ";
-		}else if(!buildingName.equals("Any") &&roomType.equals("Laboratory")){			//labs in specific building
+		}else if(!buildingName.equals("Any") &&roomType.equals("Laboratory")){//labs in specific building
 			sql = "SELECT * FROM Locations WHERE roomType = 'Laboratory' and buildingName = '"+buildingName+"' ";
-		}else if (!buildingName.equals("Any") && roomType.equals("Any")) {						// any room but specific building
+		}else if (!buildingName.equals("Any") && roomType.equals("Any")) {// any room but specific building
 			sql = "SELECT * FROM Locations WHERE buildingName = '"+buildingName+"' ";
-		}else if(buildingName.equals("Any") && roomType.equals("Lecture Hall")) {
+		}else if(buildingName.equals("Any") && roomType.equals("Lecture Hall")) {// any building but lecture halls
 			sql = "SELECT * FROM Locations WHERE roomType = '"+roomType+"' ";
-		}else if(buildingName.equals("Any") && roomType.equals("Laboratory")) {
+		}else if(buildingName.equals("Any") && roomType.equals("Laboratory")) {// any building but laboratories
 			sql = "SELECT * FROM Locations WHERE roomType = '"+roomType+"' ";
 		}
 		
@@ -509,7 +506,8 @@ public class ManageLocation extends JFrame {
 		
 	}
 
-
+	
+	//delete location method
 	private boolean deleteLocation(int rowId) {
 		
 		boolean isSuccess = false;
@@ -538,6 +536,7 @@ public class ManageLocation extends JFrame {
 	}
 	
 	
+	//update locations method
 	private boolean updateLocation(int rowId, String buildingName, String roomName, String roomType, int capacity) {
 		
 		boolean isSuccess = false;
@@ -566,7 +565,7 @@ public class ManageLocation extends JFrame {
 	}
 	
 	
-	
+	//get all the available building names for the filter dropdown
 	private String [] getBuildingNames() {
 		
 		Connection conn = DBConnect.getConnection();
@@ -598,10 +597,6 @@ public class ManageLocation extends JFrame {
 		
 		
 	}
-	
-	
-	
-	
 	
 	
 	

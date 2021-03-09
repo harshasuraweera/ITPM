@@ -123,43 +123,64 @@ public class ManageExisiting extends JFrame {
 		btnManageWorkingDays.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageWorkingDays.setFocusable(false);
 		btnManageWorkingDays.setIcon(new ImageIcon(getClass().getClassLoader().getResource("workingDaysAndHours2.png")));
-		btnManageWorkingDays.setBounds(104, 173, 445, 100);
+		btnManageWorkingDays.setBounds(128, 104, 500, 100);
 		contentPane.add(btnManageWorkingDays);
 		
-		JButton btnManageNewLecturer = new JButton(" Manage Lecturers");
-		btnManageNewLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		btnManageNewLecturer.setFocusable(false);
-		btnManageNewLecturer.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecturer3.png")));
-		btnManageNewLecturer.setBounds(104, 322, 445, 100);
-		contentPane.add(btnManageNewLecturer);
+		JButton btnManageLecturers = new JButton(" Manage Lecturers");
+		btnManageLecturers.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		btnManageLecturers.setFocusable(false);
+		btnManageLecturers.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecturer3.png")));
+		btnManageLecturers.setBounds(128, 214, 500, 100);
+		contentPane.add(btnManageLecturers);
 		
 		JButton btnManageSubject = new JButton(" Manage Subjects");
 		btnManageSubject.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageSubject.setFocusable(false);
 		btnManageSubject.setIcon(new ImageIcon(getClass().getClassLoader().getResource("subject4.png")));
-		btnManageSubject.setBounds(104, 471, 445, 100);
+		btnManageSubject.setBounds(128, 324, 500, 100);
 		contentPane.add(btnManageSubject);
 		
 		JButton btnManageLocations = new JButton(" Manage Locations");
 		btnManageLocations.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageLocations.setFocusable(false);
 		btnManageLocations.setIcon(new ImageIcon(getClass().getClassLoader().getResource("location2.png")));
-		btnManageLocations.setBounds(674, 471, 445, 100);
+		btnManageLocations.setBounds(646, 324, 500, 100);
 		contentPane.add(btnManageLocations);
 		
 		JButton btnManageTags = new JButton(" Manage Tags");
 		btnManageTags.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageTags.setFocusable(false);
 		btnManageTags.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tags3.png")));
-		btnManageTags.setBounds(674, 322, 445, 100);
+		btnManageTags.setBounds(646, 214, 500, 100);
 		contentPane.add(btnManageTags);
 		
 		JButton btnManageStudentGroups = new JButton(" Manage Student Groups");
 		btnManageStudentGroups.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageStudentGroups.setFocusable(false);
 		btnManageStudentGroups.setIcon(new ImageIcon(getClass().getClassLoader().getResource("studentGroup2.png")));
-		btnManageStudentGroups.setBounds(674, 173, 445, 100);
+		btnManageStudentGroups.setBounds(646, 104, 500, 100);
 		contentPane.add(btnManageStudentGroups);
+		
+		JButton btnManageSessions = new JButton(" Manage Sessions");
+		btnManageSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		btnManageSessions.setFocusable(false);
+		btnManageSessions.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manageSessions.png")));
+		btnManageSessions.setBounds(128, 434, 500, 100);
+		contentPane.add(btnManageSessions);
+		
+		JButton btnManageRooms = new JButton(" Manage Rooms");
+		btnManageRooms.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		btnManageRooms.setFocusable(false);
+		btnManageRooms.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecRoom.png")));
+		btnManageRooms.setBounds(646, 434, 500, 100);
+		contentPane.add(btnManageRooms);
+		
+		JButton btnSessionTypesANTA = new JButton(" Session Types and Not Available Time Allocations");
+		btnSessionTypesANTA.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		btnSessionTypesANTA.setFocusable(false);
+		btnSessionTypesANTA.setIcon(new ImageIcon(getClass().getClassLoader().getResource("sessionTypes2.png")));
+		btnSessionTypesANTA.setBounds(128, 544, 1018, 100);
+		contentPane.add(btnSessionTypesANTA);
 		
 		
 		

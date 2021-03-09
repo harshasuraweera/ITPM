@@ -62,11 +62,11 @@ public class AddLocation extends JFrame {
 		setLocationRelativeTo(null);
 		setTitle("Forza Timetable Management System - Add Location");
 		
-		//set Icon to the window
+		
 		ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
 		setIconImage(img.getImage());
 		
-		//inner contentPane
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(153, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -175,11 +175,11 @@ public class AddLocation extends JFrame {
 		roomCapacity.setBounds(448, 477, 196, 46);
 		contentPane.add(roomCapacity);
 		
-		JLabel lblNewLabel_1 = new JLabel("Add New Location");
-		lblNewLabel_1.setBounds(452, 118, 306, 44);
-		contentPane.add(lblNewLabel_1);
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1.setFont(new Font("Kristen ITC", Font.BOLD, 30));
+		JLabel addNewLocationLabel = new JLabel("Add New Location");
+		addNewLocationLabel.setBounds(452, 118, 306, 44);
+		contentPane.add(addNewLocationLabel);
+		addNewLocationLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		addNewLocationLabel.setFont(new Font("Kristen ITC", Font.BOLD, 30));
 		
 		
 		JLabel operationStatus = new JLabel("");
@@ -190,9 +190,21 @@ public class AddLocation extends JFrame {
 		
 		JButton saveLocationBtn = new JButton(" Save Location");
 		saveLocationBtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource("save.png")));
+		saveLocationBtn.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		saveLocationBtn.setFocusable(false);
+		saveLocationBtn.setBounds(287, 585, 225, 50);
+		contentPane.add(saveLocationBtn);
+		
+		//end default
+		
+		
+		
+		// Add new location to the system
 		saveLocationBtn.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
 				
+				// Validate input fields
 				if(buildingNameTxtField.getText().toString().isEmpty()) {
 					JOptionPane.showMessageDialog(new JFrame(), "Building name cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
 				}else if(roomNameTxtField.getText().toString().isEmpty()) {
@@ -203,12 +215,13 @@ public class AddLocation extends JFrame {
 					JOptionPane.showMessageDialog(new JFrame(), "Capacity should be grater than 0 and cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
 				}else {
 					
-					
+					// Do the insertation operation
 					boolean isSuccess = addNewLocation(	buildingNameTxtField.getText().toString(), 
 							roomNameTxtField.getText().toString(),
 							buttonGroup.getSelection().getActionCommand(),
 							Integer.parseInt(roomCapacity.getValue().toString()));
-		
+					
+					//According to the operation status show the success or unsuccess message
 					if(isSuccess) {
 					
 						buildingNameTxtField.setText(null);
@@ -226,22 +239,13 @@ public class AddLocation extends JFrame {
 					
 				}
 				
-				
-				
-				
 			}
 		});
-		saveLocationBtn.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		saveLocationBtn.setFocusable(false);
-		saveLocationBtn.setBounds(287, 585, 225, 50);
-		contentPane.add(saveLocationBtn);
 		
 		
-		
-		//end default
 	}
 	
-	
+	//method to add new location
 	public boolean addNewLocation (String buildingName, String roomName, String roomType, int capacity) {
 		
 		boolean isSuccess = false;
@@ -267,4 +271,6 @@ public class AddLocation extends JFrame {
 		
 		return isSuccess;
 	}
+
+
 }
