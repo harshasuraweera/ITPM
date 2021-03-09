@@ -3,25 +3,27 @@ package it19208718;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Image;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.SwingConstants;
+import javax.swing.ButtonGroup;
 
-@SuppressWarnings({ "serial", "unused" })
-public class AddSomething extends JFrame {
+public class AddLocation extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -30,7 +32,7 @@ public class AddSomething extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddSomething frame = new AddSomething();
+					AddLocation frame = new AddLocation();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,9 +43,8 @@ public class AddSomething extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws IOException 
 	 */
-	public AddSomething() throws IOException {
+	public AddLocation() {
 		
 		//do these for each and every JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,12 +52,11 @@ public class AddSomething extends JFrame {
 		setSize(1280, 720);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setTitle("ForzaTimetable Management System - Add New");
+		setTitle("Forza Timetable Management System - Add Location");
 		
 		//set Icon to the window
 		ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
 		setIconImage(img.getImage());
-		
 		
 		//inner contentPane
 		contentPane = new JPanel();
@@ -71,156 +71,80 @@ public class AddSomething extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		//default end
-		
 		JButton btnNewButton_1 = new JButton(" Back To Home");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					HomeWindow homeWindow = new HomeWindow();
-					dispose();
-					homeWindow.setVisible(true);
-					
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
-		btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
-		btnNewButton_1.setBounds(38, 10, 225, 50);
+		btnNewButton_1.setBounds(24, 10, 225, 50);
 		panel.add(btnNewButton_1);
 		
-		JButton btnNewButton_1_1 = new JButton(" Manage Exisiting");
-		btnNewButton_1_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ManageExisiting manageExisiting = new ManageExisiting();
-					dispose();
-					manageExisiting.setVisible(true);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
+		JButton btnNewButton_1_1 = new JButton("Manage Locations");
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		btnNewButton_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manage.png")));
-		btnNewButton_1_1.setBounds(973, 10, 250, 50);
 		btnNewButton_1_1.setFocusable(false);
+		btnNewButton_1_1.setBounds(1017, 10, 225, 50);
 		panel.add(btnNewButton_1_1);
 		
+		JLabel lblNewLabel = new JLabel("Building Name");
+		lblNewLabel.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblNewLabel.setBounds(287, 237, 174, 46);
+		contentPane.add(lblNewLabel);
 		
+		JLabel lblRoomName = new JLabel("Room Name");
+		lblRoomName.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblRoomName.setBounds(287, 315, 174, 46);
+		contentPane.add(lblRoomName);
 		
+		textField = new JTextField();
+		textField.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		textField.setBounds(440, 246, 525, 36);
+		contentPane.add(textField);
+		textField.setColumns(10);
 		
-		JButton addWorkingDaysAndHours = new JButton(" Add Working Days And Hours");
-		addWorkingDaysAndHours.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		addWorkingDaysAndHours.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		addWorkingDaysAndHours.setFocusable(false);
-		addWorkingDaysAndHours.setIcon(new ImageIcon(getClass().getClassLoader().getResource("workingDaysAndHours.png")));
-		addWorkingDaysAndHours.setBounds(111, 106, 500, 100);
-		contentPane.add(addWorkingDaysAndHours);
+		textField_1 = new JTextField();
+		textField_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		textField_1.setColumns(10);
+		textField_1.setBounds(440, 315, 525, 36);
+		contentPane.add(textField_1);
 		
+		JLabel lblRoomType = new JLabel("Room Type");
+		lblRoomType.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblRoomType.setBounds(287, 416, 174, 46);
+		contentPane.add(lblRoomType);
 		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Lecture Hall");
+		rdbtnNewRadioButton.setSelected(true);
+		buttonGroup.add(rdbtnNewRadioButton);
+		rdbtnNewRadioButton.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		rdbtnNewRadioButton.setBounds(502, 416, 204, 46);
+		contentPane.add(rdbtnNewRadioButton);
 		
+		JRadioButton rdbtnLaboratory = new JRadioButton("Laboratory");
+		buttonGroup.add(rdbtnLaboratory);
+		rdbtnLaboratory.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		rdbtnLaboratory.setBounds(761, 416, 204, 46);
+		contentPane.add(rdbtnLaboratory);
 		
-		JButton addNewLecturer = new JButton(" Add New Lecturer");
-		addNewLecturer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		addNewLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		addNewLecturer.setFocusable(false);
-		addNewLecturer.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecturer2.png")));
-		addNewLecturer.setBounds(111, 216, 500, 100);
-		contentPane.add(addNewLecturer);
+		JLabel lblCapacity = new JLabel("Capacity");
+		lblCapacity.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblCapacity.setBounds(287, 494, 174, 46);
+		contentPane.add(lblCapacity);
 		
+		JSpinner spinner = new JSpinner();
+		spinner.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		spinner.setBounds(458, 494, 196, 46);
+		contentPane.add(spinner);
 		
+		JLabel lblNewLabel_1 = new JLabel("Add New Location");
+		lblNewLabel_1.setBounds(452, 118, 306, 44);
+		contentPane.add(lblNewLabel_1);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1.setFont(new Font("Kristen ITC", Font.BOLD, 30));
 		
+		JButton btnNewButton_1_1_1 = new JButton("Save");
+		btnNewButton_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		btnNewButton_1_1_1.setFocusable(false);
+		btnNewButton_1_1_1.setBounds(287, 609, 225, 50);
+		contentPane.add(btnNewButton_1_1_1);
 		
-		
-		
-		JButton addNewSubject = new JButton(" Add New Subject");
-		addNewSubject.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		addNewSubject.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		addNewSubject.setFocusable(false);
-		addNewSubject.setIcon(new ImageIcon(getClass().getClassLoader().getResource("subject2.png")));
-		addNewSubject.setBounds(111, 326, 500, 100);
-		contentPane.add(addNewSubject);
-		
-		
-		
-		JButton addNewStudentGroup = new JButton(" Add Student Group");
-		addNewStudentGroup.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		addNewStudentGroup.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		addNewStudentGroup.setFocusable(false);
-		addNewStudentGroup.setIcon(new ImageIcon(getClass().getClassLoader().getResource("studentGroup.png")));
-		addNewStudentGroup.setBounds(626, 106, 500, 100);
-		contentPane.add(addNewStudentGroup);
-		
-		
-		
-		
-		
-		JButton addNewTags = new JButton(" Add Tags");
-		addNewTags.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		addNewTags.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		addNewTags.setFocusable(false);
-		addNewTags.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tags.png")));
-		addNewTags.setBounds(626, 216, 500, 100);
-		contentPane.add(addNewTags);
-		
-	
-		JButton addNewLocation = new JButton(" Add Location");
-		addNewLocation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		addNewLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		addNewLocation.setFocusable(false);
-		addNewLocation.setIcon(new ImageIcon(getClass().getClassLoader().getResource("location.png")));
-		addNewLocation.setBounds(626, 326, 500, 100);
-		contentPane.add(addNewLocation);
-		
-		JButton addNewSession = new JButton(" Add Session");
-		addNewSession.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		addNewSession.setFocusable(false);
-		addNewSession.setIcon(new ImageIcon(getClass().getClassLoader().getResource("addSession.png")));
-		addNewSession.setBounds(111, 436, 500, 100);
-		contentPane.add(addNewSession);
-		
-		JButton assignNewRooms = new JButton(" Assign Rooms");
-		assignNewRooms.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		assignNewRooms.setFocusable(false);
-		assignNewRooms.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecRoom2.png")));
-		assignNewRooms.setBounds(626, 436, 500, 100);
-		contentPane.add(assignNewRooms);
-		
-		JButton sessionTypesANTA = new JButton(" Session Types and Not Available Time Allocations");
-		sessionTypesANTA.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		sessionTypesANTA.setFocusable(false);
-		sessionTypesANTA.setIcon(new ImageIcon(getClass().getClassLoader().getResource("sessionTypes.png")));
-		sessionTypesANTA.setBounds(111, 546, 1015, 100);
-		contentPane.add(sessionTypesANTA);
-		
-		
-		
-		
-		
+		//end default
 	}
-
 }
