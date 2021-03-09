@@ -2,6 +2,7 @@ package it19208718;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
@@ -18,25 +19,37 @@ import com.mysql.cj.result.StringValueFactory;
 import database.DBConnect;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.ButtonGroup;
 
 public class ManageLocation extends JFrame {
 
 	private JPanel contentPane;
 	private JTable locationTable;
-	
+	private JScrollPane scrollPane;
+	private JTextField buildingNameTxt;
+	private JTextField roomNameTxt;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -57,11 +70,11 @@ public class ManageLocation extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ManageLocation() {
+	public ManageLocation() throws IOException{
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				ShowData();
+				showLocations();
 			}
 		});
 
@@ -90,13 +103,42 @@ public class ManageLocation extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton(" Back To Home");
-		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		btnNewButton_1.setFocusable(false);
-		btnNewButton_1.setBounds(41, 10, 225, 50);
-		panel.add(btnNewButton_1);
+		JButton btnBackToHome = new JButton(" Back To Home");
+		btnBackToHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					HomeWindow homeWindow = new HomeWindow();
+					dispose();
+					homeWindow.setVisible(true);
+					
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnBackToHome.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
+		btnBackToHome.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		btnBackToHome.setFocusable(false);
+		btnBackToHome.setBounds(24, 10, 225, 50);
+		panel.add(btnBackToHome);
+		
 		
 		JButton btnNewButton_1_1 = new JButton("Add Locations");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					AddLocation AddLocation = new AddLocation();
+					dispose();
+					AddLocation.setVisible(true);
+					
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("location3.png")));
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1.setFocusable(false);
 		btnNewButton_1_1.setBounds(1014, 10, 225, 50);
@@ -108,54 +150,192 @@ public class ManageLocation extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Manage Location");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1.setFont(new Font("Kristen ITC", Font.BOLD, 30));
-		lblNewLabel_1.setBounds(484, 105, 306, 44);
+		lblNewLabel_1.setBounds(484, 98, 306, 44);
 		contentPane.add(lblNewLabel_1);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(68, 237, 805, 306);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(69, 179, 805, 306);
 		contentPane.add(scrollPane);
 		
 		locationTable = new JTable();
 		scrollPane.setViewportView(locationTable);
 		
-		JLabel name = new JLabel();
-		name.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		name.setBounds(986, 329, 113, 58);
-		contentPane.add(name);
+		JButton updateLocation = new JButton("Update");
+		updateLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		updateLocation.setFocusable(false);
+		updateLocation.setBounds(917, 358, 120, 50);
+		contentPane.add(updateLocation);
 		
-		JLabel room = new JLabel();
-		room.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		room.setBounds(986, 416, 113, 58);
-		contentPane.add(room);
+		JButton deleteLocation = new JButton("Delete");
+		deleteLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		deleteLocation.setFocusable(false);
+		deleteLocation.setBounds(1069, 358, 120, 50);
+		contentPane.add(deleteLocation);
 		
-		JLabel type = new JLabel();
-		type.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		type.setBounds(986, 505, 113, 58);
-		contentPane.add(type);
+		JLabel lblNewLabel = new JLabel("Building Name");
+		lblNewLabel.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblNewLabel.setBounds(69, 527, 138, 46);
+		contentPane.add(lblNewLabel);
 		
-		JLabel capacity = new JLabel();
-		capacity.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		capacity.setBounds(986, 598, 113, 58);
-		contentPane.add(capacity);
+		buildingNameTxt = new JTextField();
+		buildingNameTxt.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		buildingNameTxt.setColumns(10);
+		buildingNameTxt.setBounds(222, 536, 272, 36);
+		contentPane.add(buildingNameTxt);
+		
+		JLabel lblNewLabel_2 = new JLabel("Room Name");
+		lblNewLabel_2.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblNewLabel_2.setBounds(69, 587, 138, 46);
+		contentPane.add(lblNewLabel_2);
+		
+		roomNameTxt = new JTextField();
+		roomNameTxt.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		roomNameTxt.setColumns(10);
+		roomNameTxt.setBounds(222, 596, 272, 36);
+		contentPane.add(roomNameTxt);
+		
+		JLabel lblRoomType = new JLabel("Room Type");
+		lblRoomType.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblRoomType.setBounds(551, 527, 123, 46);
+		contentPane.add(lblRoomType);
+		
+		JRadioButton lecRadioBtn = new JRadioButton("Lecture Hall");
+		buttonGroup.add(lecRadioBtn);
+		
+		lecRadioBtn.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lecRadioBtn.setFocusPainted(false);
+		lecRadioBtn.setBackground((Color) null);
+		lecRadioBtn.setActionCommand("Lecture Hall");
+		lecRadioBtn.setBounds(704, 527, 174, 46);
+		contentPane.add(lecRadioBtn);
+		
+		JRadioButton labRadioBtn = new JRadioButton("Laboratory");
+		buttonGroup.add(labRadioBtn);
+		labRadioBtn.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		labRadioBtn.setFocusPainted(false);
+		labRadioBtn.setBackground((Color) null);
+		labRadioBtn.setActionCommand("Laboratory");
+		labRadioBtn.setBounds(887, 527, 204, 46);
+		contentPane.add(labRadioBtn);
+		
+		JLabel lblCapacity = new JLabel("Capacity");
+		lblCapacity.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblCapacity.setBounds(551, 586, 130, 46);
+		contentPane.add(lblCapacity);
+		
+		JSpinner roomCapacity = new JSpinner();
+		roomCapacity.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		roomCapacity.setBounds(712, 587, 196, 46);
+		contentPane.add(roomCapacity);
+		
+		JLabel operationStatus = new JLabel("");
+		operationStatus.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		operationStatus.setBounds(917, 420, 272, 65);
+		contentPane.add(operationStatus);
 		
 		
-		DefaultTableModel locationTableModel = (DefaultTableModel)locationTable.getModel();
+		
+		updateLocation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				if(locationTable.getSelectionModel().isSelectionEmpty()) {
+					JOptionPane.showMessageDialog(new JFrame(), "You should select a row to update!", "Error",
+					        JOptionPane.ERROR_MESSAGE);
+				}else {
+					int dialogButton = JOptionPane.YES_NO_OPTION;
+					int dialogResult = JOptionPane.showConfirmDialog (null, "Operation cannot be undone! Do you want to continue?","Warning",dialogButton);
+					
+					if(dialogResult == JOptionPane.YES_OPTION){
+						
+						
+						boolean isSuccess = updateLocation(Integer.valueOf(locationTable.getValueAt(locationTable.getSelectedRow(), 0).toString()),
+								buildingNameTxt.getText().toString(), 
+								roomNameTxt.getText().toString(),
+								buttonGroup.getSelection().getActionCommand(),
+								Integer.parseInt(roomCapacity.getValue().toString()));
+						
+						if(isSuccess) {
+							
+							buildingNameTxt.setText(null);
+							roomNameTxt.setText(null);
+							roomCapacity.setValue(Integer.valueOf(0));
+							
+							operationStatus.setForeground(Color.decode("#038013"));
+							operationStatus.setText("Successfully updated!");
+							lecRadioBtn.setSelected(false);
+							labRadioBtn.setSelected(false);
+						}else {
+						
+							operationStatus.setForeground(Color.decode("#b50727"));
+							operationStatus.setText("<html>Something went wrong.<br>Try again!</html>");
+						}
+						
+					}
+				}
+				
+				
+				
+			}
+		});
+		
+		deleteLocation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(locationTable.getSelectionModel().isSelectionEmpty()) {
+					JOptionPane.showMessageDialog(new JFrame(), "You should select a row to delete!", "Error",
+					        JOptionPane.ERROR_MESSAGE);
+				}else {
+					int dialogButton = JOptionPane.YES_NO_OPTION;
+					int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to permanently delete this location?","Warning",dialogButton);
+					
+					if(dialogResult == JOptionPane.YES_OPTION){
+						
+						
+						boolean isSuccess = deleteLocation(Integer.valueOf(locationTable.getValueAt(locationTable.getSelectedRow(), 0).toString()));
+						if(isSuccess) {
+							
+							buildingNameTxt.setText(null);
+							roomNameTxt.setText(null);
+							roomCapacity.setValue(Integer.valueOf(0));
+							
+							operationStatus.setForeground(Color.decode("#038013"));
+							operationStatus.setText("Successfully deleted!");
+							lecRadioBtn.setSelected(false);
+							labRadioBtn.setSelected(false);
+						}else {
+						
+							operationStatus.setForeground(Color.decode("#b50727"));
+							operationStatus.setText("<html>Something went wrong.<br>Try again!</html>");
+						}
+						
+					}
+				}
+				
+
+				
+			}
+		});
 		
 		
-//		locationTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-//	        public void valueChanged(ListSelectionEvent event) {
-//	            // do some actions here, for example
-//	            // print first column value from selected row
-//	            System.out.println(locationTable.getValueAt(locationTable.getSelectedRow(), 0).toString());
-//	        }
-//	    });
+		locationTable.getTableHeader().setFont(new Font("Kristen ITC", Font.BOLD, 12));
 		
 		locationTable.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				System.out.println(locationTable.getValueAt(locationTable.getSelectedRow(), 0).toString());
-				name.setText(locationTable.getValueAt(locationTable.getSelectedRow(), 1).toString());
+				
+				
+				buildingNameTxt.setText(locationTable.getValueAt(locationTable.getSelectedRow(), 1).toString());
+				roomNameTxt.setText(locationTable.getValueAt(locationTable.getSelectedRow(), 2).toString());
+				
+				if (locationTable.getValueAt(locationTable.getSelectedRow(), 3).toString().equals("Lecture Hall")) {
+					lecRadioBtn.setSelected(true);
+				}else {
+					labRadioBtn.setSelected(true);
+				}
+				roomCapacity.setValue(Integer.valueOf(locationTable.getValueAt(locationTable.getSelectedRow(), 4).toString()));
 				
 			}
 			
@@ -188,7 +368,9 @@ public class ManageLocation extends JFrame {
 	}
 	
 	
-	private void ShowData() {
+	private void showLocations() {
+
+
 		
 		Connection conn = DBConnect.getConnection();
 		
@@ -198,6 +380,8 @@ public class ManageLocation extends JFrame {
 		model.addColumn("Room Name");
 		model.addColumn("Room Type"); 
 		model.addColumn("Capacity");
+		
+		
 		
 		try {
 			
@@ -220,13 +404,10 @@ public class ManageLocation extends JFrame {
 			conn.close();
 			
 			locationTable.setModel(model);
-			locationTable.setAutoResizeMode(0);
-			locationTable.getColumnModel().getColumn(0).setPreferredWidth(80);
-			locationTable.getColumnModel().getColumn(1).setPreferredWidth(140);
-			locationTable.getColumnModel().getColumn(2).setPreferredWidth(140);
-			locationTable.getColumnModel().getColumn(3).setPreferredWidth(140);
-			locationTable.getColumnModel().getColumn(4).setPreferredWidth(140);
-			
+			locationTable.setAutoResizeMode(1);
+			locationTable.setFillsViewportHeight( true );
+			locationTable.setRowHeight(30);
+			locationTable.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
 			
 			
 		}catch (Exception e) {
@@ -234,4 +415,63 @@ public class ManageLocation extends JFrame {
 		}
 		
 	}
+
+
+	private boolean deleteLocation(int rowId) {
+		
+		boolean isSuccess = false;
+		
+		Connection conn = DBConnect.getConnection();
+		
+		try {
+			
+			String sql = "DELETE FROM Locations WHERE id = '"+rowId+"' ";
+			
+			Statement st = conn.createStatement();
+			int rs = st.executeUpdate(sql);
+			
+			st.close();
+			conn.close();
+			showLocations();
+			isSuccess = true;
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			isSuccess = false;
+			
+		}	
+		
+		return isSuccess;
+	}
+	
+	
+	private boolean updateLocation(int rowId, String buildingName, String roomName, String roomType, int capacity) {
+		
+		boolean isSuccess = false;
+		
+		Connection conn = DBConnect.getConnection();
+		
+		try {
+			
+			String sql = "UPDATE Locations SET buildingName = '"+buildingName+"', roomName = '"+roomName+"', roomType = '"+roomType+"', capacity = '"+capacity+"' WHERE id = '"+rowId+"' ";
+			
+			Statement st = conn.createStatement();
+			int rs = st.executeUpdate(sql);
+			
+			st.close();
+			conn.close();
+			showLocations();
+			isSuccess = true;
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			isSuccess = false;
+			
+		}	
+		
+		return isSuccess;
+	}
+	
+	
+	
 }
