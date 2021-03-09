@@ -13,6 +13,7 @@ import database.DBConnect;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -187,30 +188,46 @@ public class AddLocation extends JFrame {
 		contentPane.add(operationStatus);
 		
 		
-		JButton saveLocationBtn = new JButton(" Save");
+		JButton saveLocationBtn = new JButton(" Save Location");
 		saveLocationBtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource("save.png")));
 		saveLocationBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				boolean isSuccess = addNewLocation(	buildingNameTxtField.getText().toString(), 
-									roomNameTxtField.getText().toString(),
-									buttonGroup.getSelection().getActionCommand(),
-									Integer.parseInt(roomCapacity.getValue().toString()));
-				
-				if(isSuccess) {
-				
-					buildingNameTxtField.setText(null);
-					roomNameTxtField.setText(null);
-					roomCapacity.setValue(Integer.valueOf(0));
-					
-					operationStatus.setForeground(Color.decode("#038013"));
-					operationStatus.setText("Location successfully added!");
-					
+				if(buildingNameTxtField.getText().toString().isEmpty()) {
+					JOptionPane.showMessageDialog(new JFrame(), "Building name cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+				}else if(roomNameTxtField.getText().toString().isEmpty()) {
+					JOptionPane.showMessageDialog(new JFrame(), "Room name cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+				}else if (buttonGroup.getSelection().toString().isEmpty()) {
+					JOptionPane.showMessageDialog(new JFrame(), "Room type cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+				}else if(roomCapacity.getValue().toString().isEmpty() || roomCapacity.getValue().toString().equals("0")) {
+					JOptionPane.showMessageDialog(new JFrame(), "Capacity should be grater than 0 and cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
 				}else {
-				
-					operationStatus.setForeground(Color.decode("#b50727"));
-					operationStatus.setText("Something went wrong. Please check and try again!");
+					
+					
+					boolean isSuccess = addNewLocation(	buildingNameTxtField.getText().toString(), 
+							roomNameTxtField.getText().toString(),
+							buttonGroup.getSelection().getActionCommand(),
+							Integer.parseInt(roomCapacity.getValue().toString()));
+		
+					if(isSuccess) {
+					
+						buildingNameTxtField.setText(null);
+						roomNameTxtField.setText(null);
+						roomCapacity.setValue(Integer.valueOf(0));
+						
+						operationStatus.setForeground(Color.decode("#038013"));
+						operationStatus.setText("Location successfully added!");
+						
+					}else {
+					
+						operationStatus.setForeground(Color.decode("#b50727"));
+						operationStatus.setText("Something went wrong. Please check and try again!");
+					}
+					
 				}
+				
+				
+				
 				
 			}
 		});

@@ -36,11 +36,18 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.JList;
+import javax.swing.JComboBox;
 
 public class ManageLocation extends JFrame {
 
@@ -67,14 +74,12 @@ public class ManageLocation extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public ManageLocation() throws IOException{
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				showLocations();
+				showLocations("Any","Any");
 			}
 		});
 
@@ -169,7 +174,7 @@ public class ManageLocation extends JFrame {
 		JButton deleteLocation = new JButton("Delete");
 		deleteLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		deleteLocation.setFocusable(false);
-		deleteLocation.setBounds(1069, 358, 120, 50);
+		deleteLocation.setBounds(1084, 358, 120, 50);
 		contentPane.add(deleteLocation);
 		
 		JLabel lblNewLabel = new JLabel("Building Name");
@@ -220,19 +225,85 @@ public class ManageLocation extends JFrame {
 		
 		JLabel lblCapacity = new JLabel("Capacity");
 		lblCapacity.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		lblCapacity.setBounds(551, 586, 130, 46);
+		lblCapacity.setBounds(551, 587, 130, 46);
 		contentPane.add(lblCapacity);
 		
 		JSpinner roomCapacity = new JSpinner();
 		roomCapacity.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		roomCapacity.setBounds(712, 587, 196, 46);
+		roomCapacity.setBounds(712, 588, 196, 46);
 		contentPane.add(roomCapacity);
 		
 		JLabel operationStatus = new JLabel("");
 		operationStatus.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		operationStatus.setBounds(917, 420, 272, 65);
+		operationStatus.setBounds(917, 420, 287, 65);
 		contentPane.add(operationStatus);
 		
+		
+		String roomType [] = {"Any","Lecture Halls", "Laboratories"};
+		JComboBox<Object> roomTypeFilter = new JComboBox<Object>(roomType);
+		roomTypeFilter.setBounds(1043, 184, 161, 36);
+		roomTypeFilter.setSelectedIndex(0);
+		roomTypeFilter.setBackground(Color.white);
+		roomTypeFilter.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		contentPane.add(roomTypeFilter);
+		
+		
+		JComboBox<Object> buildingTypeFilter =  new JComboBox<Object>(getBuildingNames());
+		buildingTypeFilter.setSelectedIndex(0);
+		buildingTypeFilter.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		buildingTypeFilter.setBackground(Color.WHITE);
+		buildingTypeFilter.setBounds(1043, 267, 161, 36);
+		contentPane.add(buildingTypeFilter);
+		
+		roomTypeFilter.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    
+		    	if(roomTypeFilter.getSelectedIndex() == 0 && buildingTypeFilter.getSelectedIndex() == 0) { // any room and any building
+		    		showLocations("Any", "Any");
+		    	}else if(roomTypeFilter.getSelectedIndex() == 1) {											// selected building and lecture halls
+		    		showLocations(String.valueOf(buildingTypeFilter.getSelectedItem()),"Lecture Hall");
+		    	}else if(roomTypeFilter.getSelectedIndex() == 2) {										// selected building and laboratories
+		    		showLocations(String.valueOf(buildingTypeFilter.getSelectedItem()), "Laboratory");
+		    	}else if(roomTypeFilter.getSelectedIndex() == 0 && buildingTypeFilter.getSelectedIndex() != 0) { //any room but specific building
+		    		showLocations(String.valueOf(buildingTypeFilter.getSelectedItem()), "Any");
+		    	}
+		    	
+		    	
+		    	
+		    }
+		});
+		
+		buildingTypeFilter.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    
+		    	String buildingName = String.valueOf(buildingTypeFilter.getSelectedItem());
+		    	
+		    	
+		    	if(buildingTypeFilter.getSelectedIndex()==0 && roomTypeFilter.getSelectedIndex() == 0) {	// any room and any building
+		    		showLocations("Any","Any");
+		    	}else if(roomTypeFilter.getSelectedIndex() == 1) {		// lecture halls in specific building
+		    		showLocations(buildingName, "Lecture Hall");
+		    	}else if(roomTypeFilter.getSelectedIndex() == 2) {	// labs  in specific building
+		    		showLocations(buildingName, "Laboratory");
+		    	}else{												//any room but selected building
+		    		showLocations(buildingName, "Any");
+		    	}
+		    	
+		    
+		    }
+		});
+		
+		
+		
+		JLabel lblFilterRoomType = new JLabel("Room Type");
+		lblFilterRoomType.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblFilterRoomType.setBounds(917, 179, 120, 46);
+		contentPane.add(lblFilterRoomType);
+		
+		JLabel lblBuilding = new JLabel("Building");
+		lblBuilding.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblBuilding.setBounds(917, 262, 120, 46);
+		contentPane.add(lblBuilding);
 		
 		
 		updateLocation.addActionListener(new ActionListener() {
@@ -243,6 +314,14 @@ public class ManageLocation extends JFrame {
 				if(locationTable.getSelectionModel().isSelectionEmpty()) {
 					JOptionPane.showMessageDialog(new JFrame(), "You should select a row to update!", "Error",
 					        JOptionPane.ERROR_MESSAGE);
+				}if(buildingNameTxt.getText().toString().isEmpty()) {
+					JOptionPane.showMessageDialog(new JFrame(), "Building name cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+				}else if(roomNameTxt.getText().toString().isEmpty()) {
+					JOptionPane.showMessageDialog(new JFrame(), "Room name cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+				}else if (buttonGroup.getSelection().toString().isEmpty()) {
+					JOptionPane.showMessageDialog(new JFrame(), "Room type cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+				}else if(roomCapacity.getValue().toString().isEmpty() || roomCapacity.getValue().toString().equals("0")) {
+					JOptionPane.showMessageDialog(new JFrame(), "Capacity should be grater than 0 and cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
 				}else {
 					int dialogButton = JOptionPane.YES_NO_OPTION;
 					int dialogResult = JOptionPane.showConfirmDialog (null, "Operation cannot be undone! Do you want to continue?","Warning",dialogButton);
@@ -368,7 +447,7 @@ public class ManageLocation extends JFrame {
 	}
 	
 	
-	private void showLocations() {
+	private void showLocations(String buildingName, String roomType) {
 
 
 		
@@ -381,11 +460,25 @@ public class ManageLocation extends JFrame {
 		model.addColumn("Room Type"); 
 		model.addColumn("Capacity");
 		
+		String sql = "SELECT * FROM Locations";
 		
+		if(buildingName.equals("Any") && roomType.equals("Any")) {
+			sql = "SELECT * FROM Locations";
+		}else if(!buildingName.equals("Any") && roomType.equals("Lecture Hall")){						//lec halls in specific building
+			sql = "SELECT * FROM Locations WHERE roomType = 'Lecture Hall' and buildingName = '"+buildingName+"' ";
+		}else if(!buildingName.equals("Any") &&roomType.equals("Laboratory")){			//labs in specific building
+			sql = "SELECT * FROM Locations WHERE roomType = 'Laboratory' and buildingName = '"+buildingName+"' ";
+		}else if (!buildingName.equals("Any") && roomType.equals("Any")) {						// any room but specific building
+			sql = "SELECT * FROM Locations WHERE buildingName = '"+buildingName+"' ";
+		}else if(buildingName.equals("Any") && roomType.equals("Lecture Hall")) {
+			sql = "SELECT * FROM Locations WHERE roomType = '"+roomType+"' ";
+		}else if(buildingName.equals("Any") && roomType.equals("Laboratory")) {
+			sql = "SELECT * FROM Locations WHERE roomType = '"+roomType+"' ";
+		}
 		
 		try {
 			
-			String sql = "SELECT * FROM Locations";
+			
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			
@@ -432,7 +525,7 @@ public class ManageLocation extends JFrame {
 			
 			st.close();
 			conn.close();
-			showLocations();
+			showLocations("Any","Any");
 			isSuccess = true;
 			
 		}catch(Exception e) {
@@ -460,7 +553,7 @@ public class ManageLocation extends JFrame {
 			
 			st.close();
 			conn.close();
-			showLocations();
+			showLocations("Any","Any");
 			isSuccess = true;
 			
 		}catch(Exception e) {
@@ -471,6 +564,48 @@ public class ManageLocation extends JFrame {
 		
 		return isSuccess;
 	}
+	
+	
+	
+	private String [] getBuildingNames() {
+		
+		Connection conn = DBConnect.getConnection();
+		
+		String[] buildingNameArray = null;
+		List<String> list = new ArrayList<>();
+		
+		try {
+			String sql = "SELECT buildingName from Locations GROUP BY buildingName";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			list.add("Any");
+			while(rs.next()) {
+				
+				
+				list.add(rs.getString("buildingName"));
+			}
+			buildingNameArray = list.toArray(new String[0]);
+			
+		}catch (Exception e) {
+			
+		}
+
+		
+		return buildingNameArray;
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
