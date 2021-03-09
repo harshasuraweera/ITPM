@@ -54,7 +54,7 @@ public class AddLocation extends JFrame {
 	 */
 	public AddLocation()  throws IOException{
 		
-		//do these for each and every JFrame
+		// do these for each and every JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setSize(1280, 720);

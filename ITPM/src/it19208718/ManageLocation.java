@@ -264,7 +264,7 @@ public class ManageLocation extends JFrame {
 		contentPane.add(buildingTypeFilter);
 		
 		
-		//filter locations according to the room type
+		// filter locations according to the room type
 		roomTypeFilter.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    
