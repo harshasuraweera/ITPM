@@ -40,7 +40,7 @@ public class ManageTags extends JFrame {
 	 * Create the frame.
 	 */
 	public ManageTags() {
-		//do these for each and every JFrame
+		//do these for each and every JFrame ZZ
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setSize(1280, 720);
