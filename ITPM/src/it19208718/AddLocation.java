@@ -32,7 +32,7 @@ public class AddLocation extends JFrame {
 	private JTextField buildingNameTxtField;
 	private JTextField roomNameTxtField;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -215,27 +215,45 @@ public class AddLocation extends JFrame {
 					JOptionPane.showMessageDialog(new JFrame(), "Capacity should be grater than 0 and cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
 				}else {
 					
-					// Do the insertation operation
-					boolean isSuccess = addNewLocation(	buildingNameTxtField.getText().toString(), 
+					//find duplicates
+					boolean foundDuplicates = findDuplicateLocations(
+							buildingNameTxtField.getText().toString(),
+							roomNameTxtField.getText().toString());
+					
+					if(foundDuplicates) { //this location is already in the db
+						JOptionPane.showMessageDialog(new JFrame(), "This location is already already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+						operationStatus.setForeground(Color.decode("#b50727"));
+						operationStatus.setText("Room (" + roomNameTxtField.getText().toString() + ") in (" + buildingNameTxtField.getText().toString() + ") building is already already exists!");
+						
+					}else {// the location is a fresh location
+						
+						
+						
+						// Do the insertation operation
+						boolean isSuccess = addNewLocation(
+							buildingNameTxtField.getText().toString(), 
 							roomNameTxtField.getText().toString(),
 							buttonGroup.getSelection().getActionCommand(),
 							Integer.parseInt(roomCapacity.getValue().toString()));
-					
-					//According to the operation status show the success or unsuccess message
-					if(isSuccess) {
-					
-						buildingNameTxtField.setText(null);
-						roomNameTxtField.setText(null);
-						roomCapacity.setValue(Integer.valueOf(0));
 						
-						operationStatus.setForeground(Color.decode("#038013"));
-						operationStatus.setText("Location successfully added!");
+						//According to the operation status show the success or unsuccess message
+						if(isSuccess) {
 						
-					}else {
-					
-						operationStatus.setForeground(Color.decode("#b50727"));
-						operationStatus.setText("Something went wrong. Please check and try again!");
+							buildingNameTxtField.setText(null);
+							roomNameTxtField.setText(null);
+							roomCapacity.setValue(Integer.valueOf(0));
+							
+							operationStatus.setForeground(Color.decode("#038013"));
+							operationStatus.setText("Location successfully added!");
+							
+						}else {
+						
+							operationStatus.setForeground(Color.decode("#b50727"));
+							operationStatus.setText("Something went wrong. Please check and try again!");
+						}
 					}
+					
+					
 					
 				}
 				
@@ -249,7 +267,6 @@ public class AddLocation extends JFrame {
 	public boolean addNewLocation (String buildingName, String roomName, String roomType, int capacity) {
 		
 		boolean isSuccess = false;
-		
 		Connection conn = DBConnect.getConnection();
 		
 		try {
@@ -261,7 +278,6 @@ public class AddLocation extends JFrame {
 			int rs = st.executeUpdate(sql);
 			
 			st.close();
-			conn.close();
 			isSuccess = true;
 			
 		}catch(Exception e) {
@@ -270,6 +286,39 @@ public class AddLocation extends JFrame {
 		}
 		
 		return isSuccess;
+	}
+	
+	
+	
+	//check duplicates
+	public boolean findDuplicateLocations (String buildingName, String roomName) {
+		
+		boolean foundDuplicate = false; //default no duplicates
+		Connection conn = DBConnect.getConnection();
+		
+		try {
+			
+			String sql = "SELECT id FROM Locations WHERE buildingName='"+buildingName+"' and roomName='"+roomName+"'";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			
+			if (!rs.next()) { //ResultSet is empty
+				foundDuplicate = false; //no duplicates
+				
+			}else {	//ResultSet is not empty
+				
+				foundDuplicate = true; //duplicates have
+			}
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return foundDuplicate;
 	}
 
 

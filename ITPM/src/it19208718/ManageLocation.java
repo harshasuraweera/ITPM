@@ -316,7 +316,7 @@ public class ManageLocation extends JFrame {
 				if(locationTable.getSelectionModel().isSelectionEmpty()) {
 					JOptionPane.showMessageDialog(new JFrame(), "You should select a row to update!", "Error",
 					        JOptionPane.ERROR_MESSAGE);
-				}if(buildingNameTxt.getText().toString().isEmpty()) {
+				}else if(buildingNameTxt.getText().toString().isEmpty()) {
 					JOptionPane.showMessageDialog(new JFrame(), "Building name cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
 				}else if(roomNameTxt.getText().toString().isEmpty()) {
 					JOptionPane.showMessageDialog(new JFrame(), "Room name cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
