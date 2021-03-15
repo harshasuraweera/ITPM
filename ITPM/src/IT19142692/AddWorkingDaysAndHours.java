@@ -53,7 +53,7 @@ public class AddWorkingDaysAndHours extends JFrame {
 	int daysCount = 0;
 	
 	private JPanel contentPane;
-	private JTextField totalSelecedDaysCount;
+	private JTextField totalSelectedDaysCount;
 
 	/**
 	 * Launch the application.
@@ -143,12 +143,12 @@ public class AddWorkingDaysAndHours extends JFrame {
 				if (e.getStateChange()==ItemEvent.SELECTED) {
 					monday = true;
 					daysCount ++;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}			
 				else {
 					monday = false;
 					daysCount --;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 			}
 		});
@@ -163,12 +163,12 @@ public class AddWorkingDaysAndHours extends JFrame {
 				if (e.getStateChange()==ItemEvent.SELECTED) {
 					tuesday = true;
 					daysCount ++;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 				else {
 					tuesday = false;
 					daysCount --;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 			}
 		});
@@ -183,12 +183,12 @@ public class AddWorkingDaysAndHours extends JFrame {
 				if (e.getStateChange()==ItemEvent.SELECTED) {
 					wednesday = true;
 					daysCount ++;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 				else {
 					wednesday = false;
 					daysCount --;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 			}
 		});
@@ -203,12 +203,12 @@ public class AddWorkingDaysAndHours extends JFrame {
 				if (e.getStateChange()==ItemEvent.SELECTED) {
 					thursday = true;
 					daysCount ++;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 				else {
 					thursday = false;
 					daysCount --;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 			}
 		});
@@ -223,12 +223,12 @@ public class AddWorkingDaysAndHours extends JFrame {
 				if (e.getStateChange()==ItemEvent.SELECTED) {
 					friday = true;
 					daysCount ++;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 				else {
 					friday = false;
 					daysCount --;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 			}	
 		});
@@ -243,12 +243,12 @@ public class AddWorkingDaysAndHours extends JFrame {
 				if (e.getStateChange()==ItemEvent.SELECTED) {
 					saturday = true;
 					daysCount ++;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 				else {
 					saturday = false;
 					daysCount --;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 			}
 		});
@@ -263,12 +263,12 @@ public class AddWorkingDaysAndHours extends JFrame {
 				if (e.getStateChange()==ItemEvent.SELECTED) {
 					sunday = true;
 					daysCount ++;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 				else {
 					sunday = false;
 					daysCount --;
-					totalSelecedDaysCount.setText(String.valueOf(daysCount));
+					totalSelectedDaysCount.setText(String.valueOf(daysCount));
 				}
 			}
 		});
@@ -315,14 +315,13 @@ public class AddWorkingDaysAndHours extends JFrame {
 		list.setBounds(332, 487, -65, -38);
 		contentPane.add(list);
 		
-		totalSelecedDaysCount = new JTextField();
-		totalSelecedDaysCount.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		totalSelecedDaysCount.setEditable(false);
-		totalSelecedDaysCount.setBounds(375, 382, 79, 49);
-		contentPane.add(totalSelecedDaysCount);
-		totalSelecedDaysCount.setColumns(10);
-		totalSelecedDaysCount.setText(String.valueOf(daysCount));	
-		
+		totalSelectedDaysCount = new JTextField();
+		totalSelectedDaysCount.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		totalSelectedDaysCount.setEditable(false);
+		totalSelectedDaysCount.setBounds(375, 382, 79, 49);
+		contentPane.add(totalSelectedDaysCount);
+		totalSelectedDaysCount.setColumns(10);
+		totalSelectedDaysCount.setText(String.valueOf(daysCount));	
 		
 		String dailyHoursArray [] = {"0","1","2","3","4","5","6","7","8","9","10","11","12"};
 		String dailyMinArray [] = {"0","30"};
@@ -342,57 +341,46 @@ public class AddWorkingDaysAndHours extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-
 					Connection conn = DBConnect.getConnection();
 					int selectedDailyHours = Integer.parseInt(String.valueOf(dailyHours.getSelectedItem() ));
 					int selectedDailyMins = Integer.parseInt(String.valueOf(dailyMinutes.getSelectedItem()) );
-				
-					
+								
 					if(monday) {
 						String sql1 = "insert into WorkingDays (day, hours, minutes) values ('Monday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						
 						Statement st = conn.createStatement();
 						int rs = st.executeUpdate(sql1);
 					}
 					else if(tuesday) {
 						String sql2 = "insert into WorkingDays (day, hours, minutes) values ('Tuesday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						
 						Statement st = conn.createStatement();
 						int rs = st.executeUpdate(sql2);
 					}
 					else if(wednesday) {
 						String sql3 = "insert into WorkingDays (day, hours, minutes) values ('Wednesday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						
 						Statement st = conn.createStatement();
 						int rs = st.executeUpdate(sql3);
 					}
 					else if(thursday) {
 						String sql4 = "insert into WorkingDays (day, hours, minutes) values ('Thursday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						
 						Statement st = conn.createStatement();
 						int rs = st.executeUpdate(sql4);
 					}
 					else if(friday) {
-						String sql5 = "insert into WorkingDays (day, hours, minutes) values ('Friday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						
+						String sql5 = "insert into WorkingDays (day, hours, minutes) values ('Friday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";			
 						Statement st = conn.createStatement();
 						int rs = st.executeUpdate(sql5);
 					}
 					else if(saturday) {
 						String sql6 = "insert into WorkingDays (day, hours, minutes) values ('Saturday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						
 						Statement st = conn.createStatement();
 						int rs = st.executeUpdate(sql6);
 					}
 					else {
-						String sql7 = "insert into WorkingDays (day, hours, minutes) values ('Sunday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						
+						String sql7 = "insert into WorkingDays (day, hours, minutes) values ('Sunday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";	
 						Statement st = conn.createStatement();
 						int rs = st.executeUpdate(sql7);
 					}
-					
-					JOptionPane.showMessageDialog(null, "Insertion Successful");
-					
+					JOptionPane.showMessageDialog(null, "Insertion Successful");	
 				}
 				catch (Exception e1){
 					JOptionPane.showMessageDialog(null, e1);
