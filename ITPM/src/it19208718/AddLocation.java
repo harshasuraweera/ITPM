@@ -263,6 +263,7 @@ public class AddLocation extends JFrame {
 		
 	}
 	
+	
 	//method to add new location
 	public boolean addNewLocation (String buildingName, String roomName, String roomType, int capacity) {
 		
