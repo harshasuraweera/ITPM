@@ -1,21 +1,13 @@
 package it19208718;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import com.mysql.cj.result.StringValueFactory;
-
 import database.DBConnect;
 
 import javax.swing.JLabel;
@@ -36,7 +28,6 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +36,9 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
-import javax.swing.JList;
 import javax.swing.JComboBox;
 
+@SuppressWarnings("serial")
 public class ManageLocation extends JFrame {
 
 	private JPanel contentPane;
@@ -508,6 +498,7 @@ public class ManageLocation extends JFrame {
 
 	
 	//delete location method
+	@SuppressWarnings("unused")
 	private boolean deleteLocation(int rowId) {
 		
 		boolean isSuccess = false;
@@ -537,6 +528,7 @@ public class ManageLocation extends JFrame {
 	
 	
 	//update locations method
+	@SuppressWarnings("unused")
 	private boolean updateLocation(int rowId, String buildingName, String roomName, String roomType, int capacity) {
 		
 		boolean isSuccess = false;

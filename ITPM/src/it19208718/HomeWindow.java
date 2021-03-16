@@ -105,7 +105,7 @@ public class HomeWindow extends JFrame {
 					dispose();
 					addSomething.setVisible(true);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+
 					e1.printStackTrace();
 				}
 				
@@ -134,7 +134,7 @@ public class HomeWindow extends JFrame {
 					dispose();
 					manageExisiting.setVisible(true);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 				

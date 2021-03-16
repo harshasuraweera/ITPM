@@ -7,9 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import database.DBConnect;
-
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -26,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class AddLocation extends JFrame {
 
 	private JPanel contentPane;
@@ -276,6 +275,7 @@ public class AddLocation extends JFrame {
 					+ "VALUES ('"+buildingName+"', '"+roomName+"', '"+roomType+"', '"+capacity+"')";
 			
 			Statement st = conn.createStatement();
+			@SuppressWarnings("unused")
 			int rs = st.executeUpdate(sql);
 			
 			st.close();

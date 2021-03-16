@@ -82,7 +82,7 @@ public class AddSomething extends JFrame {
 					homeWindow.setVisible(true);
 					
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 			}
@@ -101,7 +101,7 @@ public class AddSomething extends JFrame {
 					dispose();
 					manageExisiting.setVisible(true);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 			}
