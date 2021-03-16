@@ -292,16 +292,8 @@ public class AddWorkingDaysAndHours extends JFrame {
 		
 		btnSave.setBackground(Color.BLUE);
 		btnSave.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		btnSave.setBounds(693, 589, 140, 51);
+		btnSave.setBounds(898, 589, 140, 51);
 		contentPane.add(btnSave);
-		
-		JButton btnUpdate = new JButton("UPDATE");
-		
-		btnUpdate.setForeground(Color.WHITE);
-		btnUpdate.setBackground(new Color(0, 153, 0));
-		btnUpdate.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		btnUpdate.setBounds(893, 589, 140, 51);
-		contentPane.add(btnUpdate);
 		
 		JButton btnDelete = new JButton("DELETE");
 		btnDelete.setForeground(Color.WHITE);
@@ -344,58 +336,122 @@ public class AddWorkingDaysAndHours extends JFrame {
 					Connection conn = DBConnect.getConnection();
 					int selectedDailyHours = Integer.parseInt(String.valueOf(dailyHours.getSelectedItem() ));
 					int selectedDailyMins = Integer.parseInt(String.valueOf(dailyMinutes.getSelectedItem()) );
-								
-					if(monday) {
-						String sql1 = "insert into WorkingDays (day, hours, minutes) values ('Monday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						Statement st = conn.createStatement();
-						int rs = st.executeUpdate(sql1);
-					}
-					else if(tuesday) {
-						String sql2 = "insert into WorkingDays (day, hours, minutes) values ('Tuesday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						Statement st = conn.createStatement();
-						int rs = st.executeUpdate(sql2);
-					}
-					else if(wednesday) {
-						String sql3 = "insert into WorkingDays (day, hours, minutes) values ('Wednesday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						Statement st = conn.createStatement();
-						int rs = st.executeUpdate(sql3);
-					}
-					else if(thursday) {
-						String sql4 = "insert into WorkingDays (day, hours, minutes) values ('Thursday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						Statement st = conn.createStatement();
-						int rs = st.executeUpdate(sql4);
-					}
-					else if(friday) {
-						String sql5 = "insert into WorkingDays (day, hours, minutes) values ('Friday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";			
-						Statement st = conn.createStatement();
-						int rs = st.executeUpdate(sql5);
-					}
-					else if(saturday) {
-						String sql6 = "insert into WorkingDays (day, hours, minutes) values ('Saturday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
-						Statement st = conn.createStatement();
-						int rs = st.executeUpdate(sql6);
+						
+					
+					if(dailyHours.getSelectedItem() == null) {
+						System.out.println("Please fill the required fields");
 					}
 					else {
-						String sql7 = "insert into WorkingDays (day, hours, minutes) values ('Sunday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";	
-						Statement st = conn.createStatement();
-						int rs = st.executeUpdate(sql7);
+					
+						if(monday) {
+							String checkMondayIfAlreadyExists = "Select did from WorkingDays where day = 'Monday'";
+							Statement stCheck = conn.createStatement();
+							ResultSet rsCheck = stCheck.executeQuery(checkMondayIfAlreadyExists);
+							
+							if(rsCheck.next()) {
+								JOptionPane.showMessageDialog(null, "Monday is already in db");
+							}else {
+								String sql1 = "insert into WorkingDays (day, hours, minutes) values ('Monday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
+								Statement st = conn.createStatement();
+								int rs = st.executeUpdate(sql1);
+								JOptionPane.showMessageDialog(null, "Insertion Successful");
+							}
+	
+						}
+						else if(tuesday) {
+							String checkTuesdayIfAlreadyExists = "Select did from WorkingDays where day = 'Tuesday'";
+							Statement stCheck = conn.createStatement();
+							ResultSet rsCheck = stCheck.executeQuery(checkTuesdayIfAlreadyExists);
+							
+							if(rsCheck.next()) {
+								JOptionPane.showMessageDialog(null, "Tuesday is already in db");
+							}else {
+								String sql2 = "insert into WorkingDays (day, hours, minutes) values ('Tuesday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
+								Statement st = conn.createStatement();
+								int rs = st.executeUpdate(sql2);
+								JOptionPane.showMessageDialog(null, "Insertion Successful");
+							}
+						}
+						else if(wednesday) {
+							String checkWednesdayIfAlreadyExists = "Select did from WorkingDays where day = 'Wednesday'";
+							Statement stCheck = conn.createStatement();
+							ResultSet rsCheck = stCheck.executeQuery(checkWednesdayIfAlreadyExists);
+							
+							if(rsCheck.next()) {
+								JOptionPane.showMessageDialog(null, "Wednesday is already in db");
+							}else {
+								String sql3 = "insert into WorkingDays (day, hours, minutes) values ('Wednesday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
+								Statement st = conn.createStatement();
+								int rs = st.executeUpdate(sql3);
+								JOptionPane.showMessageDialog(null, "Insertion Successful");
+							}
+	
+						}
+						else if(thursday) {
+							String checkThursdayIfAlreadyExists = "Select did from WorkingDays where day = 'Thursday'";
+							Statement stCheck = conn.createStatement();
+							ResultSet rsCheck = stCheck.executeQuery(checkThursdayIfAlreadyExists);
+							
+							if(rsCheck.next()) {
+								JOptionPane.showMessageDialog(null, "Thursday is already in db");
+							}else {
+								String sql4 = "insert into WorkingDays (day, hours, minutes) values ('Thursday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
+								Statement st = conn.createStatement();
+								int rs = st.executeUpdate(sql4);
+								JOptionPane.showMessageDialog(null, "Insertion Successful");
+							}
+	
+						}
+						else if(friday) {
+							String checkFridayIfAlreadyExists = "Select did from WorkingDays where day = 'Friday'";
+							Statement stCheck = conn.createStatement();
+							ResultSet rsCheck = stCheck.executeQuery(checkFridayIfAlreadyExists);
+							
+							if(rsCheck.next()) {
+								JOptionPane.showMessageDialog(null, "Friday is already in db");
+							}else {
+								String sql5 = "insert into WorkingDays (day, hours, minutes) values ('Friday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";			
+								Statement st = conn.createStatement();
+								int rs = st.executeUpdate(sql5);
+								JOptionPane.showMessageDialog(null, "Insertion Successful");
+							}
+	
+						}
+						else if(saturday) {
+							String checkSaturdayIfAlreadyExists = "Select did from WorkingDays where day = 'Saturday'";
+							Statement stCheck = conn.createStatement();
+							ResultSet rsCheck = stCheck.executeQuery(checkSaturdayIfAlreadyExists);
+							
+							if(rsCheck.next()) {
+								JOptionPane.showMessageDialog(null, "Saturday is already in db");
+							}else {
+								String sql6 = "insert into WorkingDays (day, hours, minutes) values ('Saturday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";
+								Statement st = conn.createStatement();
+								int rs = st.executeUpdate(sql6);
+								JOptionPane.showMessageDialog(null, "Insertion Successful");
+							}
+							
+						}
+						else if(sunday){
+							String checkSundayIfAlreadyExists = "Select did from WorkingDays where day = 'Sunday'";
+							Statement stCheck = conn.createStatement();
+							ResultSet rsCheck = stCheck.executeQuery(checkSundayIfAlreadyExists);
+							
+							if(rsCheck.next()) {
+								JOptionPane.showMessageDialog(null, "Sunday is already in db");
+							}else {
+								String sql7 = "insert into WorkingDays (day, hours, minutes) values ('Sunday', '"+selectedDailyHours+"', '"+selectedDailyMins+"')";	
+								Statement st = conn.createStatement();
+								int rs = st.executeUpdate(sql7);
+								JOptionPane.showMessageDialog(null, "Insertion Successful");
+							}
+							
+						}
+
 					}
-					JOptionPane.showMessageDialog(null, "Insertion Successful");	
 				}
 				catch (Exception e1){
 					JOptionPane.showMessageDialog(null, e1);
-				}
-			}
-		});
-		
-		//UPDATE Button
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					//chckbxSaturday.get
-				}
-				catch(Exception e2) {
-					JOptionPane.showMessageDialog(null, e2);
 				}
 			}
 		});
@@ -404,8 +460,56 @@ public class AddWorkingDaysAndHours extends JFrame {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					Connection conn = DBConnect.getConnection();
 					
-					JOptionPane.showMessageDialog(null, "Deletion Successful");
+					if(monday){
+						String sql1 = "delete from WorkingDays where day = 'Monday' ";
+						Statement st = conn.createStatement();
+						int rs = st.executeUpdate(sql1);
+						chckbxMonday.setSelected(false);
+					}
+					else if(tuesday){
+						String sql2 = "delete from WorkingDays where day = 'Tuesday' ";
+						Statement st = conn.createStatement();
+						int rs = st.executeUpdate(sql2);
+						chckbxTuesday.setSelected(false);
+					}
+					else if(wednesday){
+						String sql3 = "delete from WorkingDays where day = 'Wednesday' ";
+						Statement st = conn.createStatement();
+						int rs = st.executeUpdate(sql3);
+						chckbxWednesday.setSelected(false);
+					}
+					else if(thursday){
+						String sql4 = "delete from WorkingDays where day = 'Thursday' ";
+						Statement st = conn.createStatement();
+						int rs = st.executeUpdate(sql4);
+						chckbxThursday.setSelected(false);
+					}
+					else if(friday){
+						String sql5 = "delete from WorkingDays where day = 'Friday' ";
+						Statement st = conn.createStatement();
+						int rs = st.executeUpdate(sql5);
+						chckbxFriday.setSelected(false);
+					}
+					else if(saturday){
+						String sql6 = "delete from WorkingDays where day = 'Saturday' ";
+						Statement st = conn.createStatement();
+						int rs = st.executeUpdate(sql6);
+						chckbxSaturday.setSelected(false);
+					}
+					else if(sunday){
+						String sql7 = "delete from WorkingDays where day = 'Sunday' ";
+						Statement st = conn.createStatement();
+						int rs = st.executeUpdate(sql7);
+						chckbxSunday.setSelected(false);
+					}
+				
+				JOptionPane.showMessageDialog(null, "Deletion Successful");
+
+				dailyHours.setSelectedIndex(0);
+				dailyMinutes.setSelectedIndex(0);
+
 				}
 				catch(Exception e3) {
 					JOptionPane.showMessageDialog(null, e3);
