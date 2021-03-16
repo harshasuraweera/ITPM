@@ -42,7 +42,7 @@ import javax.swing.JSpinner;
 public class HomeWindow extends JFrame {
 
 	private JPanel contentPane;
-	Connection conn = DBConnect.getConnection();
+	java.sql.Connection conn = DBConnect.getConnection();
 
 	/**
 	 * Launch the application.
@@ -203,25 +203,26 @@ public class HomeWindow extends JFrame {
 		registeredLecturesText_1_1_1.setBounds(10, 411, 272, 51);
 		panel_1.add(registeredLecturesText_1_1_1);
 		
-		JLabel totalLecturers = new JLabel("00");
+		JLabel totalLecturers = new JLabel();
 		totalLecturers.setHorizontalAlignment(SwingConstants.CENTER);
 		totalLecturers.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
 		totalLecturers.setBounds(115, 83, 45, 32);
 		panel_1.add(totalLecturers);
 		
-		JLabel totalStudentGroups = new JLabel("00");
+		JLabel totalStudentGroups = new JLabel();
 		totalStudentGroups.setHorizontalAlignment(SwingConstants.CENTER);
 		totalStudentGroups.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
 		totalStudentGroups.setBounds(115, 210, 45, 32);
 		panel_1.add(totalStudentGroups);
 		
-		JLabel totalSubjecrs = new JLabel("00");
-		totalSubjecrs.setHorizontalAlignment(SwingConstants.CENTER);
-		totalSubjecrs.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
-		totalSubjecrs.setBounds(115, 346, 45, 32);
-		panel_1.add(totalSubjecrs);
 		
-		JLabel totalRooms = new JLabel("00");
+		JLabel totalSubjects = new JLabel();
+		totalSubjects.setHorizontalAlignment(SwingConstants.CENTER);
+		totalSubjects.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		totalSubjects.setBounds(115, 346, 45, 32);
+		panel_1.add(totalSubjects);
+		
+		JLabel totalRooms = new JLabel();
 		totalRooms.setHorizontalAlignment(SwingConstants.CENTER);
 		totalRooms.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
 		totalRooms.setBounds(115, 472, 45, 32);
@@ -269,13 +270,13 @@ public class HomeWindow extends JFrame {
 		separator_3.setBounds(29, 139, 789, 2);
 		panel_2.add(separator_3);
 		
-		JLabel lectureRoomPercentage = new JLabel("60%");
+		JLabel lectureRoomPercentage = new JLabel();
 		lectureRoomPercentage.setHorizontalAlignment(SwingConstants.CENTER);
 		lectureRoomPercentage.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
 		lectureRoomPercentage.setBounds(50, 67, 100, 32);
 		panel_2.add(lectureRoomPercentage);
 		
-		JLabel labRoomPercentage = new JLabel("40 %");
+		JLabel labRoomPercentage = new JLabel();
 		labRoomPercentage.setHorizontalAlignment(SwingConstants.CENTER);
 		labRoomPercentage.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
 		labRoomPercentage.setBounds(707, 67, 100, 32);
@@ -384,8 +385,8 @@ public class HomeWindow extends JFrame {
 		
 		//set values left side bar
 		totalRooms.setText(String.valueOf(getLectureRoomCount(conn) + getLaboratoryRoomCount(conn)));
-		
-		
+		totalStudentGroups.setText(String.valueOf(getStudentGroupsCount(conn)));
+		totalSubjects.setText(String.valueOf(getSubjectsCount(conn)));
 		
 		//set values prograss bar
 		lectureRoomPercentage.setText(String.valueOf(generateLectureRoomPrecentage(conn)) + "%");
@@ -479,6 +480,80 @@ public class HomeWindow extends JFrame {
 	    return (double) tmp / factor;
 	}
 	
+	//get student groups count
+	public int getStudentGroupsCount(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM StudentGroups";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}
+	
+	
+	//get subjects count
+	public int getSubjectsCount(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM Subjects";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}	
+	
+
+	
+	//get lecturers count
+	public int getLecturersCount(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM Lecturers";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}	
 	
 	
 }
