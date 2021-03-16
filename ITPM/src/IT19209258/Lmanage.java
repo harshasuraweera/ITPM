@@ -6,32 +6,41 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
+import database.DBConnect;
 import it19208718.AddSomething;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 
 public class Lmanage extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField lid;
+	private JTextField lname;
+	private JTextField faculty;
+	private JTextField department;
+	private JTextField center;
+	private JTextField building;
 	private JTable table;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
 
 	/**
 	 * Launch the application.
@@ -53,6 +62,12 @@ public class Lmanage extends JFrame {
 	 * Create the frame.
 	 */
 	public Lmanage() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				ShowData();
+			}
+		});
 		//do these for each and every JFrame
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				setBounds(100, 100, 450, 300);
@@ -127,10 +142,6 @@ public class Lmanage extends JFrame {
 				btnNewButton_1.setBounds(27, 10, 250, 50);
 				panel.add(btnNewButton_1);
 				
-				table = new JTable();
-				table.setBounds(118, 126, 555, 242);
-				contentPane.add(table);
-				
 				JButton btnUpdate = new JButton("Update");
 				btnUpdate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -157,93 +168,289 @@ public class Lmanage extends JFrame {
 				contentPane.add(btnDone);
 				
 				JTextPane txtpnLecturerName = new JTextPane();
+				txtpnLecturerName.setEditable(false);
 				txtpnLecturerName.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnLecturerName.setText("Lecturer Name");
-				txtpnLecturerName.setBounds(118, 423, 141, 29);
+				txtpnLecturerName.setBounds(118, 492, 141, 29);
 				contentPane.add(txtpnLecturerName);
 				
-				textField = new JTextField();
-				textField.setBounds(363, 423, 177, 29);
-				contentPane.add(textField);
-				textField.setColumns(10);
+				lid = new JTextField();
+				lid.setBounds(363, 423, 177, 29);
+				contentPane.add(lid);
+				lid.setColumns(10);
 				
 				JTextPane txtpnLecturerId = new JTextPane();
+				txtpnLecturerId.setEditable(false);
 				txtpnLecturerId.setText("Lecturer ID");
 				txtpnLecturerId.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
-				txtpnLecturerId.setBounds(118, 486, 141, 29);
+				txtpnLecturerId.setBounds(118, 423, 141, 29);
 				contentPane.add(txtpnLecturerId);
 				
 				JTextPane txtpnFaculty = new JTextPane();
+				txtpnFaculty.setEditable(false);
 				txtpnFaculty.setText("Faculty");
 				txtpnFaculty.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnFaculty.setBounds(118, 546, 141, 29);
 				contentPane.add(txtpnFaculty);
 				
 				JTextPane txtpnCenter = new JTextPane();
+				txtpnCenter.setEditable(false);
 				txtpnCenter.setText("Center");
 				txtpnCenter.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
-				txtpnCenter.setBounds(118, 606, 141, 29);
+				txtpnCenter.setBounds(724, 473, 141, 29);
 				contentPane.add(txtpnCenter);
 				
-				textField_1 = new JTextField();
-				textField_1.setColumns(10);
-				textField_1.setBounds(363, 486, 177, 29);
-				contentPane.add(textField_1);
+				lname = new JTextField();
+				lname.setColumns(10);
+				lname.setBounds(363, 486, 177, 29);
+				contentPane.add(lname);
 				
-				textField_2 = new JTextField();
-				textField_2.setColumns(10);
-				textField_2.setBounds(363, 546, 177, 29);
-				contentPane.add(textField_2);
+				faculty = new JTextField();
+				faculty.setColumns(10);
+				faculty.setBounds(363, 546, 177, 29);
+				contentPane.add(faculty);
 				
-				textField_3 = new JTextField();
-				textField_3.setColumns(10);
-				textField_3.setBounds(363, 606, 177, 29);
-				contentPane.add(textField_3);
+				department = new JTextField();
+				department.setColumns(10);
+				department.setBounds(363, 606, 177, 29);
+				contentPane.add(department);
 				
 				JTextPane txtpnDepartment = new JTextPane();
+				txtpnDepartment.setEditable(false);
 				txtpnDepartment.setText("Department");
 				txtpnDepartment.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
-				txtpnDepartment.setBounds(726, 423, 141, 29);
+				txtpnDepartment.setBounds(118, 606, 141, 29);
 				contentPane.add(txtpnDepartment);
 				
 				JTextPane txtpnBuilding = new JTextPane();
+				txtpnBuilding.setEditable(false);
 				txtpnBuilding.setText("Building");
 				txtpnBuilding.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
-				txtpnBuilding.setBounds(726, 486, 141, 29);
+				txtpnBuilding.setBounds(724, 536, 141, 29);
 				contentPane.add(txtpnBuilding);
 				
-				JTextPane txtpnLevel = new JTextPane();
-				txtpnLevel.setText("Level");
-				txtpnLevel.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
-				txtpnLevel.setBounds(726, 546, 141, 29);
-				contentPane.add(txtpnLevel);
+				center = new JTextField();
+				center.setColumns(10);
+				center.setBounds(984, 473, 177, 29);
+				contentPane.add(center);
 				
-				JTextPane txtpnRank = new JTextPane();
-				txtpnRank.setText("Rank");
-				txtpnRank.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
-				txtpnRank.setBounds(726, 606, 141, 29);
-				contentPane.add(txtpnRank);
+				building = new JTextField();
+				building.setColumns(10);
+				building.setBounds(984, 536, 177, 29);
+				contentPane.add(building);
 				
-				textField_4 = new JTextField();
-				textField_4.setColumns(10);
-				textField_4.setBounds(992, 423, 177, 29);
-				contentPane.add(textField_4);
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setBounds(62, 112, 610, 276);
+				contentPane.add(scrollPane);
 				
-				textField_5 = new JTextField();
-				textField_5.setColumns(10);
-				textField_5.setBounds(992, 486, 177, 29);
-				contentPane.add(textField_5);
+				table = new JTable();
+				table.setBounds(0, 0, 1, 1);
 				
-				textField_6 = new JTextField();
-				textField_6.setColumns(10);
-				textField_6.setBounds(992, 546, 177, 29);
-				contentPane.add(textField_6);
-				
-				textField_7 = new JTextField();
-				textField_7.setColumns(10);
-				textField_7.setBounds(992, 606, 177, 29);
-				contentPane.add(textField_7);
+				scrollPane.setViewportView(table);
 				
 				//end navignation button 01
+				table.addMouseListener(new MouseListener() {
+					
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						lid.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
+						lname.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+						faculty.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
+						department.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
+						center.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
+						building.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
+						
+					}
+					
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				
+				//up----
+				btnUpdate.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						boolean isSuccess = updateLecturer(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()),
+								lid.getText().toString(), 
+								lname.getText().toString(),
+								faculty.getText().toString(),
+								department.getText().toString(),
+								center.getText().toString(),
+								building.getText().toString());
+					
+						if(isSuccess) {
+							JOptionPane.showMessageDialog(null, "Successfull update");
+							ShowData();
+							
+						}else {
+						
+							JOptionPane.showMessageDialog(null, "Error");
+
+						}
+						
+					}
+				});
+				
+				//del---
+				btnDelete.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						boolean isSuccess = deleteLecturer(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()));
+						
+				
+						if(isSuccess) {
+							JOptionPane.showMessageDialog(null, "Succesfull delete");
+						ShowData();
+
+						}else {
+						
+							JOptionPane.showMessageDialog(null, "error");
+
+						}
+						
+					}
+						
+				});
+				
+				
+	}
+	
+	//up method
+			private boolean updateLecturer(int id, String lid, String lname, String faculty , String department, String center, String building) {
+				
+				boolean isSuccess = false;
+				
+				java.sql.Connection conn = DBConnect.getConnection();
+				
+				try {
+					
+					String sql = "UPDATE Lecturers SET lid = '"+lid+"', lname = '"+lname+"', faculty = '"+faculty+"', department = '"+department+"',"
+							+ " center = '"+center+"',"
+							+ " building = '"+building+"'  WHERE id = '"+id+"' ";
+					
+					Statement st1 = conn.createStatement();
+					int rs = st1.executeUpdate(sql);
+					
+					st1.close();
+					conn.close();
+					isSuccess = true;
+					
+				}catch(Exception e) {
+					System.out.println(e.getMessage());
+					isSuccess = false;
+					
+				}	
+				
+				return isSuccess;
+			}
+			
+			//del metod
+			private boolean deleteLecturer(int id) {
+				
+				boolean isSuccess = false;
+				
+				java.sql.Connection conn = DBConnect.getConnection();
+				
+				try {
+					
+					String sql = "DELETE FROM Lecturers WHERE id = '"+id+"' ";
+					
+					Statement st2 = conn.createStatement();
+					int rs = st2.executeUpdate(sql);
+					
+					st2.close();
+					conn.close();
+					isSuccess = true;
+					
+				}catch(Exception e) {
+					System.out.println(e.getMessage());
+					isSuccess = false;
+					
+				}	
+				
+				return isSuccess;
+			}
+	
+	private void ShowData() {
+		
+	java.sql.Connection conn = DBConnect.getConnection();
+		
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("Id");
+		model.addColumn("Lecturer ID");
+		model.addColumn("Lecturer Name");
+		model.addColumn("Faculty"); 
+		model.addColumn("Department");
+		model.addColumn("Available Days");
+		model.addColumn("Available Hours");
+		model.addColumn("Center");
+		model.addColumn("Building");
+		model.addColumn("Level");
+		model.addColumn("Rank");
+		
+		try {
+			
+			String sql = "SELECT * FROM Lecturers";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				model.addRow(new Object[] {
+						rs.getString("id"),
+						rs.getString("lid"),
+						rs.getString("lname"),
+						rs.getString("faculty"),
+						rs.getString("department"),
+						rs.getString("adays"),
+						rs.getString("ahours"),
+						rs.getString("center"),
+						rs.getString("building"),
+						rs.getString("level"),
+						rs.getString("rank"),
+				});;
+			}
+			
+			rs.close();
+			st.close();
+			conn.close();
+			
+			table.setModel(model);
+			table.setAutoResizeMode(1);
+			
+//			table.getColumnModel().getColumn(0).setPreferredWidth(80);
+//			table.getColumnModel().getColumn(1).setPreferredWidth(140);
+//			table.getColumnModel().getColumn(2).setPreferredWidth(140);
+//			table.getColumnModel().getColumn(3).setPreferredWidth(140);
+//			table.getColumnModel().getColumn(4).setPreferredWidth(140);
+//			table.getColumnModel().getColumn(5).setPreferredWidth(140);
+//			table.getColumnModel().getColumn(6).setPreferredWidth(140);
+//			table.getColumnModel().getColumn(7).setPreferredWidth(140);
+//			table.getColumnModel().getColumn(8).setPreferredWidth(140);
+			
+			
+		}catch (Exception e) {
+			
+		}
+		
 	}
 }

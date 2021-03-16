@@ -1,25 +1,35 @@
 package IT19209258;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.*;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.border.EmptyBorder;
 
+
+import database.DBConnect;
 import it19208718.AddSomething;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 
 public class subject extends JFrame {
 
@@ -47,6 +57,7 @@ public class subject extends JFrame {
 	 * Create the frame.
 	 */
 	public subject() {
+		
 		//do these for each and every JFrame
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				setBounds(100, 100, 450, 300);
@@ -116,7 +127,7 @@ public class subject extends JFrame {
 				btnManageSubjectDetails.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnManageSubjectDetails.setFocusable(false);
 				btnManageSubjectDetails.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnManageSubjectDetails.setBounds(999, 10, 250, 50);
+				btnManageSubjectDetails.setBounds(1008, 10, 233, 50);
 				panel.add(btnManageSubjectDetails);
 				
 				JTextPane txtpnOfferedYear = new JTextPane();
@@ -177,44 +188,111 @@ public class subject extends JFrame {
 				txtpnNumberOfEvaluation.setBounds(675, 405, 268, 31);
 				contentPane.add(txtpnNumberOfEvaluation);
 				
-				JButton btnDone = new JButton("Done");
+				JButton btnDone = new JButton("Done");	
+				
 				btnDone.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnDone.setFocusable(false);
 				btnDone.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
 				btnDone.setBounds(904, 584, 250, 50);
 				contentPane.add(btnDone);
 				
-				String array [] = {"1", "2", "3", "4"};
-				JComboBox offyear = new JComboBox(array);
-				offyear.setBounds(385, 170, 128, 38);
+				JSpinner offyear = new JSpinner();
+				offyear.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				offyear.setBounds(385, 165, 196, 46);
 				contentPane.add(offyear);
 				
-				String array1 [] = {"1", "2"};
-				JComboBox offsem = new JComboBox(array1);
-				offsem.setBounds(385, 244, 128, 38);
+				JSpinner offsem = new JSpinner();
+				offsem.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				offsem.setBounds(385, 236, 196, 46);
 				contentPane.add(offsem);
 				
-				String array2 [] = {"1", "2", "3", "4"};
-				JComboBox nlh = new JComboBox(array2);
-				nlh.setBounds(1026, 165, 128, 38);
-				contentPane.add(nlh);
+				JSpinner nlhours = new JSpinner();
+				nlhours.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				nlhours.setBounds(1026, 165, 196, 46);
+				contentPane.add(nlhours);
 				
-				String array3 [] = {"1", "2", "3", "4"};
-				JComboBox nlbh = new JComboBox(array3);
-				nlbh.setBounds(1026, 244, 128, 38);
-				contentPane.add(nlbh);
+				JSpinner nlbhours = new JSpinner();
+				nlbhours.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				nlbhours.setBounds(1026, 244, 196, 46);
+				contentPane.add(nlbhours);
 				
-				String array4 [] = {"1", "2", "3", "4"};
-				JComboBox neh = new JComboBox(array4);
-				neh.setBounds(1026, 398, 128, 38);
-				contentPane.add(neh);
+				JSpinner nthours = new JSpinner();
+				nthours.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				nthours.setBounds(1026, 331, 196, 46);
+				contentPane.add(nthours);
 				
-				String array5 [] = {"1", "2", "3", "4"};
-				JComboBox nth = new JComboBox(array5);
-				nth.setBounds(1026, 319, 128, 38);
-				contentPane.add(nth);
+				JSpinner nehours = new JSpinner();
+				nehours.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				nehours.setBounds(1026, 405, 196, 46);
+				contentPane.add(nehours);
 				
 				//end navignation button 01
-	}
+				btnDone.addActionListener(new ActionListener() {
 
+					public void actionPerformed(ActionEvent e) {
+						
+						boolean isSuccess = addsubject(
+							Integer.parseInt(offyear.getValue().toString()),
+							Integer.parseInt(offsem.getValue().toString()),
+							sname.getText().toString(), 
+							scode.getText().toString(),
+							Integer.parseInt(nlhours.getValue().toString()),
+							Integer.parseInt(nlbhours.getValue().toString()),
+							Integer.parseInt(nthours.getValue().toString()),
+							Integer.parseInt(nehours.getValue().toString()));
+						
+						if(isSuccess) {
+							
+							JOptionPane.showMessageDialog(null, "added successfully");
+						}else {
+						
+							JOptionPane.showMessageDialog(null, "error");
+						}
+					}
+				});
+	}
+	
+		public boolean addsubject (int offyear, int offsem, String sname, String scode, int nlhours, int nlbhours, int nthours, int nehours) {
+			
+			boolean isSuccess = false;
+			java.sql.Connection conn = DBConnect.getConnection();
+			
+			try {
+				
+				String sql = "INSERT INTO Subjects (offyear, offsem, sname, scode, nlhours, nlbhours, nthours, nehours)"
+						+ "VALUES ('"+offyear+"', '"+offsem+"', '"+sname+"', '"+scode+"', '"+nlhours+"', '"+nlbhours+"', '"+nthours+"', '"+nehours+"')";
+				
+				Statement st = conn.createStatement();
+				int rs = st.executeUpdate(sql);
+				
+				st.close();
+				isSuccess = true;
+				
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+				isSuccess = false;
+			}
+			
+			return isSuccess;
+		}
 }
+
+
+//boolean isSuccess = false;
+//java.sql.Connection conn = DBConnect.getConnection();
+
+//try {
+	
+//	String sql = "INSERT INTO Subjects (offyear, offsem, sname, scode, nlhours, nlbhours, nthours, nehours)"
+	//		+ "VALUES ('"+offyear+"', '"+offsem+"', '"+sname+"', '"+scode+"', '"+nlhours+"', '"+nlbhours+"', '"+nthours+"', '"+nehours+"')";
+	
+	//Statement st = conn.createStatement();
+	//int rs = st.executeUpdate(sql);
+	
+	//st.close();
+	//isSuccess = true;
+	
+//}catch(Exception e1) {
+	//System.out.println(e1.getMessage());
+	//isSuccess = false;
+//}
