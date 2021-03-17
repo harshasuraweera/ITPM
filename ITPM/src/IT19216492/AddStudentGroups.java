@@ -12,11 +12,23 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import com.mysql.cj.result.StringValueFactory;
+
+import database.DBConnect;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 
 public class AddStudentGroups extends JFrame {
@@ -24,6 +36,8 @@ public class AddStudentGroups extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+
+	
 
 	/**
 	 * Launch the application.
@@ -107,6 +121,16 @@ public class AddStudentGroups extends JFrame {
 		comboBox.setBounds(317, 248, 282, 36);
 		contentPane.add(comboBox);
 		
+		comboBox.addItem("");
+		comboBox.addItem("Y1S1");
+		comboBox.addItem("Y1S2");
+		comboBox.addItem("Y2S1");
+		comboBox.addItem("Y2S2");
+		comboBox.addItem("Y3S1");
+		comboBox.addItem("Y3S2");
+		comboBox.addItem("Y4S1");
+		comboBox.addItem("Y4S2");
+		
 		
 		
 		JLabel lblProgramme = new JLabel("Degree Programme");
@@ -118,6 +142,15 @@ public class AddStudentGroups extends JFrame {
 		comboBox_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		comboBox_1.setBounds(317, 337, 282, 36);
 		contentPane.add(comboBox_1);
+		
+		comboBox_1.addItem("");
+		comboBox_1.addItem("IT");
+		comboBox_1.addItem("SE");
+		comboBox_1.addItem("IM");
+		comboBox_1.addItem("ICS");
+		comboBox_1.addItem("DS");
+		comboBox_1.addItem("CS");
+		comboBox_1.addItem("CSNE");
 		
 		
 		
@@ -175,29 +208,103 @@ public class AddStudentGroups extends JFrame {
 		
 		
 		JButton btnNewButton_1_1_1 = new JButton("Clear");
+		btnNewButton_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				comboBox.setSelectedIndex(0);
+				comboBox_1.setSelectedIndex(0);
+				spinner.setValue(0);
+				spinner_1.setValue(0);
+				textField.setText(" ");
+				textField_1.setText(" ");
+				
+				
+			}
+		});
+		
+		
 		btnNewButton_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1_1.setFocusable(false);
 		btnNewButton_1_1_1.setBounds(287, 609, 225, 50);
 		contentPane.add(btnNewButton_1_1_1);
 		
-		JButton btnNewButton_1_1_1_1 = new JButton("Done");
+		JButton btnNewButton_1_1_1_1 = new JButton("Add");
+		btnNewButton_1_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(comboBox.getSelectedItem().equals("") || comboBox_1.getSelectedItem().equals("") || spinner.getValue().equals("") || spinner_1.getValue().equals("") || textField.getText().equals("") || textField_1.getText().equals("")) {
+					
+					JLabel label = new JLabel("Please Fill Complete Information");
+ 					label.setHorizontalAlignment(SwingConstants.CENTER);
+ 					JOptionPane.showMessageDialog(null, label);
+				}
+				else {
+					
+					String value1 = comboBox.getSelectedItem().toString();
+					String value2 = comboBox_1.getSelectedItem().toString();
+					String value3 = spinner.getValue().toString();
+					String value4 = spinner_1.getValue().toString();
+					String value5 = textField.getText();
+					String value6 = textField_1.getText();
+					
+				
+				
+				try {
+					
+					Connection conn = DBConnect.getConnection();
+					
+					String query = "INSERT INTO StudentGroups values(null, '" + value1 + "','" + value2 + "','" + value3 + "', '" + value4 + "', '" + value5 + "', '" + value6 + "')";
+					
+					 Statement sta = conn.createStatement();
+	                 int x = sta.executeUpdate(query);
+	                 if (x == 0) 
+	                 {
+	                 	JLabel label = new JLabel("This is alredy exist");
+	 					label.setHorizontalAlignment(SwingConstants.CENTER);
+	 					JOptionPane.showMessageDialog(null, label);
+	                 } 
+	                 else
+	                 {
+	                 	JLabel label = new JLabel("Data Inserted Successfully");
+	 					label.setHorizontalAlignment(SwingConstants.CENTER);
+	 					JOptionPane.showMessageDialog(null, label);
+	                 } 
+	                 conn.close();
+	             }
+					catch (Exception exception) 
+					{
+	             	 System.out.println("Error!!");
+	             }
+				
+				}	
+			}
+				
+		});
+		
+		
 		btnNewButton_1_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1_1_1.setFocusable(false);
 		btnNewButton_1_1_1_1.setBounds(696, 609, 225, 50);
 		contentPane.add(btnNewButton_1_1_1_1);
 		
 		JButton btnNewButton_1_1_1_1_1 = new JButton("Generate ID");
+		btnNewButton_1_1_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				textField.setText(comboBox.getSelectedItem().toString()+"."+comboBox_1.getSelectedItem().toString()+"."+spinner.getValue().toString());
+				textField_1.setText(comboBox.getSelectedItem().toString()+"."+comboBox_1.getSelectedItem().toString()+"."+spinner.getValue().toString()+"."+spinner_1.getValue().toString());
+			}
+		});
+		
 		btnNewButton_1_1_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1_1_1_1.setFocusable(false);
 		btnNewButton_1_1_1_1_1.setBounds(926, 438, 225, 50);
 		contentPane.add(btnNewButton_1_1_1_1_1);
 		
 		
-		
-		
 	
-
 		
+		
+			
 		//end default
 	}
 }

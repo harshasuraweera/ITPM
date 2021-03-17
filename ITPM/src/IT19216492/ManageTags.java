@@ -10,10 +10,25 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import database.DBConnect;
+
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ManageTags extends JFrame {
 
@@ -40,6 +55,13 @@ public class ManageTags extends JFrame {
 	 * Create the frame.
 	 */
 	public ManageTags() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				ShowData();
+			}
+		});
+		
 		//do these for each and every JFrame ZZ
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -101,6 +123,16 @@ public class ManageTags extends JFrame {
 		comboBox.setBounds(721, 496, 213, 25);
 		contentPane.add(comboBox);
 		
+		comboBox.addItem("");
+		comboBox.addItem("Y1S1");
+		comboBox.addItem("Y1S2");
+		comboBox.addItem("Y2S1");
+		comboBox.addItem("Y2S2");
+		comboBox.addItem("Y3S1");
+		comboBox.addItem("Y3S2");
+		comboBox.addItem("Y4S1");
+		comboBox.addItem("Y4S2");
+		
 		
 		
 		JLabel lblRelatedTag = new JLabel("Related Tag");
@@ -113,35 +145,198 @@ public class ManageTags extends JFrame {
 		comboBox_1.setBounds(721, 554, 213, 25);
 		contentPane.add(comboBox_1);
 		
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		
 		
 		
 		
 		JButton btnNewButton_1_1_1 = new JButton("Clear");
+		btnNewButton_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				comboBox.setSelectedIndex(0);
+				comboBox_1.setSelectedIndex(0);
+			}
+		});
+		
 		btnNewButton_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 		btnNewButton_1_1_1.setFocusable(false);
 		btnNewButton_1_1_1.setBounds(313, 634, 149, 36);
 		contentPane.add(btnNewButton_1_1_1);
 		
-		JButton btnNewButton_1_1_1_1 = new JButton("Done");
+		JButton btnNewButton_1_1_1_1 = new JButton("Delete");
+		btnNewButton_1_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					Connection conn = DBConnect.getConnection();
+					
+					int i=table.getSelectedRow();
+					
+					int selectedRowId = Integer.parseInt(table.getValueAt(i,0).toString());
+					
+					String query = "DELETE FROM Tags WHERE id='"+selectedRowId+"'";         
+	            	
+					 Statement sta = conn.createStatement();
+	                 int x = sta.executeUpdate(query);
+	                 ShowData();
+	                 if (x == 0) 
+	                 {
+	                 	JLabel label = new JLabel("This is alredy exist");
+	 					label.setHorizontalAlignment(SwingConstants.CENTER);
+	 					JOptionPane.showMessageDialog(null, label);
+	                 } 
+	                 else
+	                 {
+	                 	JLabel label = new JLabel("Data Delete Successfully");
+	 					label.setHorizontalAlignment(SwingConstants.CENTER);
+	 					JOptionPane.showMessageDialog(null, label);
+	                 } 
+	                 conn.close();
+	             }
+					catch (Exception exception) 
+					{
+	             	 System.out.println("Error!!");
+	             }
+				   
+				}	
+			
+				
+		});
+		
+				
+		
 		btnNewButton_1_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 		btnNewButton_1_1_1_1.setFocusable(false);
 		btnNewButton_1_1_1_1.setBounds(568, 634, 149, 36);
 		contentPane.add(btnNewButton_1_1_1_1);
 		
 		JButton btnNewButton_1_1_1_1_1 = new JButton("Update");
+		btnNewButton_1_1_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+if(comboBox.getSelectedItem().equals("") || comboBox_1.getSelectedItem().equals("")) {
+					
+					JLabel label = new JLabel("Please Fill Complete Information");
+ 					label.setHorizontalAlignment(SwingConstants.CENTER);
+ 					JOptionPane.showMessageDialog(null, label);
+				}
+				else {
+					
+					String value1 = comboBox.getSelectedItem().toString();
+					String value2 = comboBox_1.getSelectedItem().toString();
+					
+				
+				try {
+					
+					Connection conn = DBConnect.getConnection();
+					
+					int i=table.getSelectedRow();
+					
+					int selectedRowId = Integer.parseInt(table.getValueAt(i,0).toString());
+					
+					String query = "UPDATE `Tags` SET `tagName`='" + value1 + "',`relatedTag`='" + value2 + "'";
+					
+					 Statement sta = conn.createStatement();
+	                 int x = sta.executeUpdate(query);
+	                 ShowData();
+	                 if (x == 0) 
+	                 {
+	                 	JLabel label = new JLabel("This is alredy exist");
+	 					label.setHorizontalAlignment(SwingConstants.CENTER);
+	 					JOptionPane.showMessageDialog(null, label);
+	                 } 
+	                 else
+	                 {
+	                 	JLabel label = new JLabel("Data Updated Successfully");
+	 					label.setHorizontalAlignment(SwingConstants.CENTER);
+	 					JOptionPane.showMessageDialog(null, label);
+	                 } 
+	                 conn.close();
+	             }
+					catch (Exception exception) 
+					{
+	             	 System.out.println("Error!!");
+	             }
+				
+				}	
+			}
+				
+		});
+		
+		
+		
 		btnNewButton_1_1_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 		btnNewButton_1_1_1_1_1.setBounds(839, 635, 149, 36);
 		contentPane.add(btnNewButton_1_1_1_1_1);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(214, 155, 900, 309);
+		contentPane.add(scrollPane);
+		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				int i=table.getSelectedRow();
+				
+			    comboBox.setSelectedItem(table.getValueAt(i, 1).toString());
+			    comboBox_1.setSelectedItem(table.getValueAt(i, 2).toString());
+				
+			}
+		});
+		scrollPane.setViewportView(table);
 		table.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
-		table.setBounds(214, 155, 900, 309);
-		contentPane.add(table);
 		
-		
-		
-	
-		//end default
 	}
-}
-
+	
+	private void ShowData() {
+			
+			Connection conn = DBConnect.getConnection();
+			
+			DefaultTableModel model = new DefaultTableModel();
+			model.addColumn("Id");
+			model.addColumn("tagNamer");
+			model.addColumn("relatedTag");
+			
+			
+			try {
+				
+				String sql = "SELECT * FROM StudentGroups";
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery(sql);
+				
+				while(rs.next()) {
+					model.addRow(new Object[] {
+							rs.getString("id"),
+							rs.getString("tagNamer"),
+							rs.getString("relatedTag"),
+							
+					});;
+				}
+				
+				rs.close();
+				st.close();
+				conn.close();
+				
+				table.setModel(model);
+				table.setAutoResizeMode(0);
+				table.getColumnModel().getColumn(0).setPreferredWidth(80);
+				table.getColumnModel().getColumn(1).setPreferredWidth(140);
+				table.getColumnModel().getColumn(2).setPreferredWidth(140);
+				
+				
+			}catch (Exception e) {
+				
+			}
+			
+		}
+	}

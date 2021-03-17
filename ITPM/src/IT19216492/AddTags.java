@@ -9,11 +9,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import database.DBConnect;
+
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
 
 public class AddTags extends JFrame {
 
@@ -101,6 +109,15 @@ public class AddTags extends JFrame {
 		comboBox.setBounds(598, 241, 323, 37);
 		contentPane.add(comboBox);
 		
+		comboBox.addItem("");
+		comboBox.addItem("");
+		comboBox.addItem("");
+		comboBox.addItem("");
+		comboBox.addItem("");
+		comboBox.addItem("");
+		comboBox.addItem("");
+		comboBox.addItem("");
+		
 		
 		
 		JLabel lblRelatedTag = new JLabel("Related Tag");
@@ -113,16 +130,78 @@ public class AddTags extends JFrame {
 		comboBox_1.setBounds(598, 407, 323, 37);
 		contentPane.add(comboBox_1);
 		
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		comboBox_1.addItem("");
+		
 		
 		
 		
 		JButton btnNewButton_1_1_1 = new JButton("Clear");
+		btnNewButton_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				comboBox.setSelectedIndex(0);
+				comboBox_1.setSelectedIndex(0);
+			}
+		});
+		
 		btnNewButton_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1_1.setFocusable(false);
 		btnNewButton_1_1_1.setBounds(287, 609, 225, 50);
 		contentPane.add(btnNewButton_1_1_1);
 		
-		JButton btnNewButton_1_1_1_1 = new JButton("Done");
+		JButton btnNewButton_1_1_1_1 = new JButton("Add");
+		btnNewButton_1_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					if(comboBox.getSelectedItem().equals("") || comboBox_1.getSelectedItem().equals("")) {
+					
+					JLabel label = new JLabel("Please Fill Complete Information");
+ 					label.setHorizontalAlignment(SwingConstants.CENTER);
+ 					JOptionPane.showMessageDialog(null, label);
+				}
+				else {
+				
+				String value1 = comboBox.getSelectedItem().toString();
+				String value2 = comboBox_1.getSelectedItem().toString();
+try {
+					
+					Connection conn = DBConnect.getConnection();
+					
+					String query = "INSERT INTO StudentGroups values(null, '" + value1 + "','" + value2 + "')";
+					
+					 Statement sta = conn.createStatement();
+	                 int x = sta.executeUpdate(query);
+	                 if (x == 0) 
+	                 {
+	                 	JLabel label = new JLabel("This is alredy exist");
+	 					label.setHorizontalAlignment(SwingConstants.CENTER);
+	 					JOptionPane.showMessageDialog(null, label);
+	                 } 
+	                 else
+	                 {
+	                 	JLabel label = new JLabel("Data Inserted Successfully");
+	 					label.setHorizontalAlignment(SwingConstants.CENTER);
+	 					JOptionPane.showMessageDialog(null, label);
+	                 } 
+	                 conn.close();
+	             }
+					catch (Exception exception) 
+					{
+	             	 System.out.println("Error!!");
+	             }
+				
+				}	
+			}
+				
+		});
+		
+		
 		btnNewButton_1_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1_1_1.setFocusable(false);
 		btnNewButton_1_1_1_1.setBounds(696, 609, 225, 50);
