@@ -41,6 +41,7 @@ public class Lmanage extends JFrame {
 	private JTextField center;
 	private JTextField building;
 	private JTable table;
+	private JTextField level;
 
 	/**
 	 * Launch the application.
@@ -177,6 +178,7 @@ public class Lmanage extends JFrame {
 				contentPane.add(txtpnLecturerName);
 				
 				lid = new JTextField();
+				lid.setEditable(false);
 				lid.setBounds(363, 423, 177, 29);
 				contentPane.add(lid);
 				lid.setColumns(10);
@@ -202,7 +204,7 @@ public class Lmanage extends JFrame {
 				txtpnCenter.setEditable(false);
 				txtpnCenter.setText("Center");
 				txtpnCenter.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
-				txtpnCenter.setBounds(724, 473, 141, 29);
+				txtpnCenter.setBounds(724, 423, 141, 29);
 				contentPane.add(txtpnCenter);
 				
 				lname = new JTextField();
@@ -233,17 +235,17 @@ public class Lmanage extends JFrame {
 				txtpnBuilding.setEditable(false);
 				txtpnBuilding.setText("Building");
 				txtpnBuilding.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
-				txtpnBuilding.setBounds(724, 536, 141, 29);
+				txtpnBuilding.setBounds(724, 486, 141, 29);
 				contentPane.add(txtpnBuilding);
 				
 				center = new JTextField();
 				center.setColumns(10);
-				center.setBounds(984, 473, 177, 29);
+				center.setBounds(984, 423, 177, 29);
 				contentPane.add(center);
 				
 				building = new JTextField();
 				building.setColumns(10);
-				building.setBounds(984, 536, 177, 29);
+				building.setBounds(984, 492, 177, 29);
 				contentPane.add(building);
 				
 				JScrollPane scrollPane = new JScrollPane();
@@ -255,7 +257,23 @@ public class Lmanage extends JFrame {
 				
 				scrollPane.setViewportView(table);
 				
+				JTextPane txtpnLevel = new JTextPane();
+				txtpnLevel.setText("Level");
+				txtpnLevel.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
+				txtpnLevel.setEditable(false);
+				txtpnLevel.setBackground(new Color(153, 204, 255));
+				txtpnLevel.setBounds(724, 546, 141, 29);
+				contentPane.add(txtpnLevel);
+				
+				level = new JTextField();
+				level.setEditable(false);
+				level.setColumns(10);
+				level.setBounds(984, 546, 177, 29);
+				contentPane.add(level);
+				
 				//end navignation button 01
+				
+				//show data while click in an any row
 				table.addMouseListener(new MouseListener() {
 					
 					@Override
@@ -263,10 +281,11 @@ public class Lmanage extends JFrame {
 						lid.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
 						lname.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
 						faculty.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
-						department.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
-						center.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
-						building.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
-						
+						department.setText(table.getValueAt(table.getSelectedRow(), 4).toString());
+						center.setText(table.getValueAt(table.getSelectedRow(), 7).toString());
+						building.setText(table.getValueAt(table.getSelectedRow(), 8).toString());
+						level.setText(table.getValueAt(table.getSelectedRow(), 9).toString());
+
 					}
 					
 					@Override
@@ -294,10 +313,11 @@ public class Lmanage extends JFrame {
 					}
 				});
 				
-				//up----
+				//update lec
 				btnUpdate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
+						//validation
 						if(table.getSelectionModel().isSelectionEmpty()) {
 							JOptionPane.showMessageDialog(null, "Plesae Selecte the Row before pressing Update");
 						}
@@ -324,10 +344,10 @@ public class Lmanage extends JFrame {
 					}
 				});
 				
-				//del---
+				//delete lec
 				btnDelete.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
+						//validation
 						if(table.getSelectionModel().isSelectionEmpty()) {
 							
 							JOptionPane.showMessageDialog(null, "Plesae Selecte the Row before pressing Update");
@@ -355,7 +375,7 @@ public class Lmanage extends JFrame {
 				
 	}
 	
-	//up method
+			//up method
 			private boolean updateLecturer(int id, String lid, String lname, String faculty , String department, String center, String building) {
 				
 				boolean isSuccess = false;
@@ -410,7 +430,7 @@ public class Lmanage extends JFrame {
 				
 				return isSuccess;
 			}
-	
+	//show data on table
 	private void ShowData() {
 		
 	java.sql.Connection conn = DBConnect.getConnection();
