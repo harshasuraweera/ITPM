@@ -82,7 +82,7 @@ public class lecturer extends JFrame {
 				//end default
 				
 				//navigation buttons
-				JButton btnNewButton = new JButton("Home");
+				JButton btnNewButton = new JButton("  Home");
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 					
@@ -101,9 +101,9 @@ public class lecturer extends JFrame {
 					}
 				});
 				btnNewButton.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				btnNewButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("addNew2.png")));
+				btnNewButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
 				btnNewButton.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnNewButton.setBounds(33, 10, 250, 50);
+				btnNewButton.setBounds(10, 10, 250, 50);
 				btnNewButton.setFocusable(false);
 				panel.add(btnNewButton);
 				
@@ -111,118 +111,135 @@ public class lecturer extends JFrame {
 				btnManageLecturerDetails.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 					
-						Lmanage Lmanage = new Lmanage();
+						Lmanage lmanage = new Lmanage();
 						dispose();
-						Lmanage.setVisible(true);
+						lmanage.setVisible(true);
 						
 							
 						
 						
 					}
 				});
-				btnManageLecturerDetails.setBackground(Color.WHITE);
-				btnManageLecturerDetails.setForeground(Color.BLACK);
 				btnManageLecturerDetails.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				btnManageLecturerDetails.setFocusable(false);
+				btnManageLecturerDetails.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecturer.png")));
 				btnManageLecturerDetails.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnManageLecturerDetails.setBounds(1000, 10, 250, 50);
+				btnManageLecturerDetails.setBounds(936, 10, 311, 50);
+				btnManageLecturerDetails.setFocusable(false);
 				panel.add(btnManageLecturerDetails);
 				
 				JTextPane txtpnLectureName = new JTextPane();
+				txtpnLectureName.setBackground(new Color(153, 204, 255));
 				txtpnLectureName.setText(" Lecture Name");
 				txtpnLectureName.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnLectureName.setBounds(75, 240, 171, 35);
+				txtpnLectureName.setBounds(75, 262, 171, 35);
 				contentPane.add(txtpnLectureName);
 				
 				JTextPane txtpnLectureId = new JTextPane();
+				txtpnLectureId.setBackground(new Color(153, 204, 255));
 				txtpnLectureId.setEditable(false);
 				txtpnLectureId.setText(" Lecture ID");
 				txtpnLectureId.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnLectureId.setBounds(75, 149, 171, 35);
+				txtpnLectureId.setBounds(75, 182, 171, 35);
 				contentPane.add(txtpnLectureId);
 				
 				JTextPane txtpnFaculty = new JTextPane();
+				txtpnFaculty.setBackground(new Color(153, 204, 255));
+				txtpnFaculty.setEditable(false);
 				txtpnFaculty.setText("Faculty");
 				txtpnFaculty.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnFaculty.setBounds(75, 323, 171, 35);
+				txtpnFaculty.setBounds(75, 349, 171, 35);
 				contentPane.add(txtpnFaculty);
 				
 				JTextPane txtpnDepartment = new JTextPane();
+				txtpnDepartment.setBackground(new Color(153, 204, 255));
+				txtpnDepartment.setEditable(false);
 				txtpnDepartment.setText("Department");
 				txtpnDepartment.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnDepartment.setBounds(75, 405, 171, 35);
+				txtpnDepartment.setBounds(75, 430, 171, 35);
 				contentPane.add(txtpnDepartment);
 				
 				JTextPane txtpnAvailableDays = new JTextPane();
+				txtpnAvailableDays.setBackground(new Color(153, 204, 255));
+				txtpnAvailableDays.setEditable(false);
 				txtpnAvailableDays.setText("Available Days");
 				txtpnAvailableDays.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnAvailableDays.setBounds(75, 488, 171, 35);
+				txtpnAvailableDays.setBounds(75, 507, 171, 35);
 				contentPane.add(txtpnAvailableDays);
 				
 				JTextPane txtpnAvailableHours = new JTextPane();
+				txtpnAvailableHours.setBackground(new Color(153, 204, 255));
+				txtpnAvailableHours.setEditable(false);
 				txtpnAvailableHours.setText("Available Hours");
 				txtpnAvailableHours.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				txtpnAvailableHours.setBounds(75, 593, 171, 35);
 				contentPane.add(txtpnAvailableHours);
 				
 				JTextPane txtpnCenter = new JTextPane();
+				txtpnCenter.setBackground(new Color(153, 204, 255));
+				txtpnCenter.setEditable(false);
 				txtpnCenter.setText("Center");
 				txtpnCenter.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnCenter.setBounds(740, 149, 171, 35);
+				txtpnCenter.setBounds(744, 182, 171, 35);
 				contentPane.add(txtpnCenter);
 				
 				JTextPane txtpnBuilding = new JTextPane();
+				txtpnBuilding.setBackground(new Color(153, 204, 255));
+				txtpnBuilding.setEditable(false);
 				txtpnBuilding.setText("Building");
 				txtpnBuilding.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnBuilding.setBounds(740, 240, 171, 35);
+				txtpnBuilding.setBounds(744, 262, 171, 35);
 				contentPane.add(txtpnBuilding);
 				
 				JTextPane txtpnLevel = new JTextPane();
+				txtpnLevel.setBackground(new Color(153, 204, 255));
+				txtpnLevel.setEditable(false);
 				txtpnLevel.setText("Level");
 				txtpnLevel.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnLevel.setBounds(740, 323, 171, 35);
+				txtpnLevel.setBounds(744, 349, 171, 35);
 				contentPane.add(txtpnLevel);
 				
 				JTextPane txtpnRank = new JTextPane();
+				txtpnRank.setBackground(new Color(153, 204, 255));
+				txtpnRank.setEditable(false);
 				txtpnRank.setText("Rank");
 				txtpnRank.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnRank.setBounds(740, 405, 171, 35);
+				txtpnRank.setBounds(744, 430, 171, 35);
 				contentPane.add(txtpnRank);
 				
 				rank = new JTextField();
 				rank.setEditable(false);
-				rank.setBounds(977, 405, 275, 35);
+				rank.setBounds(941, 430, 275, 35);
 				contentPane.add(rank);
 				rank.setColumns(10);
 				
 				lname = new JTextField();
 				lname.setColumns(10);
-				lname.setBounds(397, 240, 275, 35);
+				lname.setBounds(397, 262, 275, 35);
 				contentPane.add(lname);
 				
 				lid = new JTextField();
 				lid.setColumns(10);
-				lid.setBounds(397, 149, 275, 35);
+				lid.setBounds(397, 182, 275, 35);
 				contentPane.add(lid);
 				
 				String array1 [] = {"A", "B", "C", "D"};
 				JComboBox faculty = new JComboBox(array1);
-				faculty.setBounds(397, 323, 275, 35);
+				faculty.setBounds(397, 349, 275, 35);
 				contentPane.add(faculty);
 				
 				String array3 [] = {"AA", "BB", "CC", "DD"};
 				JComboBox department = new JComboBox(array3);
-				department.setBounds(397, 405, 275, 35);
+				department.setBounds(397, 430, 275, 35);
 				contentPane.add(department);
 				
 				String array4 [] = {"E", "F", "G", "H"};
 				JComboBox center = new JComboBox(array4);
-				center.setBounds(977, 149, 275, 35);
+				center.setBounds(941, 182, 275, 35);
 				contentPane.add(center);
 				
 				String array5 [] = {"W", "X", "Y", "Z"};
 				JComboBox building = new JComboBox(array5);
-				building.setBounds(977, 240, 275, 35);
+				building.setBounds(941, 262, 275, 35);
 				contentPane.add(building);
 				
 				JSpinner ahours = new JSpinner();
@@ -230,15 +247,14 @@ public class lecturer extends JFrame {
 				ahours.setBounds(397, 593, 196, 46);
 				contentPane.add(ahours);
 				
-				JSpinner level = new JSpinner();
-				level.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				level.setBounds(977, 323, 196, 46);
-				contentPane.add(level);
-				
-				JSpinner adays = new JSpinner();
-				adays.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				adays.setBounds(397, 488, 196, 46);
+				JTextArea adays = new JTextArea();
+				adays.setBounds(397, 507, 275, 35);
 				contentPane.add(adays);
+				
+				String array [] = {"Professor 1", "Assistant Professor 2", "Senior Lecturer(HG) 3", "Senior Lecturer 4", "Lecturer 5", "Assistant Lecturer 6"};
+				JComboBox level = new JComboBox(array);
+				level.setBounds(941, 349, 275, 35);
+				contentPane.add(level);
 				
 				JButton btnDone = new JButton("Done");
 				btnDone.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -248,10 +264,11 @@ public class lecturer extends JFrame {
 				contentPane.add(btnDone);
 				
 				JButton btnGenerate = new JButton("generate");
+				btnGenerate.setBackground(Color.RED);
 				btnGenerate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
-						String generatedRank = level.getValue().toString() + "." + lid.getText().toString();
+						String generatedRank = level.getSelectedItem().toString() + "." + lid.getText().toString();
 						rank.setText(generatedRank);
 						
 					}
@@ -259,22 +276,37 @@ public class lecturer extends JFrame {
 				btnGenerate.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnGenerate.setFocusable(false);
 				btnGenerate.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnGenerate.setBounds(847, 488, 250, 50);
+				btnGenerate.setBounds(841, 507, 250, 50);
 				contentPane.add(btnGenerate);
+				
+				JTextPane txtpnAddLecturer = new JTextPane();
+				txtpnAddLecturer.setText("Add New Lecturer");
+				txtpnAddLecturer.setFont(new Font("Kristen ITC", txtpnAddLecturer.getFont().getStyle() | Font.BOLD, txtpnAddLecturer.getFont().getSize() + 30));
+				txtpnAddLecturer.setEditable(false);
+				txtpnAddLecturer.setBackground(new Color(153, 204, 255));
+				txtpnAddLecturer.setBounds(459, 91, 432, 90);
+				contentPane.add(txtpnAddLecturer);
 			
 				btnDone.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						
+						if(lid.getText().equals("")||lname.getText().equals("")||faculty.getSelectedItem().equals("")||department.getSelectedItem().equals("")||adays.getText().equals("")||ahours.getValue().equals("")) {
+						
+							JOptionPane.showMessageDialog(null, "Please Fill the Informations");
+						}
+						
+						else {
 					
-						boolean isSuccess = newlecturer(
+							boolean isSuccess = newlecturer(
 								lid.getText().toString(), 
 								lname.getText().toString(),
 								faculty.getSelectedItem().toString(),
 								department.getSelectedItem().toString(),
-								Integer.parseInt(adays.getValue().toString()),
+								adays.getText().toString(),
 								Integer.parseInt(ahours.getValue().toString()),
 								center.getSelectedItem().toString(),
 								building.getSelectedItem().toString(),
-								Integer.parseInt(level.getValue().toString()),
+								level.getSelectedItem().toString(),
 								rank.getText().toString());
 						
 							if(isSuccess) {
@@ -283,6 +315,7 @@ public class lecturer extends JFrame {
 							}else {
 						
 							JOptionPane.showMessageDialog(null, "error");
+							}
 						}
 						
 					}
@@ -291,7 +324,7 @@ public class lecturer extends JFrame {
 				//end navignation button 01
 	}
 	
-	public boolean newlecturer (String lid, String lname, String faculty, String department,int adays, int ahours, String center, String building, int level, String rank) {
+	public boolean newlecturer (String lid, String lname, String faculty, String department,String adays, int ahours, String center, String building, String level, String rank) {
 		
 		boolean isSuccess = false;
 		java.sql.Connection conn = DBConnect.getConnection();

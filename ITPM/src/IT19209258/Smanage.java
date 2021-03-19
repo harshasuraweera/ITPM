@@ -96,7 +96,7 @@ public class Smanage extends JFrame {
 				
 				
 				//navigation buttons
-				JButton btnNewButton = new JButton("Home");
+				JButton btnNewButton = new JButton("  Home");
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 					
@@ -115,7 +115,7 @@ public class Smanage extends JFrame {
 					}
 				});
 				btnNewButton.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				btnNewButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("addNew2.png")));
+				btnNewButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
 				btnNewButton.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
 				btnNewButton.setBounds(999, 11, 250, 50);
 				btnNewButton.setFocusable(false);
@@ -125,7 +125,7 @@ public class Smanage extends JFrame {
 				
 				
 				
-				JButton btnNewButton_1 = new JButton("Back");
+				JButton btnNewButton_1 = new JButton("   Add New Subject");
 				btnNewButton_1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 					
@@ -138,11 +138,12 @@ public class Smanage extends JFrame {
 						
 					}
 				});
-				btnNewButton_1.setBounds(10, 11, 250, 50);
-				panel.add(btnNewButton_1);
 				btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				btnNewButton_1.setFocusable(false);
+				btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("subject1.png")));
 				btnNewButton_1.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
+				btnNewButton_1.setBounds(10, 11, 250, 50);
+				btnNewButton_1.setFocusable(false);
+				panel.add(btnNewButton_1);
 				
 				JButton btnUpdate = new JButton("Update");	
 				btnUpdate.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -166,24 +167,32 @@ public class Smanage extends JFrame {
 				contentPane.add(btnDone);
 				
 				JTextPane txtpnLecturerName = new JTextPane();
+				txtpnLecturerName.setBackground(new Color(153, 204, 255));
+				txtpnLecturerName.setEditable(false);
 				txtpnLecturerName.setText("Offered Year");
 				txtpnLecturerName.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnLecturerName.setBounds(117, 429, 121, 29);
 				contentPane.add(txtpnLecturerName);
 				
 				JTextPane txtpnLecturerId = new JTextPane();
+				txtpnLecturerId.setBackground(new Color(153, 204, 255));
+				txtpnLecturerId.setEditable(false);
 				txtpnLecturerId.setText("Offered Semester");
 				txtpnLecturerId.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnLecturerId.setBounds(117, 492, 149, 29);
 				contentPane.add(txtpnLecturerId);
 				
 				JTextPane txtpnFaculty = new JTextPane();
+				txtpnFaculty.setBackground(new Color(153, 204, 255));
+				txtpnFaculty.setEditable(false);
 				txtpnFaculty.setText("Subject Name");
 				txtpnFaculty.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnFaculty.setBounds(117, 552, 121, 29);
 				contentPane.add(txtpnFaculty);
 				
 				JTextPane txtpnCenter = new JTextPane();
+				txtpnCenter.setBackground(new Color(153, 204, 255));
+				txtpnCenter.setEditable(false);
 				txtpnCenter.setText("Subject Code");
 				txtpnCenter.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnCenter.setBounds(117, 612, 121, 29);
@@ -200,24 +209,32 @@ public class Smanage extends JFrame {
 				contentPane.add(scode);
 				
 				JTextPane txtpnDepartment = new JTextPane();
+				txtpnDepartment.setEditable(false);
+				txtpnDepartment.setBackground(new Color(153, 204, 255));
 				txtpnDepartment.setText("Number of Lectures Hours");
 				txtpnDepartment.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnDepartment.setBounds(698, 429, 223, 29);
 				contentPane.add(txtpnDepartment);
 				
 				JTextPane txtpnBuilding = new JTextPane();
+				txtpnBuilding.setBackground(new Color(153, 204, 255));
+				txtpnBuilding.setEditable(false);
 				txtpnBuilding.setText("Number of Lab Hours");
 				txtpnBuilding.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnBuilding.setBounds(698, 492, 141, 29);
 				contentPane.add(txtpnBuilding);
 				
 				JTextPane txtpnLevel = new JTextPane();
+				txtpnLevel.setBackground(new Color(153, 204, 255));
+				txtpnLevel.setEditable(false);
 				txtpnLevel.setText("Number of Tutorial Hours");
 				txtpnLevel.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnLevel.setBounds(698, 552, 223, 29);
 				contentPane.add(txtpnLevel);
 				
 				JTextPane txtpnRank = new JTextPane();
+				txtpnRank.setBackground(new Color(153, 204, 255));
+				txtpnRank.setEditable(false);
 				txtpnRank.setText("Number of Evaluation Hours");
 				txtpnRank.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnRank.setBounds(698, 612, 241, 29);
@@ -313,24 +330,31 @@ public class Smanage extends JFrame {
 				btnUpdate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
-						boolean isSuccess = updatesubject(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()),
-								Integer.parseInt(offyear.getValue().toString()),
-								Integer.parseInt(offsem.getValue().toString()),
-								sname.getText().toString(), 
-								scode.getText().toString(),
-								Integer.parseInt(nlhours.getValue().toString()),
-								Integer.parseInt(nlbhours.getValue().toString()),
-								Integer.parseInt(nthours.getValue().toString()),
-								Integer.parseInt(nehours.getValue().toString()));
+						if(table.getSelectionModel().isSelectionEmpty()) {
+							JOptionPane.showMessageDialog(null, "Plesae Selecte the Row before pressing Update");
+						}
 						
-						if(isSuccess) {
-							JOptionPane.showMessageDialog(null, "Successfull update");
-							ShowData();
+						else {
 							
-						}else {
-						
-							JOptionPane.showMessageDialog(null, "Error");
-
+							boolean isSuccess = updatesubject(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()),
+									Integer.parseInt(offyear.getValue().toString()),
+									Integer.parseInt(offsem.getValue().toString()),
+									sname.getText().toString(), 
+									scode.getText().toString(),
+									Integer.parseInt(nlhours.getValue().toString()),
+									Integer.parseInt(nlbhours.getValue().toString()),
+									Integer.parseInt(nthours.getValue().toString()),
+									Integer.parseInt(nehours.getValue().toString()));
+							
+							if(isSuccess) {
+								JOptionPane.showMessageDialog(null, "Successfull update");
+								ShowData();
+								
+							}else {
+							
+								JOptionPane.showMessageDialog(null, "Error");
+	
+							}
 						}
 						
 					}
@@ -339,17 +363,23 @@ public class Smanage extends JFrame {
 				//del---
 				btnDelete.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						boolean isSuccess = deletesubject(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()));
 						
-				
-						if(isSuccess) {
-							JOptionPane.showMessageDialog(null, "Succesfull delete");
-						ShowData();
-
-						}else {
+						if(table.getSelectionModel().isSelectionEmpty()) {
+							JOptionPane.showMessageDialog(null, "Plesae Selecte the Row before pressing Update");
+						}
 						
-							JOptionPane.showMessageDialog(null, "error");
-
+						else {
+							
+							boolean isSuccess = deletesubject(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()));
+								if(isSuccess) {
+									JOptionPane.showMessageDialog(null, "Succesfull delete");
+								ShowData();
+		
+								}else {
+								
+									JOptionPane.showMessageDialog(null, "error");
+									
+								}
 						}
 						
 					}

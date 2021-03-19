@@ -98,7 +98,7 @@ public class Lmanage extends JFrame {
 				
 				
 				//navigation buttons
-				JButton btnNewButton = new JButton("Home");
+				JButton btnNewButton = new JButton("  Home");
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 					
@@ -117,13 +117,13 @@ public class Lmanage extends JFrame {
 					}
 				});
 				btnNewButton.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				btnNewButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("addNew2.png")));
+				btnNewButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
 				btnNewButton.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
 				btnNewButton.setBounds(997, 10, 250, 50);
 				btnNewButton.setFocusable(false);
 				panel.add(btnNewButton);
 				
-				JButton btnNewButton_1 = new JButton("Back");
+				JButton btnNewButton_1 = new JButton(" Add New Lecturer");
 				btnNewButton_1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 					
@@ -137,9 +137,10 @@ public class Lmanage extends JFrame {
 					}
 				});
 				btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				btnNewButton_1.setFocusable(false);
+				btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecturer.png")));
 				btnNewButton_1.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnNewButton_1.setBounds(27, 10, 250, 50);
+				btnNewButton_1.setBounds(27, 10, 243, 50);
+				btnNewButton_1.setFocusable(false);
 				panel.add(btnNewButton_1);
 				
 				JButton btnUpdate = new JButton("Update");
@@ -168,6 +169,7 @@ public class Lmanage extends JFrame {
 				contentPane.add(btnDone);
 				
 				JTextPane txtpnLecturerName = new JTextPane();
+				txtpnLecturerName.setBackground(new Color(153, 204, 255));
 				txtpnLecturerName.setEditable(false);
 				txtpnLecturerName.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 				txtpnLecturerName.setText("Lecturer Name");
@@ -180,6 +182,7 @@ public class Lmanage extends JFrame {
 				lid.setColumns(10);
 				
 				JTextPane txtpnLecturerId = new JTextPane();
+				txtpnLecturerId.setBackground(new Color(153, 204, 255));
 				txtpnLecturerId.setEditable(false);
 				txtpnLecturerId.setText("Lecturer ID");
 				txtpnLecturerId.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
@@ -187,6 +190,7 @@ public class Lmanage extends JFrame {
 				contentPane.add(txtpnLecturerId);
 				
 				JTextPane txtpnFaculty = new JTextPane();
+				txtpnFaculty.setBackground(new Color(153, 204, 255));
 				txtpnFaculty.setEditable(false);
 				txtpnFaculty.setText("Faculty");
 				txtpnFaculty.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
@@ -194,6 +198,7 @@ public class Lmanage extends JFrame {
 				contentPane.add(txtpnFaculty);
 				
 				JTextPane txtpnCenter = new JTextPane();
+				txtpnCenter.setBackground(new Color(153, 204, 255));
 				txtpnCenter.setEditable(false);
 				txtpnCenter.setText("Center");
 				txtpnCenter.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
@@ -216,6 +221,7 @@ public class Lmanage extends JFrame {
 				contentPane.add(department);
 				
 				JTextPane txtpnDepartment = new JTextPane();
+				txtpnDepartment.setBackground(new Color(153, 204, 255));
 				txtpnDepartment.setEditable(false);
 				txtpnDepartment.setText("Department");
 				txtpnDepartment.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
@@ -223,6 +229,7 @@ public class Lmanage extends JFrame {
 				contentPane.add(txtpnDepartment);
 				
 				JTextPane txtpnBuilding = new JTextPane();
+				txtpnBuilding.setBackground(new Color(153, 204, 255));
 				txtpnBuilding.setEditable(false);
 				txtpnBuilding.setText("Building");
 				txtpnBuilding.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
@@ -291,22 +298,27 @@ public class Lmanage extends JFrame {
 				btnUpdate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
-						boolean isSuccess = updateLecturer(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()),
-								lid.getText().toString(), 
-								lname.getText().toString(),
-								faculty.getText().toString(),
-								department.getText().toString(),
-								center.getText().toString(),
-								building.getText().toString());
-					
-						if(isSuccess) {
-							JOptionPane.showMessageDialog(null, "Successfull update");
-							ShowData();
-							
-						}else {
+						if(table.getSelectionModel().isSelectionEmpty()) {
+							JOptionPane.showMessageDialog(null, "Plesae Selecte the Row before pressing Update");
+						}
+						else {
+							boolean isSuccess = updateLecturer(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()),
+									lid.getText().toString(), 
+									lname.getText().toString(),
+									faculty.getText().toString(),
+									department.getText().toString(),
+									center.getText().toString(),
+									building.getText().toString());
 						
-							JOptionPane.showMessageDialog(null, "Error");
-
+							if(isSuccess) {
+								JOptionPane.showMessageDialog(null, "Successfull update");
+								ShowData();
+								
+							}else {
+							
+								JOptionPane.showMessageDialog(null, "Error");
+	
+							}
 						}
 						
 					}
@@ -315,17 +327,25 @@ public class Lmanage extends JFrame {
 				//del---
 				btnDelete.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						
+						if(table.getSelectionModel().isSelectionEmpty()) {
+							
+							JOptionPane.showMessageDialog(null, "Plesae Selecte the Row before pressing Update");
+							
+						}
+						else {
+							
 						boolean isSuccess = deleteLecturer(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()));
 						
-				
-						if(isSuccess) {
-							JOptionPane.showMessageDialog(null, "Succesfull delete");
-						ShowData();
-
-						}else {
-						
-							JOptionPane.showMessageDialog(null, "error");
-
+							if(isSuccess) {
+								JOptionPane.showMessageDialog(null, "Succesfull delete");
+							ShowData();
+	
+							}else {
+							
+								JOptionPane.showMessageDialog(null, "error");
+	
+							}
 						}
 						
 					}
