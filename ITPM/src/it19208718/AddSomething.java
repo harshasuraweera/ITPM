@@ -188,6 +188,16 @@ public class AddSomething extends JFrame {
 		JButton addNewLocation = new JButton(" Add Location");
 		addNewLocation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AddLocation addNewLocation = null;
+				try {
+					addNewLocation = new AddLocation();
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+				dispose();
+				addNewLocation.setVisible(true);
+				
 			}
 		});
 		addNewLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));

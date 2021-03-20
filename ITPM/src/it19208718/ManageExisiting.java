@@ -141,6 +141,20 @@ public class ManageExisiting extends JFrame {
 		contentPane.add(btnManageSubject);
 		
 		JButton btnManageLocations = new JButton(" Manage Locations");
+		btnManageLocations.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ManageLocation manageLocation = new ManageLocation();
+					dispose();
+					manageLocation.setVisible(true);
+					
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		btnManageLocations.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageLocations.setFocusable(false);
 		btnManageLocations.setIcon(new ImageIcon(getClass().getClassLoader().getResource("location2.png")));
