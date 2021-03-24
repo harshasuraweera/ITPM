@@ -18,6 +18,8 @@ import javax.swing.border.EmptyBorder;
 
 import database.DBConnect;
 import it19208718.AddSomething;
+import it19208718.HomeWindow;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JList;
@@ -87,9 +89,9 @@ public class lecturer extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 					
 						try {
-							AddSomething addSomething = new AddSomething();
+							HomeWindow home = new HomeWindow();
 							dispose();
-							addSomething.setVisible(true);
+							home.setVisible(true);
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

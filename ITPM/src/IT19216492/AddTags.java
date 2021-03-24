@@ -16,9 +16,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import database.DBConnect;
+import it19208718.HomeWindow;
 
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
@@ -76,6 +78,19 @@ public class AddTags extends JFrame {
 		
 		
 		JButton btnNewButton_1 = new JButton(" Back To Home");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					HomeWindow homeWindow = new HomeWindow();
+					dispose();
+					homeWindow.setVisible(true);
+					
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
 		btnNewButton_1.setBounds(24, 10, 225, 50);

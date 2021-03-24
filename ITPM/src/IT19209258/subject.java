@@ -23,6 +23,8 @@ import javax.swing.border.EmptyBorder;
 
 import database.DBConnect;
 import it19208718.AddSomething;
+import it19208718.HomeWindow;
+
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.JList;
@@ -91,11 +93,12 @@ public class subject extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 					
 						try {
-							AddSomething addSomething = new AddSomething();
+							HomeWindow homeWindow = new HomeWindow();
 							dispose();
-							addSomething.setVisible(true);
+							homeWindow.setVisible(true);
+							
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
+							
 							e1.printStackTrace();
 						}
 						

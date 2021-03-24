@@ -12,8 +12,8 @@ public class DBConnect {
 	static Connection conn = null;
 	@SuppressWarnings("rawtypes")
 	Statement stmt = null;
-	static String url = "jdbc:mysql://141.136.47.126:3306/admin_itpm";
-	static String userName = "admin_itpm";
+	static String url = "jdbc:mysql://151.106.114.2:3306/u271442347_itpm_db";
+	static String userName = "u271442347_itpm_user";
 	static String password = "80tlxBtuX";
 	
 	
