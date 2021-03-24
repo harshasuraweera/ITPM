@@ -17,6 +17,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import IT19142692.AddWorkingDaysAndHours;
+import IT19209258.Lmanage;
+import IT19209258.Smanage;
+import IT19216492.ManageStudentGroups;
+import IT19216492.ManageTags;
+
 @SuppressWarnings({ "serial", "unused" })
 public class ManageExisiting extends JFrame {
 
@@ -102,7 +108,6 @@ public class ManageExisiting extends JFrame {
 					dispose();
 					addSomething.setVisible(true);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -118,6 +123,9 @@ public class ManageExisiting extends JFrame {
 		JButton btnManageWorkingDays = new JButton(" Manage Working Days And Hours");
 		btnManageWorkingDays.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AddWorkingDaysAndHours addWorkingDaysAndHours = new AddWorkingDaysAndHours();
+				dispose();
+				addWorkingDaysAndHours.setVisible(true);
 			}
 		});
 		btnManageWorkingDays.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -127,6 +135,13 @@ public class ManageExisiting extends JFrame {
 		contentPane.add(btnManageWorkingDays);
 		
 		JButton btnManageLecturers = new JButton(" Manage Lecturers");
+		btnManageLecturers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Lmanage lectureManage = new Lmanage();
+				dispose();
+				lectureManage.setVisible(true);
+			}
+		});
 		btnManageLecturers.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageLecturers.setFocusable(false);
 		btnManageLecturers.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecturer3.png")));
@@ -134,6 +149,13 @@ public class ManageExisiting extends JFrame {
 		contentPane.add(btnManageLecturers);
 		
 		JButton btnManageSubject = new JButton(" Manage Subjects");
+		btnManageSubject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Smanage subjectManage = new Smanage();
+				dispose();
+				subjectManage.setVisible(true);
+			}
+		});
 		btnManageSubject.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageSubject.setFocusable(false);
 		btnManageSubject.setIcon(new ImageIcon(getClass().getClassLoader().getResource("subject4.png")));
@@ -141,6 +163,20 @@ public class ManageExisiting extends JFrame {
 		contentPane.add(btnManageSubject);
 		
 		JButton btnManageLocations = new JButton(" Manage Locations");
+		btnManageLocations.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ManageLocation manageLocation = new ManageLocation();
+					dispose();
+					manageLocation.setVisible(true);
+					
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		btnManageLocations.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageLocations.setFocusable(false);
 		btnManageLocations.setIcon(new ImageIcon(getClass().getClassLoader().getResource("location2.png")));
@@ -148,6 +184,13 @@ public class ManageExisiting extends JFrame {
 		contentPane.add(btnManageLocations);
 		
 		JButton btnManageTags = new JButton(" Manage Tags");
+		btnManageTags.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ManageTags manageTags = new ManageTags();
+				dispose();
+				manageTags.setVisible(true);
+			}
+		});
 		btnManageTags.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageTags.setFocusable(false);
 		btnManageTags.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tags3.png")));
@@ -155,6 +198,13 @@ public class ManageExisiting extends JFrame {
 		contentPane.add(btnManageTags);
 		
 		JButton btnManageStudentGroups = new JButton(" Manage Student Groups");
+		btnManageStudentGroups.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ManageStudentGroups manageStudentGroups = new ManageStudentGroups();
+				dispose();
+				manageStudentGroups.setVisible(true);
+			}
+		});
 		btnManageStudentGroups.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageStudentGroups.setFocusable(false);
 		btnManageStudentGroups.setIcon(new ImageIcon(getClass().getClassLoader().getResource("studentGroup2.png")));

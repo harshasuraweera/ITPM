@@ -8,6 +8,7 @@ import com.mysql.cj.xdevapi.Statement;
 
 
 public class DBConnect {
+
    
   static Connection conn = null;
   @SuppressWarnings("rawtypes")
@@ -16,7 +17,7 @@ public class DBConnect {
   static String userName = "u271442347_itpm_user";
   static String password = "80tlxBtuX";
   
-  
+
 
   public static Connection getConnection() {
       
