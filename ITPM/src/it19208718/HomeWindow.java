@@ -387,11 +387,36 @@ public class HomeWindow extends JFrame {
 		totalRooms.setText(String.valueOf(getLectureRoomCount(conn) + getLaboratoryRoomCount(conn)));
 		totalStudentGroups.setText(String.valueOf(getStudentGroupsCount(conn)));
 		totalSubjects.setText(String.valueOf(getSubjectsCount(conn)));
+		totalLecturers.setText(String.valueOf(getLecturersCount(conn)));
 		
 		//set values prograss bar
 		lectureRoomPercentage.setText(String.valueOf(generateLectureRoomPrecentage(conn)) + "%");
 		labRoomPercentage.setText(String.valueOf(generateLaboratoryRoomPrecentage(conn)) + "%");
 		progressBar.setValue((int)generateLectureRoomPrecentage(conn));
+		
+		
+		
+		//number of lectuers by count
+		int lecturersCountByCategory[] = getLecturersByCategoryWise( conn);
+		
+		numberOfProfessors.setText(numberOfProfessors.getText() + String.valueOf(lecturersCountByCategory[0]));
+		numberOfAssistantProfessors.setText(numberOfAssistantProfessors.getText() + String.valueOf(lecturersCountByCategory[1]));
+		numberOfSeniorHgLecturers.setText(numberOfSeniorHgLecturers.getText() + String.valueOf(lecturersCountByCategory[2]));
+		numberOfSeniorLecturers.setText(numberOfSeniorLecturers.getText() + String.valueOf(lecturersCountByCategory[3]));
+		numberOfLecturers.setText(numberOfLecturers.getText() + String.valueOf(lecturersCountByCategory[4]));
+		numberOfAssistantLecturers.setText(numberOfAssistantLecturers.getText() + String.valueOf(lecturersCountByCategory[5]));
+		
+		
+		
+		
+		//number of subjects for each year
+		int subjectsCountByYear[] = getSubjectsByYearWise( conn);
+		
+		numberOf1stYearSubjects.setText(numberOf1stYearSubjects.getText() + String.valueOf(subjectsCountByYear[0]));
+		numberOf2ndYearSubjects.setText(numberOf2ndYearSubjects.getText() + String.valueOf(subjectsCountByYear[1]));
+		numberOf3rdYearSubjects.setText(numberOf3rdYearSubjects.getText() + String.valueOf(subjectsCountByYear[2]));
+		numberOf4thYearSubjects.setText(numberOf4thYearSubjects.getText() + String.valueOf(subjectsCountByYear[3]));
+		
 		
 	}
 	
@@ -531,7 +556,7 @@ public class HomeWindow extends JFrame {
 	
 
 	
-	//get lecturers count
+	//get total lecturers count
 	public int getLecturersCount(Connection conn) {
 		
 		int count = 0;
@@ -553,7 +578,126 @@ public class HomeWindow extends JFrame {
 		}
 		
 		return count;
-	}	
+	}
+	
+	
+	
+	//get lecturers by category wise
+	public int[] getLecturersByCategoryWise(Connection conn){
+		
+		
+		int[] array = new int[6];
+		
+		try {
+			Statement st = conn.createStatement();
+			
+			//professorCount
+			String sqlProfessor = "SELECT COUNT(id) FROM Lecturers WHERE level = 1 ";
+			ResultSet professorCount = st.executeQuery(sqlProfessor);
+			professorCount.next();
+			array[0] = professorCount.getInt(1);
+			
+			
+			//Assistant Professor count
+			String sqlAssistantProfessor = "SELECT COUNT(id) FROM Lecturers WHERE level = 2 ";
+			ResultSet AssistantProfessorCount = st.executeQuery(sqlAssistantProfessor);
+			AssistantProfessorCount.next(); 
+			array[1] = AssistantProfessorCount.getInt(1);
+			
+			
+			//Senior Lecturer (HG) count
+			String sqlSeniorLecturerHG = "SELECT COUNT(id) FROM Lecturers WHERE level = 3 ";
+			ResultSet SeniorLecturerHGCount = st.executeQuery(sqlSeniorLecturerHG);
+			SeniorLecturerHGCount.next(); 
+			array[2] = SeniorLecturerHGCount.getInt(1);
+			
+			
+			//Senior Lecturer count
+			String sqlSeniorLecturer = "SELECT COUNT(id) FROM Lecturers WHERE level = 4 ";
+			ResultSet SeniorLecturerCount = st.executeQuery(sqlSeniorLecturer);
+			SeniorLecturerCount.next(); 
+			array[3] = SeniorLecturerCount.getInt(1);
+			
+			
+			// Lecturer count
+			String sqlLecturer = "SELECT COUNT(id) FROM Lecturers WHERE level = 5 ";
+			ResultSet LecturerCount = st.executeQuery(sqlLecturer);
+			LecturerCount.next(); 
+			array[4] = LecturerCount.getInt(1);
+			
+			
+			// Assistant Lecturer count
+			String sqlAssistantLecturer = "SELECT COUNT(id) FROM Lecturers WHERE level = 6 ";
+			ResultSet AssistantLecturerCount = st.executeQuery(sqlAssistantLecturer);
+			AssistantLecturerCount.next(); 
+			array[5] = AssistantLecturerCount.getInt(1);	
+			
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return array;
+		
+	}
+	
+	
+	
+	
+	//get subjects by year wise
+	public int[] getSubjectsByYearWise(Connection conn){
+		
+		int[] array = new int[5];
+		
+		try {
+			Statement st = conn.createStatement();
+			
+			//year1
+			String sqlYear1 = "SELECT COUNT(id) FROM Subjects WHERE offyear = 1 ";
+			ResultSet sqlYear1Count = st.executeQuery(sqlYear1);
+			sqlYear1Count.next();
+			array[0] = sqlYear1Count.getInt(1);
+			
+			
+			//year2
+			String sqlYear2 = "SELECT COUNT(id) FROM Subjects WHERE offyear = 2 ";
+			ResultSet sqlYear2Count = st.executeQuery(sqlYear2);
+			sqlYear2Count.next(); 
+			array[1] = sqlYear2Count.getInt(1);
+			
+			
+			//year3
+			String sqlYear3 = "SELECT COUNT(id) FROM Subjects WHERE offyear = 3 ";
+			ResultSet sqlYear3Count = st.executeQuery(sqlYear3);
+			sqlYear3Count.next(); 
+			array[2] = sqlYear3Count.getInt(1);
+			
+			
+			//year4
+			String sqlYear4 = "SELECT COUNT(id) FROM Subjects WHERE offyear = 4 ";
+			ResultSet sqlYear4Count = st.executeQuery(sqlYear4);
+			sqlYear4Count.next(); 
+			array[3] = sqlYear4Count.getInt(1);
+			
+			
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		
+		
+		return array;
+		
+	}
+	
+	
 	
 	
 }
