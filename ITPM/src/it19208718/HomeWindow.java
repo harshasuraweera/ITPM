@@ -488,9 +488,13 @@ public class HomeWindow extends JFrame {
 	
 	//generate lab room precentage
 	private double generateLaboratoryRoomPrecentage(Connection conn) {
+		
+		int lecRooms = getLectureRoomCount(conn);
+		int labRooms = getLaboratoryRoomCount(conn);
+		int totRooms = lecRooms + labRooms;
 			
-			
-		double labRoomPrecentage = 100 - generateLectureRoomPrecentage(conn);
+		//lab room precentage
+		double labRoomPrecentage = (labRooms/(double)totRooms) * 100;
 			
 		return round(labRoomPrecentage, 2); 
 			
