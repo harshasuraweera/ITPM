@@ -26,6 +26,8 @@ import javax.swing.table.DefaultTableModel;
 
 import database.DBConnect;
 import it19208718.AddSomething;
+import it19208718.HomeWindow;
+
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
@@ -101,9 +103,9 @@ public class Smanage extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 					
 						try {
-							AddSomething addSomething = new AddSomething();
+							HomeWindow homewindow = new HomeWindow();
 							dispose();
-							addSomething.setVisible(true);
+							homewindow.setVisible(true);
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -149,21 +151,21 @@ public class Smanage extends JFrame {
 				btnUpdate.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnUpdate.setFocusable(false);
 				btnUpdate.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnUpdate.setBounds(774, 145, 250, 50);
+				btnUpdate.setBounds(978, 139, 250, 50);
 				contentPane.add(btnUpdate);
 				
 				JButton btnDelete = new JButton("Delete");
 				btnDelete.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnDelete.setFocusable(false);
 				btnDelete.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnDelete.setBounds(774, 239, 250, 50);
+				btnDelete.setBounds(978, 233, 250, 50);
 				contentPane.add(btnDelete);
 				
 				JButton btnDone = new JButton("View");
 				btnDone.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnDone.setFocusable(false);
 				btnDone.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnDone.setBounds(774, 326, 250, 50);
+				btnDone.setBounds(978, 320, 250, 50);
 				contentPane.add(btnDone);
 				
 				JTextPane txtpnLecturerName = new JTextPane();
@@ -271,7 +273,7 @@ public class Smanage extends JFrame {
 				contentPane.add(nehours);
 				
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(62, 112, 610, 276);
+				scrollPane.setBounds(62, 113, 892, 275);
 				contentPane.add(scrollPane);
 				
 				table = new JTable();
