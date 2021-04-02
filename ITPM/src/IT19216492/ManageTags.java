@@ -17,12 +17,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import database.DBConnect;
+import it19208718.HomeWindow;
 
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -34,6 +37,7 @@ public class ManageTags extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -68,7 +72,7 @@ public class ManageTags extends JFrame {
 		setSize(1280, 720);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setTitle("Forza Timetable Management System - Add Location");
+		setTitle("Forza Timetable Management System - Manage Tags");
 		
 		//set Icon to the window
 		ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
@@ -89,13 +93,35 @@ public class ManageTags extends JFrame {
 		
 		
 		
-		JButton btnNewButton_1 = new JButton(" Back To Home");
+		JButton btnNewButton_1 = new JButton(" Add Tags");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				AddTags addTags = new AddTags();
+				dispose();
+				addTags.setVisible(true);
+			}
+		});
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
 		btnNewButton_1.setBounds(24, 10, 225, 50);
 		panel.add(btnNewButton_1);
 		
-		JButton btnNewButton_1_1 = new JButton("Manage Tags");
+		JButton btnNewButton_1_1 = new JButton(" Back To Home");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					HomeWindow homeWindow = new HomeWindow();
+					dispose();
+					homeWindow.setVisible(true);
+					
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1.setFocusable(false);
 		btnNewButton_1_1.setBounds(978, 10, 264, 50);
@@ -104,7 +130,7 @@ public class ManageTags extends JFrame {
 		
 		
 		
-		JLabel lblNewLabel_1 = new JLabel("Add Tags");
+		JLabel lblNewLabel_1 = new JLabel("Manage Tags");
 		lblNewLabel_1.setBounds(615, 82, 172, 44);
 		contentPane.add(lblNewLabel_1);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
@@ -118,20 +144,12 @@ public class ManageTags extends JFrame {
 		lblTagName.setBounds(403, 489, 116, 37);
 		contentPane.add(lblTagName);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
-		comboBox.setBounds(721, 496, 213, 25);
-		contentPane.add(comboBox);
+		textField = new JTextField();
+		textField.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		textField.setColumns(10);
+		textField.setBounds(721, 496, 213, 25);
+		contentPane.add(textField);
 		
-		comboBox.addItem("");
-		comboBox.addItem("Y1S1");
-		comboBox.addItem("Y1S2");
-		comboBox.addItem("Y2S1");
-		comboBox.addItem("Y2S2");
-		comboBox.addItem("Y3S1");
-		comboBox.addItem("Y3S2");
-		comboBox.addItem("Y4S1");
-		comboBox.addItem("Y4S2");
 		
 		
 		
@@ -146,13 +164,11 @@ public class ManageTags extends JFrame {
 		contentPane.add(comboBox_1);
 		
 		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
+		comboBox_1.addItem("Lecture");
+		comboBox_1.addItem("Lab");
+		comboBox_1.addItem("Tutorial");
+		comboBox_1.addItem("Practical");
+		comboBox_1.addItem("Evaluation");
 		
 		
 		
@@ -161,7 +177,7 @@ public class ManageTags extends JFrame {
 		btnNewButton_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				comboBox.setSelectedIndex(0);
+				textField.setText(" ");
 				comboBox_1.setSelectedIndex(0);
 			}
 		});
@@ -222,7 +238,7 @@ public class ManageTags extends JFrame {
 		btnNewButton_1_1_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-if(comboBox.getSelectedItem().equals("") || comboBox_1.getSelectedItem().equals("")) {
+if(textField.getText().equals("") || comboBox_1.getSelectedItem().equals("")) {
 					
 					JLabel label = new JLabel("Please Fill Complete Information");
  					label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -230,7 +246,7 @@ if(comboBox.getSelectedItem().equals("") || comboBox_1.getSelectedItem().equals(
 				}
 				else {
 					
-					String value1 = comboBox.getSelectedItem().toString();
+					String value1 = textField.getText();
 					String value2 = comboBox_1.getSelectedItem().toString();
 					
 				
@@ -242,7 +258,7 @@ if(comboBox.getSelectedItem().equals("") || comboBox_1.getSelectedItem().equals(
 					
 					int selectedRowId = Integer.parseInt(table.getValueAt(i,0).toString());
 					
-					String query = "UPDATE `Tags` SET `tagName`='" + value1 + "',`relatedTag`='" + value2 + "'";
+					String query = "UPDATE `Tags` SET `tagName`='" + value1 + "',`relatedTag`='" + value2 + "' WHERE id='"+selectedRowId+"'";
 					
 					 Statement sta = conn.createStatement();
 	                 int x = sta.executeUpdate(query);
@@ -278,7 +294,7 @@ if(comboBox.getSelectedItem().equals("") || comboBox_1.getSelectedItem().equals(
 		contentPane.add(btnNewButton_1_1_1_1_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(214, 155, 900, 309);
+		scrollPane.setBounds(512, 155, 363, 309);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -288,13 +304,15 @@ if(comboBox.getSelectedItem().equals("") || comboBox_1.getSelectedItem().equals(
 				
 				int i=table.getSelectedRow();
 				
-			    comboBox.setSelectedItem(table.getValueAt(i, 1).toString());
+				textField.setText(table.getValueAt(i, 1).toString());
 			    comboBox_1.setSelectedItem(table.getValueAt(i, 2).toString());
 				
 			}
 		});
 		scrollPane.setViewportView(table);
 		table.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
+		
+		
 		
 	}
 	
@@ -304,20 +322,20 @@ if(comboBox.getSelectedItem().equals("") || comboBox_1.getSelectedItem().equals(
 			
 			DefaultTableModel model = new DefaultTableModel();
 			model.addColumn("Id");
-			model.addColumn("tagNamer");
+			model.addColumn("tagName");
 			model.addColumn("relatedTag");
 			
 			
 			try {
 				
-				String sql = "SELECT * FROM StudentGroups";
+				String sql = "SELECT * FROM Tags";
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery(sql);
 				
 				while(rs.next()) {
 					model.addRow(new Object[] {
 							rs.getString("id"),
-							rs.getString("tagNamer"),
+							rs.getString("tagName"),
 							rs.getString("relatedTag"),
 							
 					});;
