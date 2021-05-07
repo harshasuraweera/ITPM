@@ -17,10 +17,12 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class AssignSessionRoom extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField ifTheSelectedSessionConsectiveShowTheRelatedOneHere;
 
 	/**
 	 * Launch the application.
@@ -114,12 +116,12 @@ public class AssignSessionRoom extends JFrame {
 		addNewLocationLabel.setBounds(457, 122, 345, 44);
 		contentPane.add(addNewLocationLabel);
 		
-		JComboBox<Object> roomTypeFilter = new JComboBox<Object>(new Object[]{});
+		JComboBox<Object> allTheSessionsDropDownList = new JComboBox<Object>(new Object[]{});
 		//roomTypeFilter.setSelectedIndex(0);
-		roomTypeFilter.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		roomTypeFilter.setBackground(Color.WHITE);
-		roomTypeFilter.setBounds(291, 199, 818, 36);
-		contentPane.add(roomTypeFilter);
+		allTheSessionsDropDownList.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		allTheSessionsDropDownList.setBackground(Color.WHITE);
+		allTheSessionsDropDownList.setBounds(291, 199, 818, 36);
+		contentPane.add(allTheSessionsDropDownList);
 		
 		JLabel lblSelectSession = new JLabel("Select Session");
 		lblSelectSession.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -131,49 +133,50 @@ public class AssignSessionRoom extends JFrame {
 		lblConse.setBounds(116, 278, 165, 46);
 		contentPane.add(lblConse);
 		
-		JComboBox<Object> roomTypeFilter_1 = new JComboBox<Object>(new Object[]{});
-		//roomTypeFilter_1.setSelectedIndex(0);
-		roomTypeFilter_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		roomTypeFilter_1.setBackground(Color.WHITE);
-		roomTypeFilter_1.setBounds(291, 283, 818, 36);
-		contentPane.add(roomTypeFilter_1);
-		
 		JLabel lblSelectRoom = new JLabel("Select Room");
 		lblSelectRoom.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		lblSelectRoom.setBounds(116, 367, 165, 46);
 		contentPane.add(lblSelectRoom);
 		
-		JComboBox<Object> roomTypeFilter_1_1 = new JComboBox<Object>(new Object[]{});
+		JComboBox<Object> allTheAvailableRoomList = new JComboBox<Object>(new Object[]{});
 		//roomTypeFilter_1_1.setSelectedIndex(0);
-		roomTypeFilter_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		roomTypeFilter_1_1.setBackground(Color.WHITE);
-		roomTypeFilter_1_1.setBounds(291, 372, 818, 36);
-		contentPane.add(roomTypeFilter_1_1);
+		allTheAvailableRoomList.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		allTheAvailableRoomList.setBackground(Color.WHITE);
+		allTheAvailableRoomList.setBounds(291, 372, 818, 36);
+		contentPane.add(allTheAvailableRoomList);
 		
 		JLabel lblSelectedSessions = new JLabel("Selected Sessions");
 		lblSelectedSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		lblSelectedSessions.setBounds(116, 456, 165, 46);
 		contentPane.add(lblSelectedSessions);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBackground(Color.WHITE);
-		textArea.setBounds(291, 456, 818, 112);
-		contentPane.add(textArea);
+		JTextArea selectedSessionListArray = new JTextArea();
+		selectedSessionListArray.setBackground(Color.WHITE);
+		selectedSessionListArray.setBounds(291, 456, 818, 112);
+		contentPane.add(selectedSessionListArray);
 		
-		JButton updateLocation = new JButton("Assign");
-		updateLocation.addActionListener(new ActionListener() {
+		JButton assignSessionBtn = new JButton("Assign");
+		assignSessionBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		updateLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		updateLocation.setFocusable(false);
-		updateLocation.setBounds(116, 608, 120, 50);
-		contentPane.add(updateLocation);
+		assignSessionBtn.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		assignSessionBtn.setFocusable(false);
+		assignSessionBtn.setBounds(116, 608, 120, 50);
+		contentPane.add(assignSessionBtn);
 		
-		JButton updateLocation_1 = new JButton("Clear");
-		updateLocation_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		updateLocation_1.setFocusable(false);
-		updateLocation_1.setBounds(288, 608, 120, 50);
-		contentPane.add(updateLocation_1);
+		JButton clearSelectedSessionArrayBtn = new JButton("Clear");
+		clearSelectedSessionArrayBtn.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		clearSelectedSessionArrayBtn.setFocusable(false);
+		clearSelectedSessionArrayBtn.setBounds(288, 608, 120, 50);
+		contentPane.add(clearSelectedSessionArrayBtn);
+		
+		ifTheSelectedSessionConsectiveShowTheRelatedOneHere = new JTextField();
+		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setText("sd");
+		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setEditable(false);
+		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setColumns(10);
+		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setBounds(291, 282, 818, 36);
+		contentPane.add(ifTheSelectedSessionConsectiveShowTheRelatedOneHere);
 	}
 }
