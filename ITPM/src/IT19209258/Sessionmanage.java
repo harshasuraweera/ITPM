@@ -1,6 +1,6 @@
 package IT19209258;
 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -16,10 +16,8 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 
 import database.DBConnect;
 import it19208718.AddLocation;
@@ -29,7 +27,7 @@ import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.BorderFactory;
 
-public class AddSessions extends JFrame {
+public class Sessionmanage extends JFrame {
 
 	private JPanel contentPane;
 
@@ -40,7 +38,7 @@ public class AddSessions extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddSessions frame = new AddSessions();
+					Sessionmanage frame = new Sessionmanage();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +50,7 @@ public class AddSessions extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddSessions() {
+	public Sessionmanage() {
 		//do these for each and every JFrame
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setBounds(100, 100, 450, 300);
@@ -84,7 +82,7 @@ public class AddSessions extends JFrame {
 	          dispose();
 	          homeWindow.setVisible(true);
 	          
-	        } catch (Exception e1) {
+	        } catch (IOException e1) {
 	          
 	          e1.printStackTrace();
 	        }
@@ -93,166 +91,122 @@ public class AddSessions extends JFrame {
 	    btnBackToHome.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
 	    btnBackToHome.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    btnBackToHome.setFocusable(false);
-	    btnBackToHome.setBounds(24, 10, 225, 50);
+	    btnBackToHome.setBounds(1022, 11, 225, 50);
 	    panel.add(btnBackToHome);
 	    
-	    JButton btnManageSessions = new JButton("Manage Sessions");
-	    btnManageSessions.addActionListener(new ActionListener() {
+	    JButton btnAddNewSessions = new JButton("Add New Sessions");
+	    btnAddNewSessions.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		
-	    		Sessionmanage Sessionmanage = new Sessionmanage();
-	    		dispose();
-	    		Sessionmanage.setVisible(true);
+	    			AddSessions AddSessions = new AddSessions();
+	    			dispose();
+	    			AddSessions.setVisible(true);
+	    			
+	    		
 	    	}
 	    });
-	    btnManageSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-	    btnManageSessions.setFocusable(false);
-	    btnManageSessions.setBounds(1026, 10, 225, 50);
-	    panel.add(btnManageSessions);
-	    
-	    JTextPane txtpnAddNewSession = new JTextPane();
-	    txtpnAddNewSession.setFont(new Font("Kristen ITC", Font.BOLD, 30));
-	    txtpnAddNewSession.setText("Select Lecturer and Tag");
-	    txtpnAddNewSession.setEditable(false);
-	    txtpnAddNewSession.setBackground(new Color(153, 204, 255));
-	    txtpnAddNewSession.setBounds(452, 95, 396, 83);
-	    contentPane.add(txtpnAddNewSession);
+	    btnAddNewSessions.setBounds(20, 11, 225, 50);
+	    panel.add(btnAddNewSessions);
+	    btnAddNewSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    btnAddNewSessions.setFocusable(false);
 	    
 	    JTextPane txtpnSelectLecturerName = new JTextPane();
 	    txtpnSelectLecturerName.setText(" Select Lecturer Name 01");
 	    txtpnSelectLecturerName.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectLecturerName.setBackground(new Color(153, 204, 255));
-	    txtpnSelectLecturerName.setBounds(55, 179, 244, 35);
+	    txtpnSelectLecturerName.setBounds(47, 472, 244, 35);
 	    contentPane.add(txtpnSelectLecturerName);
 	    
-	    JComboBox <Object> lecturer1 = new JComboBox <Object> (getlecturerNames());
-	    lecturer1.setBounds(325, 179, 275, 35);
+	    JComboBox<Object> lecturer1 = new JComboBox <Object> (getlecturerNames());
+	    lecturer1.setBounds(347, 472, 275, 27);
 	    contentPane.add(lecturer1);
+	    
+	    JTextPane txtpnSelectLecturerName_2 = new JTextPane();
+	    txtpnSelectLecturerName_2.setText(" Select Lecturer Name 02");
+	    txtpnSelectLecturerName_2.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    txtpnSelectLecturerName_2.setBackground(new Color(153, 204, 255));
+	    txtpnSelectLecturerName_2.setBounds(47, 518, 244, 35);
+	    contentPane.add(txtpnSelectLecturerName_2);
+	    
+	    JComboBox<Object> lecturer2 =new JComboBox <Object> (getlecturer1Names());
+	    lecturer2.setBounds(347, 518, 275, 27);
+	    contentPane.add(lecturer2);
 	    
 	    JTextPane txtpnSelectTag = new JTextPane();
 	    txtpnSelectTag.setText("Select Tag");
 	    txtpnSelectTag.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectTag.setBackground(new Color(153, 204, 255));
-	    txtpnSelectTag.setBounds(713, 179, 171, 35);
+	    txtpnSelectTag.setBounds(744, 472, 111, 35);
 	    contentPane.add(txtpnSelectTag);
 	    
-	    JComboBox <Object> tag = new JComboBox <Object> (gettagNames());
-	    tag.setBounds(931, 179, 275, 35);
+	    JComboBox<Object> tag = new JComboBox <Object> (gettagNames());
+	    tag.setBounds(1018, 472, 196, 35);
 	    contentPane.add(tag);
+	    
+	    JTextPane txtpnNumberOfStudents = new JTextPane();
+	    txtpnNumberOfStudents.setText("Number of Students");
+	    txtpnNumberOfStudents.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    txtpnNumberOfStudents.setBackground(new Color(153, 204, 255));
+	    txtpnNumberOfStudents.setBounds(744, 539, 216, 35);
+	    contentPane.add(txtpnNumberOfStudents);
+	    
+	    JSpinner nOfStudents = new JSpinner();
+	    nOfStudents.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    nOfStudents.setBounds(1018, 528, 196, 35);
+	    contentPane.add(nOfStudents);
+	    
+	    JTextPane txtpnDuration = new JTextPane();
+	    txtpnDuration.setText("Duration");
+	    txtpnDuration.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    txtpnDuration.setBackground(new Color(153, 204, 255));
+	    txtpnDuration.setBounds(744, 602, 216, 35);
+	    contentPane.add(txtpnDuration);
+	    
+	    JSpinner duration = new JSpinner();
+	    duration.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    duration.setBounds(1018, 602, 196, 35);
+	    contentPane.add(duration);
+	    
+	    JButton btnUpdate = new JButton("Update");
+	    btnUpdate.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    btnUpdate.setFocusable(false);
+	    btnUpdate.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
+	    btnUpdate.setBounds(1072, 160, 155, 50);
+	    contentPane.add(btnUpdate);
+	    
+	    JButton btnDelete = new JButton("Delete");
+	    btnDelete.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    btnDelete.setFocusable(false);
+	    btnDelete.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
+	    btnDelete.setBounds(1072, 279, 155, 50);
+	    contentPane.add(btnDelete);
 	    
 	    JTextPane txtpnSelectGroup = new JTextPane();
 	    txtpnSelectGroup.setText(" Select Group");
 	    txtpnSelectGroup.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectGroup.setBackground(new Color(153, 204, 255));
-	    txtpnSelectGroup.setBounds(55, 427, 223, 35);
+	    txtpnSelectGroup.setBounds(47, 610, 223, 35);
 	    contentPane.add(txtpnSelectGroup);
 	    
 	    JTextPane txtpnSelectSubject = new JTextPane();
 	    txtpnSelectSubject.setText(" Select Subject");
 	    txtpnSelectSubject.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectSubject.setBackground(new Color(153, 204, 255));
-	    txtpnSelectSubject.setBounds(55, 528, 163, 35);
+	    txtpnSelectSubject.setBounds(47, 564, 163, 35);
 	    contentPane.add(txtpnSelectSubject);
 	    
-	    JSpinner nOfStudents = new JSpinner();
-	    nOfStudents.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-	    nOfStudents.setBounds(1010, 419, 196, 46);
-	    contentPane.add(nOfStudents);
-	    
-	    JComboBox <Object> groupid = new JComboBox <Object> (getGroupIDs());
-	    groupid.setBounds(325, 427, 275, 35);
+	    JComboBox<Object> groupid = new JComboBox <Object> (getGroupIDs());
+	    groupid.setBounds(347, 618, 275, 27);
 	    contentPane.add(groupid);
 	    
-	    JComboBox <Object> subjectName = new JComboBox <Object> (getSubjects());
-	    subjectName.setBounds(325, 528, 275, 35);
+	    JComboBox<Object> subjectName = new JComboBox <Object> (getSubjects());
+	    subjectName.setBounds(347, 572, 275, 27);
 	    contentPane.add(subjectName);
 	    
-	    JTextPane txtpnNumberOfStudents = new JTextPane();
-	    txtpnNumberOfStudents.setText("Number of Students");
-	    txtpnNumberOfStudents.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-	    txtpnNumberOfStudents.setBackground(new Color(153, 204, 255));
-	    txtpnNumberOfStudents.setBounds(713, 427, 216, 35);
-	    contentPane.add(txtpnNumberOfStudents);
-	    
-	    JTextPane txtpnDuration = new JTextPane();
-	    txtpnDuration.setText("Duration");
-	    txtpnDuration.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-	    txtpnDuration.setBackground(new Color(153, 204, 255));
-	    txtpnDuration.setBounds(713, 528, 216, 35);
-	    contentPane.add(txtpnDuration);
-	    
-	    JSpinner duration = new JSpinner();
-	    duration.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-	    duration.setBounds(1010, 517, 196, 46);
-	    contentPane.add(duration);
-	    
-	    JTextPane txtpnSelectGroupAnd = new JTextPane();
-	    txtpnSelectGroupAnd.setText("Select Group and Subject");
-	    txtpnSelectGroupAnd.setFont(new Font("Kristen ITC", Font.BOLD, 30));
-	    txtpnSelectGroupAnd.setEditable(false);
-	    txtpnSelectGroupAnd.setBackground(new Color(153, 204, 255));
-	    txtpnSelectGroupAnd.setBounds(435, 343, 413, 83);
-	    contentPane.add(txtpnSelectGroupAnd);
-	    
-	    JButton btnDone = new JButton("Done");
-	    btnDone.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-	    btnDone.setFocusable(false);
-	    btnDone.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-	    btnDone.setBounds(956, 615, 250, 50);
-	    contentPane.add(btnDone);
-	    
-	    JTextPane txtpnSelectLecturerName_1 = new JTextPane();
-	    txtpnSelectLecturerName_1.setText(" Select Lecturer Name 02");
-	    txtpnSelectLecturerName_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-	    txtpnSelectLecturerName_1.setBackground(new Color(153, 204, 255));
-	    txtpnSelectLecturerName_1.setBounds(55, 265, 244, 35);
-	    contentPane.add(txtpnSelectLecturerName_1);
-	    
-	    JComboBox<Object> lecturer2 = new JComboBox <Object> (getlecturer1Names());
-	    lecturer2.setBounds(325, 265, 275, 35);
-	    contentPane.add(lecturer2);
-	    
-	    
-	    
-	    btnDone.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if(lecturer1.getSelectedItem().equals("") || lecturer2.getSelectedItem().equals("") || tag.getSelectedItem().equals("") || groupid.getSelectedItem().equals("") || subjectName.getSelectedItem().equals("")) {
-					
-					JOptionPane.showMessageDialog(null, "Please Fill the Informations");
-					
-				}
-				else {
-					boolean isSuccess =  addsession(
-							
-							lecturer1.getSelectedItem().toString(),
-							lecturer2.getSelectedItem().toString(),
-							tag.getSelectedItem().toString(),
-							groupid.getSelectedItem().toString(),
-							subjectName.getSelectedItem().toString(),
-							Integer.parseInt(nOfStudents.getValue().toString()),
-							Integer.parseInt(duration.getValue().toString()));
-				
-					if(isSuccess) {
-						
-						JOptionPane.showMessageDialog(null, "added successfully");
-						}else {
-					
-						JOptionPane.showMessageDialog(null, "error");
-						
-						}
-				}	
-			}
-	    });
-	    
-	  //end default
-	    
+	    //end default
 	}
-	    
-	    
-	    private String [] getlecturerNames() {
+	
+	 private String [] getlecturerNames() {
 	    	Connection conn = DBConnect.getConnection();
 	    	
 	    	String[] lecturerNameArray = null;
@@ -385,31 +339,4 @@ public class AddSessions extends JFrame {
 	        
 	        return subjectArray;
 	}
-	    
-	    public boolean addsession(String lecturer1, String lecturer2, String tag, String groupid, String subjectName, int nOfStudent, int duration) {
-	    	boolean isSuccess = false;
-			java.sql.Connection conn = DBConnect.getConnection();
-			try {
-				String subjectCode = null;
-				String sql1 = "Select scode from Subjects WHERE sname = '"+subjectName+"'";
-				Statement st =  conn.createStatement();
-		        ResultSet rs =  st.executeQuery(sql1);
-		        while(rs.next()) {
-		         subjectCode = rs.getString("scode");
-		        }
-				String sql = "INSERT INTO Sessions(lecturer1,lecturer2,tag,groupId,subjectName,nOfStudents,duration, subjectCode)   VALUES ('"+lecturer1+"', '"+lecturer2+"', '"+tag+"', '"+groupid+"', '"+subjectName+"', '"+nOfStudent+"', '"+duration+"', '"+subjectCode+"')";
-				Statement st1 = conn.createStatement();
-				int rs1 = st1.executeUpdate(sql);
-				
-				st1.close();
-				isSuccess = true;
-				
-			}catch(Exception e) {
-				System.out.println(e.getMessage());
-				isSuccess = false;
-			}
-			
-			
-			return isSuccess;
-	    }
 }
