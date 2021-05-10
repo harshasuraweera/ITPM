@@ -241,7 +241,7 @@ public class lecturer extends JFrame {
 				monday.setBounds(410, 551, 35, 32);
 				contentPane.add(monday);
 				
-				String array [] = {"1", "2", "3", "4", "5", " 6"};
+				String array [] = {"","1", "2", "3", "4", "5", " 6"};
 				JComboBox level = new JComboBox(array);
 				level.setBounds(941, 349, 275, 35);
 				contentPane.add(level);

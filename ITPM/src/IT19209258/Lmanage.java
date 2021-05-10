@@ -31,6 +31,7 @@ import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JScrollBar;
 
 public class Lmanage extends JFrame {
 
@@ -243,7 +244,7 @@ public class Lmanage extends JFrame {
 				contentPane.add(building);
 				
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(62, 112, 1007, 300);
+				scrollPane.setBounds(62, 112, 995, 285);
 				contentPane.add(scrollPane);
 				
 				table = new JTable();
@@ -494,15 +495,15 @@ public class Lmanage extends JFrame {
 			table.setModel(model);
 			table.setAutoResizeMode(1);
 			
-//			table.getColumnModel().getColumn(0).setPreferredWidth(80);
-//			table.getColumnModel().getColumn(1).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(2).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(3).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(4).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(5).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(6).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(7).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(8).setPreferredWidth(140);
+			table.getColumnModel().getColumn(0).setPreferredWidth(80);
+			table.getColumnModel().getColumn(1).setPreferredWidth(140);
+			table.getColumnModel().getColumn(2).setPreferredWidth(140);
+			table.getColumnModel().getColumn(3).setPreferredWidth(140);
+			table.getColumnModel().getColumn(4).setPreferredWidth(140);
+			table.getColumnModel().getColumn(5).setPreferredWidth(140);
+			table.getColumnModel().getColumn(6).setPreferredWidth(140);
+			table.getColumnModel().getColumn(7).setPreferredWidth(140);
+			table.getColumnModel().getColumn(8).setPreferredWidth(140);
 			
 			
 		}catch (Exception e) {
