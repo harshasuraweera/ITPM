@@ -105,7 +105,8 @@ public class Sessionmanage extends JFrame {
 	    		
 	    	}
 	    });
-	    btnAddNewSessions.setBounds(20, 11, 225, 50);
+	    btnAddNewSessions.setIcon(new ImageIcon(getClass().getClassLoader().getResource("rsz_addnew.png")));
+	    btnAddNewSessions.setBounds(20, 11, 245, 50);
 	    panel.add(btnAddNewSessions);
 	    btnAddNewSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    btnAddNewSessions.setFocusable(false);

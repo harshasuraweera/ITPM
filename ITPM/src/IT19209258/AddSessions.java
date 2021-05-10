@@ -105,6 +105,7 @@ public class AddSessions extends JFrame {
 	    		Sessionmanage.setVisible(true);
 	    	}
 	    });
+	    btnManageSessions.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manage.png")));
 	    btnManageSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    btnManageSessions.setFocusable(false);
 	    btnManageSessions.setBounds(1026, 10, 225, 50);
