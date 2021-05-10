@@ -205,7 +205,8 @@ public class AddSpecialRoom extends JFrame {
 				try {
 					Connection conn = DBConnect.getConnection();
 					
-					//String sql1 = "insert into SpecialRoom (sroom, sday, stime, setime) values (null,'"++"')";
+					//NEED TO BE UPDATED
+					String sql1 = "insert into SpecialRoom (sroom, sday, stime, setime) values ()";
 					Statement st = conn.createStatement();
 					int rs = st.executeUpdate(sql1);
 				}
