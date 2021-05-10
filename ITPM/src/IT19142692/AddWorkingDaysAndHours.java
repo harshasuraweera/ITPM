@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import database.DBConnect;
-import it19208718.AddSomething;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
