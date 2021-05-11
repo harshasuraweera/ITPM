@@ -40,7 +40,6 @@ public class AssignSessionRoom extends JFrame {
 	private ArrayList<String> selectedSessionsArrayList =  new ArrayList<String>();  
 	private ArrayList<String> selectedRoomssArrayList =  new ArrayList<String>(); 
 	private ArrayList<String> selectedAllSessions = new ArrayList<String>();
-	private JTextField ifTheSelectedSessionConsectiveShowTheRelatedOneHere;
 
 	/**
 	 * Launch the application.
@@ -129,7 +128,8 @@ public class AssignSessionRoom extends JFrame {
 		panel.add(btnManageLocation);
 		
 		JTextArea selectedSessions = new JTextArea();
-		selectedSessions.setBounds(291, 456, 806, 122);
+		selectedSessions.setEditable(false);
+		selectedSessions.setBounds(291, 456, 818, 122);
 		contentPane.add(selectedSessions);
 		
 		JLabel addNewLocationLabel = new JLabel("Assign Session Rooms");
@@ -157,14 +157,14 @@ public class AssignSessionRoom extends JFrame {
 		
 		JLabel lblSelectRoom = new JLabel("Select Room");
 		lblSelectRoom.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		lblSelectRoom.setBounds(116, 367, 165, 46);
+		lblSelectRoom.setBounds(116, 381, 165, 46);
 		contentPane.add(lblSelectRoom);
 		
 		JComboBox<Object> allTheAvailableRoomList = new JComboBox<Object>(new Object[]{});
 		//allTheAvailableRoomList.setSelectedIndex(0);
 		allTheAvailableRoomList.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		allTheAvailableRoomList.setBackground(Color.WHITE);
-		allTheAvailableRoomList.setBounds(291, 372, 818, 36);
+		allTheAvailableRoomList.setBounds(291, 386, 818, 36);
 		contentPane.add(allTheAvailableRoomList);
 		
 		JLabel lblSelectedSessions = new JLabel("Selected Sessions");
@@ -195,12 +195,9 @@ public class AssignSessionRoom extends JFrame {
 		clearSelectedSessionArrayBtn.setBounds(288, 608, 120, 50);
 		contentPane.add(clearSelectedSessionArrayBtn);
 		
-		ifTheSelectedSessionConsectiveShowTheRelatedOneHere = new JTextField();
-		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setText("sd");
+		JTextArea ifTheSelectedSessionConsectiveShowTheRelatedOneHere = new JTextArea();
 		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setEditable(false);
-		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setColumns(10);
-		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setBounds(291, 282, 818, 36);
+		ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setBounds(288, 279, 818, 70);
 		contentPane.add(ifTheSelectedSessionConsectiveShowTheRelatedOneHere);
 		
 		
@@ -217,19 +214,33 @@ public class AssignSessionRoom extends JFrame {
 				String selectedSession = String.valueOf(allTheSessionsDropDownList.getSelectedItem());
 				
 				if(selectedSession.endsWith("Tutorial")) { //is the selected session a Tutorial, load lecture halls to the room dropdown list
-					
-					ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setText("Tutorial");
 					allTheAvailableRoomList.setModel(new DefaultComboBoxModel<Object>(getRoomNames("Lecture Hall")));
 					
 					
 				}else if(selectedSession.endsWith("Lab")) { //is the selected session a Lab, load laboratories to the room dropdown list
-					
-					ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setText("Lab");
 					allTheAvailableRoomList.setModel(new DefaultComboBoxModel<Object>(getRoomNames("Laboratory")));
 					
 				}
 				
 				
+				//if the selected session is Consecutive session, load the relavant sessions to the feild
+				
+				String sessionId = String.valueOf(allTheSessionsDropDownList.getSelectedItem().toString().charAt(2)) + String.valueOf( allTheSessionsDropDownList.getSelectedItem().toString().charAt(3) );
+				
+				
+				//check weather the sessionID available at Consecutive Session table
+				
+				boolean ifConsecutive = checkIfTheSessionConsecutive(sessionId);
+				
+				if(ifConsecutive) {
+					
+					for(String s : getConsecutiveSessionsList(sessionId)) {
+						ifTheSelectedSessionConsectiveShowTheRelatedOneHere.append(s + System.getProperty("line.separator"));
+					}
+					
+				}else {
+					ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setText("This session is not a Consecutive session");
+				}
 				
 				
 			}
@@ -257,6 +268,8 @@ public class AssignSessionRoom extends JFrame {
 				for(String s : selectedAllSessions){
 					selectedSessions.append(s + System.getProperty("line.separator"));
 				}
+				
+				
 				
 				allTheSessionsDropDownList.setSelectedIndex(0);
 				
@@ -467,6 +480,97 @@ public class AssignSessionRoom extends JFrame {
 		
 		return isSuccess;
 	}
+	
+	
+	//check weather the sessionID available at Consecutive Session table
+	public boolean checkIfTheSessionConsecutive (String sessionID) {
+		
+		boolean isSuccess = false;
+		
+		Connection conn = DBConnect.getConnection();
+		
+		
+		try {
+			
+			String sql = "SELECT * FROM ConsecutiveSession WHERE sessionId = '"+sessionID+"' ";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			if(rs.next()) {
+				isSuccess = true;
+			}
+			
+			st.close();
+			conn.close();
+			
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			isSuccess = false;
+			
+		}	
+		
+		return isSuccess;
+	}
+	
+	
+	
+	
+	//find the related Consecutive session
+	private String [] getConsecutiveSessionsList (String sessionId) {
+		
+		Connection conn = DBConnect.getConnection();
+		
+		String[] sessionListArray = null;
+		List<String> list = new ArrayList<>();
+		String singleRoom;
+		String AIID;
+		
+		try {
+			
+			//get cons group via database
+			String consGroupSql = "SELECT * FROM ConsecutiveSession WHERE sessionId = '"+sessionId+"'";
+			Statement st2 = conn.createStatement();
+			ResultSet rs2 = st2.executeQuery(consGroupSql);
+			String consGroup = null;
+			while(rs2.next()) {
+				consGroup = rs2.getString("consGroup");
+			}
+			
+//			System.out.println(consGroup);
+			
+			String sql = "SELECT * FROM Sessions WHERE id IN (select sessionId from ConsecutiveSession where consGroup = '"+consGroup+"') ";
+							
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			
+			while(rs.next()) {
+				
+				if( rs.getString("id").equals("1") || rs.getString("id").equals("2") || rs.getString("id").equals("3")|| rs.getString("id").equals("4") || rs.getString("id").equals("5") 
+						|| rs.getString("id").equals("6") || rs.getString("id").equals("7") || rs.getString("id").equals("8") || rs.getString("id").equals("9") ) {
+					
+					AIID = "0" + rs.getString("id");
+					
+				}else {
+					AIID = rs.getString("id");
+				}
+				
+				singleRoom = "ID"+ AIID + " | " + rs.getString("subjectName") + " (" + rs.getString("subjectCode") + ") for " + rs.getString("groupId") + " by " + rs.getString("lecturer1") + " and " + rs.getString("lecturer2") + " | "  + rs.getString("tag");
+				list.add(singleRoom);
+			}
+			sessionListArray = list.toArray(new String[0]);
+			
+		}catch (Exception e) {
+			
+		}
+
+		
+		return sessionListArray;
+	} 
+	
+	
 	
 	
 	
