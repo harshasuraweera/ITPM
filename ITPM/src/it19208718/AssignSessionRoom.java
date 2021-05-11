@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -41,6 +43,8 @@ public class AssignSessionRoom extends JFrame {
 	private ArrayList<String> selectedRoomssArrayList =  new ArrayList<String>(); 
 	private ArrayList<String> selectedAllSessions = new ArrayList<String>();
 
+	private ArrayList<String>  consecutiveSessionList =  new ArrayList<String>();  
+	boolean ifConsecutive = false;
 	/**
 	 * Launch the application.
 	 */
@@ -211,6 +215,8 @@ public class AssignSessionRoom extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setText(null);
+				
 				String selectedSession = String.valueOf(allTheSessionsDropDownList.getSelectedItem());
 				
 				if(selectedSession.endsWith("Tutorial")) { //is the selected session a Tutorial, load lecture halls to the room dropdown list
@@ -224,17 +230,18 @@ public class AssignSessionRoom extends JFrame {
 				
 				
 				//if the selected session is Consecutive session, load the relavant sessions to the feild
-				
 				String sessionId = String.valueOf(allTheSessionsDropDownList.getSelectedItem().toString().charAt(2)) + String.valueOf( allTheSessionsDropDownList.getSelectedItem().toString().charAt(3) );
 				
 				
 				//check weather the sessionID available at Consecutive Session table
-				
-				boolean ifConsecutive = checkIfTheSessionConsecutive(sessionId);
+				ifConsecutive = checkIfTheSessionConsecutive(sessionId);
 				
 				if(ifConsecutive) {
 					
-					for(String s : getConsecutiveSessionsList(sessionId)) {
+					//Conversion of Array To ArrayList
+					Collections.addAll(consecutiveSessionList, getConsecutiveSessionsList(sessionId));
+					
+					for(String s : consecutiveSessionList) {
 						ifTheSelectedSessionConsectiveShowTheRelatedOneHere.append(s + System.getProperty("line.separator"));
 					}
 					
@@ -253,27 +260,52 @@ public class AssignSessionRoom extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				String selectedSessionName = String.valueOf(allTheSessionsDropDownList.getSelectedItem());
 				String selectedRoomName = String.valueOf(allTheAvailableRoomList.getSelectedItem());
 				
-				selectedSessionsArrayList.add(selectedSessionName);
-				selectedRoomssArrayList.add(selectedRoomName);
 				
 				
-				
-				//load these to selected sessions textbox
-				selectedAllSessions.add(selectedSessionName + " At " + selectedRoomName );
+				if(ifConsecutive) {
+					
+						
+					
+					selectedSessionsArrayList = consecutiveSessionList;
+					selectedRoomssArrayList.add(selectedRoomName);
+					selectedRoomssArrayList.add(selectedRoomName);
+					
+					for(int i=0; i<consecutiveSessionList.size(); i++) {
+						selectedAllSessions.add(consecutiveSessionList.get(i) + " At " + selectedRoomName );
+					}
 
-				selectedSessions.setText("");
-				for(String s : selectedAllSessions){
-					selectedSessions.append(s + System.getProperty("line.separator"));
+					selectedSessions.setText("");
+					for(String s : selectedAllSessions){
+						selectedSessions.append(s + System.getProperty("line.separator"));
+					}
+					
+//					allTheSessionsDropDownList.setSelectedIndex(0);
+//					allTheAvailableRoomList.setSelectedIndex(0);
+					
+				}else {
+					
+					selectedSessionsArrayList.add(selectedSessionName);
+					selectedRoomssArrayList.add(selectedRoomName);
+					
+					
+					
+					//load these to selected sessions textbox
+					selectedAllSessions.add(selectedSessionName + " At " + selectedRoomName );
+
+					selectedSessions.setText("");
+					for(String s : selectedAllSessions){
+						selectedSessions.append(s + System.getProperty("line.separator"));
+					}
+					
+					
+
 				}
 				
 				
-				
-				allTheSessionsDropDownList.setSelectedIndex(0);
-				
-				allTheAvailableRoomList.setSelectedIndex(0);
 			}
 		});
 		
@@ -282,45 +314,60 @@ public class AssignSessionRoom extends JFrame {
 		assignSessionBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				int count = 0;
 				
-				int dialogButton = JOptionPane.YES_NO_OPTION;
-				int dialogResult = JOptionPane.showConfirmDialog (null, "Operation cannot be undone! Do you want to continue?","Warning",dialogButton);
-				
-				if(dialogResult == JOptionPane.YES_OPTION){
-					
-					for(int i=0; i<selectedSessionsArrayList.size(); i++) {
-						
-						String sessionId = String.valueOf(selectedSessionsArrayList.get(i).toString().charAt(2)) + String.valueOf( selectedSessionsArrayList.get(i).toString().charAt(3) );
-
-						String locationId = String.valueOf(selectedRoomssArrayList.get(i).toString().charAt(2)) + String.valueOf( selectedRoomssArrayList.get(i).toString().charAt(3) );
-						
-						//make the session as a room assigned session
-						markAsRoomAssigned(sessionId);
-						
-						//reload sessions list
-						allTheSessionsDropDownList.setModel(new DefaultComboBoxModel(getSessionsList()));
-						
-						boolean isSuccess = insertIntoSessionRoomTable(sessionId, locationId);
-						if(isSuccess) {
-							count++;
-						}
-						
-					}
-					
-					if(count == selectedSessionsArrayList.size()) {
-						
-					}
-					
-					selectedSessions.setText("");
-					selectedSessionsArrayList.clear();
-					selectedRoomssArrayList.clear();
-					selectedAllSessions.clear();
-					
+				if(allTheSessionsDropDownList.getSelectedIndex() == 0) {
+					JOptionPane.showMessageDialog(new JFrame(), "Please select a session", "Error", JOptionPane.ERROR_MESSAGE);
+				}else if(allTheAvailableRoomList.getSelectedIndex() == 0){
+					JOptionPane.showMessageDialog(new JFrame(), "Please select a relavant room", "Error", JOptionPane.ERROR_MESSAGE);
 				}else {
 					
+					int count = 0;
+					
+					int dialogButton = JOptionPane.YES_NO_OPTION;
+					int dialogResult = JOptionPane.showConfirmDialog (null, "Operation cannot be undone! Do you want to continue?","Warning",dialogButton);
+					
+					if(dialogResult == JOptionPane.YES_OPTION){
 						
+						for(int i=0; i<selectedSessionsArrayList.size(); i++) {
+							
+							String sessionId = String.valueOf(selectedSessionsArrayList.get(i).toString().charAt(2)) + String.valueOf( selectedSessionsArrayList.get(i).toString().charAt(3) );
+
+							String locationId = String.valueOf(selectedRoomssArrayList.get(i).toString().charAt(2)) + String.valueOf( selectedRoomssArrayList.get(i).toString().charAt(3) );
+							
+							//make the session as a room assigned session
+							markAsRoomAssigned(sessionId);
+							
+							//reload sessions list
+							allTheSessionsDropDownList.setModel(new DefaultComboBoxModel<Object>(getSessionsList()));
+							
+							boolean isSuccess = insertIntoSessionRoomTable(sessionId, locationId);
+							if(isSuccess) {
+								count++;
+							}
+							
+						}
+						
+						if(count == selectedSessionsArrayList.size()) {
+							
+						}
+						
+						allTheSessionsDropDownList.setSelectedIndex(0);
+						allTheAvailableRoomList.setSelectedIndex(0);
+						selectedSessions.setText("");
+						selectedSessionsArrayList.clear();
+						selectedRoomssArrayList.clear();
+						selectedAllSessions.clear();
+						ifTheSelectedSessionConsectiveShowTheRelatedOneHere.setText("");
+						
+					}else {
+						
+							
+					}
+					
 				}
+				
+				
+				
 					
 			}
 		});
@@ -538,7 +585,6 @@ public class AssignSessionRoom extends JFrame {
 				consGroup = rs2.getString("consGroup");
 			}
 			
-//			System.out.println(consGroup);
 			
 			String sql = "SELECT * FROM Sessions WHERE id IN (select sessionId from ConsecutiveSession where consGroup = '"+consGroup+"') ";
 							
