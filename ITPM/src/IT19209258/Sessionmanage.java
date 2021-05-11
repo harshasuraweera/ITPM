@@ -20,6 +20,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -212,9 +213,9 @@ public class Sessionmanage extends JFrame {
 	    txtpnSelectSubject.setBounds(47, 564, 163, 35);
 	    contentPane.add(txtpnSelectSubject);
 	    
-	    JComboBox<Object> groupid = new JComboBox <Object> (getGroupIDs());
-	    groupid.setBounds(347, 618, 275, 27);
-	    contentPane.add(groupid);
+	    JComboBox<Object> groupId = new JComboBox <Object> (getGroupIDs());
+	    groupId.setBounds(347, 618, 275, 27);
+	    contentPane.add(groupId);
 	    
 	    JComboBox<Object> subjectName = new JComboBox <Object> (getSubjects());
 	    subjectName.setBounds(347, 572, 275, 27);
@@ -232,7 +233,7 @@ public class Sessionmanage extends JFrame {
 				lecturer1.setSelectedItem(table.getValueAt(table.getSelectedRow(), 1).toString());
 				lecturer2.setSelectedItem(table.getValueAt(table.getSelectedRow(), 2).toString());
 				subjectName.setSelectedItem(table.getValueAt(table.getSelectedRow(), 4).toString());
-				groupid.setSelectedItem(table.getValueAt(table.getSelectedRow(), 5).toString());
+				groupId.setSelectedItem(table.getValueAt(table.getSelectedRow(), 5).toString());
 				tag.setSelectedItem(table.getValueAt(table.getSelectedRow(), 6).toString());
 				nOfStudents.setValue(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 7).toString()));
 				duration.setValue(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 8).toString()));
@@ -270,9 +271,129 @@ public class Sessionmanage extends JFrame {
 	    //contentPane.add(table);
 	    scrollPane.setViewportView(table);
 	    //table.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
-	    //end default
+	    
+	    
 	    	
+	    btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(table.getSelectionModel().isSelectionEmpty()) {
+					JOptionPane.showMessageDialog(null, "Plesae Selecte the Row before pressing Update");
+				}
+				
+				else {
+					
+					boolean isSuccess = updateSession(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()),
+							lecturer1.getSelectedItem().toString(),
+							lecturer2.getSelectedItem().toString(),
+							tag.getSelectedItem().toString(),
+							groupId.getSelectedItem().toString(),
+							subjectName.getSelectedItem().toString(),
+							Integer.parseInt(nOfStudents.getValue().toString()),
+							Integer.parseInt(duration.getValue().toString()));
+					
+					if(isSuccess) {
+						JOptionPane.showMessageDialog(null, "Successfull update");
+						ShowData();
+						
+					}else {
+					
+						JOptionPane.showMessageDialog(null, "Error");
+
+					}
+				}
+				
+			}
+		});
+	    
+	    btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//validation
+				if(table.getSelectionModel().isSelectionEmpty()) {
+					
+					JOptionPane.showMessageDialog(null, "Plesae Selecte the Row before pressing Update");
+					
+				}
+				else {
+					
+				boolean isSuccess = deleteLecturer(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()));
+				
+					if(isSuccess) {
+						JOptionPane.showMessageDialog(null, "Succesfull delete");
+					ShowData();
+
+					}else {
+					
+						JOptionPane.showMessageDialog(null, "error");
+
+					}
+				}
+				
+			}
+				
+		});
+	    
+	  //end default
 	}
+	
+	private boolean updateSession(int id, String lecturer1, String lecturer2, String tag, String groupId, String subjectName, int nOfStudents, int duration) {
+		
+		boolean isSuccess = false;
+		
+		java.sql.Connection conn = DBConnect.getConnection();
+		
+		try {
+				String subjectCode = null;
+				String sql1 = "Select scode from Subjects WHERE sname = '"+subjectName+"'";
+				Statement st =  conn.createStatement();
+		        ResultSet rs =  st.executeQuery(sql1);
+		        while(rs.next()) {
+		         subjectCode = rs.getString("scode");
+		        }
+				String sql = "UPDATE Sessions SET lecturer1 = '"+lecturer1+"', lecturer2 = '"+lecturer2+"', subjectCode = '"+subjectCode+"', subjectName = '"+subjectName+"', groupId = '"+groupId+"', tag = '"+tag+"', nOfStudents = '"+nOfStudents+"', duration = '"+duration+"' WHERE id = '"+id+"' ";
+				Statement st1 = conn.createStatement();
+				int rs1 = st1.executeUpdate(sql);
+				
+				st1.close();
+				conn.close();
+				isSuccess = true;
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			isSuccess = false;
+			
+		}	
+		
+		return isSuccess;
+	}
+	
+	private boolean deleteLecturer(int id) {
+		
+		boolean isSuccess = false;
+		
+		java.sql.Connection conn = DBConnect.getConnection();
+		
+		try {
+			
+			String sql = "DELETE FROM Sessions WHERE id = '"+id+"' ";
+			
+			Statement st2 = conn.createStatement();
+			int rs = st2.executeUpdate(sql);
+			
+			st2.close();
+			conn.close();
+			isSuccess = true;
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			isSuccess = false;
+			
+		}	
+		
+		return isSuccess;
+	}
+
+	
 	 //load data into combo box
 	 private String [] getlecturerNames() {
 	    	Connection conn = DBConnect.getConnection();
