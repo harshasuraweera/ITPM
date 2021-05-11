@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import database.DBConnect;
 import it19208718.AddLocation;
@@ -26,10 +31,15 @@ import javax.swing.JTextPane;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.BorderFactory;
+import javax.swing.JTable;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 public class Sessionmanage extends JFrame {
 
 	private JPanel contentPane;
+	private JTable table;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -51,6 +61,12 @@ public class Sessionmanage extends JFrame {
 	 * Create the frame.
 	 */
 	public Sessionmanage() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				ShowData();
+			}
+		});
 		//do these for each and every JFrame
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setBounds(100, 100, 450, 300);
@@ -137,7 +153,7 @@ public class Sessionmanage extends JFrame {
 	    txtpnSelectTag.setText("Select Tag");
 	    txtpnSelectTag.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectTag.setBackground(new Color(153, 204, 255));
-	    txtpnSelectTag.setBounds(744, 472, 111, 35);
+	    txtpnSelectTag.setBounds(750, 472, 111, 35);
 	    contentPane.add(txtpnSelectTag);
 	    
 	    JComboBox<Object> tag = new JComboBox <Object> (gettagNames());
@@ -204,9 +220,60 @@ public class Sessionmanage extends JFrame {
 	    subjectName.setBounds(347, 572, 275, 27);
 	    contentPane.add(subjectName);
 	    
+	    JScrollPane scrollPane = new JScrollPane();
+	    scrollPane.setBounds(110, 120, 893, 305);
+	    contentPane.add(scrollPane);
+	    
+	    table = new JTable();
+	    table.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				lecturer1.setSelectedItem(table.getValueAt(table.getSelectedRow(), 1).toString());
+				lecturer2.setSelectedItem(table.getValueAt(table.getSelectedRow(), 2).toString());
+				subjectName.setSelectedItem(table.getValueAt(table.getSelectedRow(), 4).toString());
+				groupid.setSelectedItem(table.getValueAt(table.getSelectedRow(), 5).toString());
+				tag.setSelectedItem(table.getValueAt(table.getSelectedRow(), 6).toString());
+				nOfStudents.setValue(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 7).toString()));
+				duration.setValue(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 8).toString()));
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+
+
+		});
+	    
+	    //table.setBounds(110, 120, 893, 305);
+	    //contentPane.add(table);
+	    scrollPane.setViewportView(table);
+	    //table.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 	    //end default
+	    	
 	}
-	
+	 //load data into combo box
 	 private String [] getlecturerNames() {
 	    	Connection conn = DBConnect.getConnection();
 	    	
@@ -233,6 +300,7 @@ public class Sessionmanage extends JFrame {
 	        
 	        return lecturerNameArray;
 	}
+	 	//load data into combo box
 	    private String [] getlecturer1Names() {
 	    	Connection conn = DBConnect.getConnection();
 	    	
@@ -259,7 +327,7 @@ public class Sessionmanage extends JFrame {
 	        
 	        return lecturer1NameArray;
 	}
-	    
+	    //load data into combo box
 	    private String [] gettagNames() {
 	    	java.sql.Connection conn = DBConnect.getConnection();
 	    	
@@ -286,7 +354,7 @@ public class Sessionmanage extends JFrame {
 	        
 	        return tagNameArray;
 	}
-	 
+	    //load data into combo box
 	    private String [] getGroupIDs() {
 	    	java.sql.Connection conn = DBConnect.getConnection();
 	    	
@@ -313,7 +381,7 @@ public class Sessionmanage extends JFrame {
 	        
 	        return groupidArray;
 	}
-	    
+	    //load data into combo box
 	    private String [] getSubjects() {
 	    	java.sql.Connection conn = DBConnect.getConnection();
 	    	
@@ -340,4 +408,64 @@ public class Sessionmanage extends JFrame {
 	        
 	        return subjectArray;
 	}
+	    
+	    private void ShowData() {
+			
+	    	java.sql.Connection conn = DBConnect.getConnection();
+	    		
+	    		DefaultTableModel model = new DefaultTableModel();
+	    		model.addColumn("Id");
+	    		model.addColumn("Lecturer 01");
+	    		model.addColumn("Lecturer 02");
+	    		model.addColumn("Subject Code"); 
+	    		model.addColumn("Subject Name");
+	    		model.addColumn("Group Id");
+	    		model.addColumn("Tag");
+	    		model.addColumn("Number of Students");
+	    		model.addColumn("Duration");
+	    		
+	    		try {
+	    			
+	    			String sql = "SELECT * FROM Sessions";
+	    			Statement st = conn.createStatement();
+	    			ResultSet rs = st.executeQuery(sql);
+	    			
+	    			while(rs.next()) {
+	    				model.addRow(new Object[] {
+	    						rs.getString("id"),
+	    						rs.getString("lecturer1"),
+	    						rs.getString("lecturer2"),
+	    						rs.getString("subjectCode"),
+	    						rs.getString("SubjectName"),
+	    						rs.getString("groupId"),
+	    						rs.getString("tag"),
+	    						rs.getString("nOfStudents"),
+	    						rs.getString("duration"),
+	    				});;
+	    			}
+	    			
+	    			rs.close();
+	    			st.close();
+	    			conn.close();
+	    			
+	    			table.setModel(model);
+	    			table.setAutoResizeMode(1);
+	    			
+	    			table.getColumnModel().getColumn(0).setPreferredWidth(80);
+	    			table.getColumnModel().getColumn(1).setPreferredWidth(140);
+	    			table.getColumnModel().getColumn(2).setPreferredWidth(140);
+	    			table.getColumnModel().getColumn(3).setPreferredWidth(140);
+	    			table.getColumnModel().getColumn(4).setPreferredWidth(140);
+	    			table.getColumnModel().getColumn(5).setPreferredWidth(140);
+	    			table.getColumnModel().getColumn(6).setPreferredWidth(140);
+	    			table.getColumnModel().getColumn(7).setPreferredWidth(140);
+	    			table.getColumnModel().getColumn(8).setPreferredWidth(140);
+	    			
+	    			
+	    		}catch (Exception e) {
+	    			
+	    		}
+	    		
+	    	}
+
 }

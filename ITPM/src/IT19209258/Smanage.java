@@ -273,15 +273,10 @@ public class Smanage extends JFrame {
 				contentPane.add(nehours);
 				
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(62, 113, 892, 275);
+				scrollPane.setBounds(62, 114, 840, 279);
 				contentPane.add(scrollPane);
 				
 				table = new JTable();
-				table.setBounds(0, 0, 1, 1);
-
-				scrollPane.setViewportView(table);
-				
-				
 				table.addMouseListener(new MouseListener() {
 					
 					@Override
@@ -324,6 +319,11 @@ public class Smanage extends JFrame {
 
 
 				});
+				//table.setBounds(0, 0, 1, 1);
+				scrollPane.setViewportView(table);
+				
+				
+				
 				
 				
 				//end navignation button 01
@@ -367,7 +367,7 @@ public class Smanage extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						
 						if(table.getSelectionModel().isSelectionEmpty()) {
-							JOptionPane.showMessageDialog(null, "Plesae Selecte the Row before pressing Update");
+							JOptionPane.showMessageDialog(null, "Plesae Selecte the Row before pressing Delete");
 						}
 						
 						else {
@@ -491,15 +491,15 @@ public class Smanage extends JFrame {
 			table.setModel(model);
 			table.setAutoResizeMode(1);
 			
-//			table.getColumnModel().getColumn(0).setPreferredWidth(80);
-//			table.getColumnModel().getColumn(1).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(2).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(3).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(4).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(5).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(6).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(7).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(8).setPreferredWidth(140);
+			table.getColumnModel().getColumn(0).setPreferredWidth(80);
+			table.getColumnModel().getColumn(1).setPreferredWidth(140);
+			table.getColumnModel().getColumn(2).setPreferredWidth(140);
+			table.getColumnModel().getColumn(3).setPreferredWidth(140);
+			table.getColumnModel().getColumn(4).setPreferredWidth(140);
+			table.getColumnModel().getColumn(5).setPreferredWidth(140);
+			table.getColumnModel().getColumn(6).setPreferredWidth(140);
+			table.getColumnModel().getColumn(7).setPreferredWidth(140);
+			table.getColumnModel().getColumn(8).setPreferredWidth(140);
 			
 			
 		}catch (Exception e) {
