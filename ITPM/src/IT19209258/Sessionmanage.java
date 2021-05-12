@@ -319,8 +319,9 @@ public class Sessionmanage extends JFrame {
 				boolean isSuccess = deleteLecturer(Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString()));
 				
 					if(isSuccess) {
+						
+						ShowData();
 						JOptionPane.showMessageDialog(null, "Succesfull delete");
-					ShowData();
 
 					}else {
 					
