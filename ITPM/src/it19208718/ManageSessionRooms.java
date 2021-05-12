@@ -9,12 +9,16 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,6 +35,8 @@ public class ManageSessionRooms extends JFrame {
 	private JPanel contentPane;
 	private JTable assignedSessionRoomTable;
 	private JScrollPane assignedSessionRoomScrollPane;
+	
+	public String sessionType = "default";
 
 	/**
 	 * Launch the application.
@@ -55,7 +61,7 @@ public class ManageSessionRooms extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				showAssignedSessionRooms("default");
+				showAssignedSessionRooms(sessionType);
 			}
 		});
 		// do these for each and every JFrame
@@ -155,7 +161,8 @@ public class ManageSessionRooms extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						btnConsecutiveSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 						btnDefaultSessions.setFont(new Font("Kristen ITC", Font.BOLD, 18));
-						showAssignedSessionRooms("default");
+						sessionType = "default";
+						showAssignedSessionRooms(sessionType);
 					}
 				});
 				
@@ -164,7 +171,8 @@ public class ManageSessionRooms extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						btnDefaultSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 						btnConsecutiveSessions.setFont(new Font("Kristen ITC", Font.BOLD, 18));
-						showAssignedSessionRooms("consecutive");
+						sessionType = "consecutive";
+						showAssignedSessionRooms(sessionType);
 						
 					}
 				});
@@ -199,7 +207,67 @@ public class ManageSessionRooms extends JFrame {
 				
 				
 				
-				
+				btnChangeRoom.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						
+						if(sessionType == "default") {
+							
+							String selectedSessionId = assignedSessionRoomTable.getValueAt(assignedSessionRoomTable.getSelectedRow(), 0).toString();
+							String sessionTag = assignedSessionRoomTable.getValueAt(assignedSessionRoomTable.getSelectedRow(), 6).toString();
+							
+							String roomType = null;
+							
+							if(sessionTag == "Tutorial" || sessionTag == "Lecture") {
+								roomType = "Lecture Hall";
+							}else {
+								roomType = "Laboratory";
+							}
+							
+							String[] roomNameList = getRoomNames(roomType);
+							
+							String newRoom = (String) JOptionPane.showInputDialog(null, "Please select a new room", "Changing the room", 
+									 JOptionPane.QUESTION_MESSAGE, null, roomNameList, roomNameList[0]); // Initial choice
+							 
+							String locationId = String.valueOf( newRoom.charAt(2)) +  String.valueOf(newRoom.charAt(3)) ;
+							
+							//update the new room for existing one
+							updateAssignedRoom(selectedSessionId, locationId);
+							
+							showAssignedSessionRooms("default");
+							
+						}else if(sessionType == "consecutive") {
+							
+							String selectedSessionId = assignedSessionRoomTable.getValueAt(assignedSessionRoomTable.getSelectedRow(), 0).toString();
+							String sessionTag = assignedSessionRoomTable.getValueAt(assignedSessionRoomTable.getSelectedRow(), 6).toString();
+							
+							String roomType = null;
+							
+							if(sessionTag == "Tutorial" || sessionTag == "Lecture") {
+								roomType = "Lecture Hall";
+							}else {
+								roomType = "Laboratory";
+							}
+							
+							String[] roomNameList = getRoomNames(roomType);
+							
+							String newRoom = (String) JOptionPane.showInputDialog(null, "Please select a new room", "Changing the room", 
+									 JOptionPane.QUESTION_MESSAGE, null, roomNameList, roomNameList[0]); // Initial choice
+							 
+							String locationId = String.valueOf( newRoom.charAt(2)) +  String.valueOf(newRoom.charAt(3)) ;
+							
+							//update the new room for existing one
+							updateAssignedRoom(selectedSessionId, locationId);
+							
+							showAssignedSessionRooms("consecutive");
+
+							
+						}
+						
+						
+						
+					}
+				});
 				
 				
 	}
@@ -208,7 +276,7 @@ public class ManageSessionRooms extends JFrame {
 	
 	
 	
-	//load default sessions
+	//load default and consecutive sessions
 	
 	private void showAssignedSessionRooms(String sessionType) {
 
@@ -261,7 +329,7 @@ public class ManageSessionRooms extends JFrame {
 			
 			rs.close();
 			st.close();
-			conn.close();
+			
 			
 			assignedSessionRoomTable.setModel(model);
 			assignedSessionRoomTable.setAutoResizeMode(1);
@@ -278,20 +346,128 @@ public class ManageSessionRooms extends JFrame {
 	
 	
 	
+	//get assigned location details for selected sessionID
+	public String roomDetails (String sessionId) {
+		
+		Connection conn = DBConnect.getConnection();
+		String roomDetail = null;
+		
+		//get room details of current session
+		String sql2 = "SELECT * FROM Locations WHERE id IN (SELECT locationId FROM AssignedSessionRooms WHERE sessionId= '"+Integer.valueOf(sessionId)+"' ) ";
+		
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql2);
+			
+			String AIID;
+			
+			while(rs.next()) {
+				
+				
+				if( rs.getString("id").equals("1") || rs.getString("id").equals("2") || rs.getString("id").equals("3")|| rs.getString("id").equals("4") || rs.getString("id").equals("5") 
+						|| rs.getString("id").equals("6") || rs.getString("id").equals("7") || rs.getString("id").equals("8") || rs.getString("id").equals("9") ) {
+					
+					AIID = "0" + rs.getString("id");
+					
+				}else {
+					AIID = rs.getString("id");
+				}
+				
+				roomDetail = "ID"+ AIID + " | " + rs.getString("buildingName") + " | " + rs.getString("roomName") + " | Capacity: " + rs.getString("capacity");
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return roomDetail;
+		
+	}
 	
 	
 	
-	//load consecutive sessions
+	
+	//get all the rooms available to a list
+	private String [] getRoomNames(String roomType) {
+		
+		Connection conn = DBConnect.getConnection();
+		
+		String[] roomListArray = null;
+		List<String> list = new ArrayList<>();
+		String singleRoom;
+		
+		String AIID;
+		
+		
+		try {
+			String sql = "SELECT * from Locations WHERE roomType = '"+roomType+"' ";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			if(roomType.equals("Lecture Hall")) {
+				list.add("Select a Lecture Hall on here");
+			}
+			if(roomType.equals("Laboratory")) {
+				list.add("Select a Laboratory on here");
+			}
+			
+			while(rs.next()) {
+				
+				if( rs.getString("id").equals("1") || rs.getString("id").equals("2") || rs.getString("id").equals("3")|| rs.getString("id").equals("4") || rs.getString("id").equals("5") 
+						|| rs.getString("id").equals("6") || rs.getString("id").equals("7") || rs.getString("id").equals("8") || rs.getString("id").equals("9") ) {
+					
+					AIID = "0" + rs.getString("id");
+					
+				}else {
+					AIID = rs.getString("id");
+				}
+				
+				singleRoom = "ID"+ AIID + " | " + rs.getString("buildingName") + " | " + rs.getString("roomName") + " | Capacity: " + rs.getString("capacity");
+				list.add(singleRoom);
+			}
+			roomListArray = list.toArray(new String[0]);
+			
+		}catch (Exception e) {
+			
+		}
+
+		
+		return roomListArray;
+		
+		
+		
+	}
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
+	//update the new room for existing one
+	public boolean updateAssignedRoom(String sessionId, String newLocationId) {
+		
+		boolean isSuccess = false;
+		
+		Connection conn = DBConnect.getConnection();
+		
+		try {
+			
+			String sql = "UPDATE AssignedSessionRooms SET locationId = '"+newLocationId+"' WHERE sessionId = '"+sessionId+"' ";
+			
+			Statement st = conn.createStatement();
+			int rs = st.executeUpdate(sql);
+			
+			st.close();
+			conn.close();
+			isSuccess = true;
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			isSuccess = false;
+			
+		}	
+		
+		return isSuccess;
+		
+	}
 	
 	
 	
