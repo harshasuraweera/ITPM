@@ -30,6 +30,7 @@ import database.DBConnect;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+@SuppressWarnings({ "serial", "unused" })
 public class ManageSessionRooms extends JFrame {
 
 	private JPanel contentPane;

@@ -36,6 +36,7 @@ import javax.swing.UIManager;
 import java.awt.SystemColor;
 import javax.swing.JTextPane;
 
+@SuppressWarnings({ "unused", "serial" })
 public class AssignSessionRoom extends JFrame {
 
 	private JPanel contentPane;
@@ -513,6 +514,7 @@ public class AssignSessionRoom extends JFrame {
 			String sql = "UPDATE Sessions SET roomAssignedStatus = 'assigned' WHERE id = '"+sessionId+"' ";
 			
 			Statement st = conn.createStatement();
+			@SuppressWarnings("unused")
 			int rs = st.executeUpdate(sql);
 			
 			st.close();
