@@ -257,7 +257,8 @@ public class ManageSessionRooms extends JFrame {
 							String locationId = String.valueOf( newRoom.charAt(2)) +  String.valueOf(newRoom.charAt(3)) ;
 							
 							//update the new room for existing one
-							updateAssignedRoom(selectedSessionId, locationId);
+							//updateAssignedRoom(selectedSessionId, locationId);
+							updateAssignedRoomForConsecutive(selectedSessionId, locationId);
 							
 							showAssignedSessionRooms("consecutive");
 
@@ -469,6 +470,47 @@ public class ManageSessionRooms extends JFrame {
 		
 	}
 	
+	
+	//update room for consecutive sessions
+	public boolean updateAssignedRoomForConsecutive(String sessionId, String newLocationId) {
+		
+		boolean isSuccess = false;
+		
+		Connection conn = DBConnect.getConnection();
+		
+		try {
+			
+			
+			//get consGroup according to sessionID
+			String sql2 =  "SELECT consGroup FROM ConsecutiveSession WHERE sessionId = '"+sessionId+"' ";
+			Statement st2 = conn.createStatement();
+			ResultSet rs2 = st2.executeQuery(sql2);
+			String consGroup = null;
+			
+			while(rs2.next()) {
+				consGroup = rs2.getString("consGroup");
+			}
+			
+			
+			String sql = "UPDATE AssignedSessionRooms SET locationId = '"+newLocationId+"' "
+					+ "WHERE sessionId IN (SELECT sessionId FROM ConsecutiveSession WHERE consGroup = '"+consGroup+"' ) ";
+			
+			Statement st = conn.createStatement();
+			int rs = st.executeUpdate(sql);
+			
+			st.close();
+			conn.close();
+			isSuccess = true;
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			isSuccess = false;
+			
+		}	
+		
+		return isSuccess;
+		
+	}
 	
 	
 	
