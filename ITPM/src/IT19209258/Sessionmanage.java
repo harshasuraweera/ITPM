@@ -132,57 +132,57 @@ public class Sessionmanage extends JFrame {
 	    txtpnSelectLecturerName.setText(" Select Lecturer Name 01");
 	    txtpnSelectLecturerName.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectLecturerName.setBackground(new Color(153, 204, 255));
-	    txtpnSelectLecturerName.setBounds(47, 472, 244, 35);
+	    txtpnSelectLecturerName.setBounds(43, 439, 244, 35);
 	    contentPane.add(txtpnSelectLecturerName);
 	    
 	    JComboBox<Object> lecturer1 = new JComboBox <Object> (getlecturerNames());
-	    lecturer1.setBounds(347, 472, 275, 27);
+	    lecturer1.setBounds(343, 439, 275, 27);
 	    contentPane.add(lecturer1);
 	    
 	    JTextPane txtpnSelectLecturerName_2 = new JTextPane();
 	    txtpnSelectLecturerName_2.setText(" Select Lecturer Name 02");
 	    txtpnSelectLecturerName_2.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectLecturerName_2.setBackground(new Color(153, 204, 255));
-	    txtpnSelectLecturerName_2.setBounds(47, 518, 244, 35);
+	    txtpnSelectLecturerName_2.setBounds(43, 485, 244, 35);
 	    contentPane.add(txtpnSelectLecturerName_2);
 	    
-	    JComboBox<Object> lecturer2 =new JComboBox <Object> (getlecturer1Names());
-	    lecturer2.setBounds(347, 518, 275, 27);
+	    JComboBox<Object> lecturer2 =new JComboBox <Object> (getlecturerNames());
+	    lecturer2.setBounds(343, 485, 275, 27);
 	    contentPane.add(lecturer2);
 	    
 	    JTextPane txtpnSelectTag = new JTextPane();
 	    txtpnSelectTag.setText("Select Tag");
 	    txtpnSelectTag.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectTag.setBackground(new Color(153, 204, 255));
-	    txtpnSelectTag.setBounds(750, 472, 111, 35);
+	    txtpnSelectTag.setBounds(742, 439, 111, 35);
 	    contentPane.add(txtpnSelectTag);
 	    
 	    JComboBox<Object> tag = new JComboBox <Object> (gettagNames());
-	    tag.setBounds(1018, 472, 196, 35);
+	    tag.setBounds(1016, 439, 196, 27);
 	    contentPane.add(tag);
 	    
 	    JTextPane txtpnNumberOfStudents = new JTextPane();
 	    txtpnNumberOfStudents.setText("Number of Students");
 	    txtpnNumberOfStudents.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnNumberOfStudents.setBackground(new Color(153, 204, 255));
-	    txtpnNumberOfStudents.setBounds(744, 539, 216, 35);
+	    txtpnNumberOfStudents.setBounds(742, 485, 216, 35);
 	    contentPane.add(txtpnNumberOfStudents);
 	    
 	    JSpinner nOfStudents = new JSpinner();
 	    nOfStudents.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-	    nOfStudents.setBounds(1018, 528, 196, 35);
+	    nOfStudents.setBounds(1016, 495, 196, 27);
 	    contentPane.add(nOfStudents);
 	    
 	    JTextPane txtpnDuration = new JTextPane();
 	    txtpnDuration.setText("Duration");
 	    txtpnDuration.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnDuration.setBackground(new Color(153, 204, 255));
-	    txtpnDuration.setBounds(744, 602, 216, 35);
+	    txtpnDuration.setBounds(742, 542, 216, 35);
 	    contentPane.add(txtpnDuration);
 	    
 	    JSpinner duration = new JSpinner();
 	    duration.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-	    duration.setBounds(1018, 602, 196, 35);
+	    duration.setBounds(1016, 542, 196, 27);
 	    contentPane.add(duration);
 	    
 	    JButton btnUpdate = new JButton("Update");
@@ -196,36 +196,55 @@ public class Sessionmanage extends JFrame {
 	    btnDelete.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    btnDelete.setFocusable(false);
 	    btnDelete.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-	    btnDelete.setBounds(1072, 279, 155, 50);
+	    btnDelete.setBounds(1072, 243, 155, 50);
 	    contentPane.add(btnDelete);
 	    
 	    JTextPane txtpnSelectGroup = new JTextPane();
-	    txtpnSelectGroup.setText(" Select Group");
+	    txtpnSelectGroup.setText(" Select Sub Group");
 	    txtpnSelectGroup.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectGroup.setBackground(new Color(153, 204, 255));
-	    txtpnSelectGroup.setBounds(47, 610, 223, 35);
+	    txtpnSelectGroup.setBounds(43, 635, 223, 27);
 	    contentPane.add(txtpnSelectGroup);
 	    
 	    JTextPane txtpnSelectSubject = new JTextPane();
 	    txtpnSelectSubject.setText(" Select Subject");
 	    txtpnSelectSubject.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectSubject.setBackground(new Color(153, 204, 255));
-	    txtpnSelectSubject.setBounds(47, 564, 163, 35);
+	    txtpnSelectSubject.setBounds(43, 531, 163, 35);
 	    contentPane.add(txtpnSelectSubject);
 	    
-	    JComboBox<Object> groupId = new JComboBox <Object> (getGroupIDs());
-	    groupId.setBounds(347, 618, 275, 27);
-	    contentPane.add(groupId);
+	    JComboBox<Object> subGroupId = new JComboBox <Object> (getsubGroupIDs());
+	    subGroupId.setBounds(343, 635, 275, 27);
+	    contentPane.add(subGroupId);
 	    
 	    JComboBox<Object> subjectName = new JComboBox <Object> (getSubjects());
-	    subjectName.setBounds(347, 572, 275, 27);
+	    subjectName.setBounds(343, 539, 275, 27);
 	    contentPane.add(subjectName);
 	    
 	    JScrollPane scrollPane = new JScrollPane();
 	    scrollPane.setBounds(110, 120, 893, 305);
 	    contentPane.add(scrollPane);
 	    
+	    JTextPane txtpnSelectGroup_1 = new JTextPane();
+	    txtpnSelectGroup_1.setText(" Select Group");
+	    txtpnSelectGroup_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    txtpnSelectGroup_1.setBackground(new Color(153, 204, 255));
+	    txtpnSelectGroup_1.setBounds(43, 585, 223, 27);
+	    contentPane.add(txtpnSelectGroup_1);
+	    
+	    JComboBox<Object> groupId = new JComboBox <Object> (getGroupIDs());
+	    groupId.setBounds(343, 585, 275, 27);
+	    contentPane.add(groupId);
+	    
+	    JButton btnClear = new JButton("Clear");
+	    btnClear.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    btnClear.setFocusable(false);
+	    btnClear.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
+	    btnClear.setBounds(1072, 326, 155, 50);
+	    contentPane.add(btnClear);
+	    
 	    table = new JTable();
+	    //handle mouse movement
 	    table.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -234,6 +253,7 @@ public class Sessionmanage extends JFrame {
 				lecturer2.setSelectedItem(table.getValueAt(table.getSelectedRow(), 2).toString());
 				subjectName.setSelectedItem(table.getValueAt(table.getSelectedRow(), 4).toString());
 				groupId.setSelectedItem(table.getValueAt(table.getSelectedRow(), 5).toString());
+				subGroupId.setSelectedItem(table.getValueAt(table.getSelectedRow(), 5).toString());
 				tag.setSelectedItem(table.getValueAt(table.getSelectedRow(), 6).toString());
 				nOfStudents.setValue(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 7).toString()));
 				duration.setValue(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 8).toString()));
@@ -273,7 +293,7 @@ public class Sessionmanage extends JFrame {
 	    //table.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 	    
 	    
-	    	
+	    //updatebutton	
 	    btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -288,13 +308,15 @@ public class Sessionmanage extends JFrame {
 							lecturer2.getSelectedItem().toString(),
 							tag.getSelectedItem().toString(),
 							groupId.getSelectedItem().toString(),
+							subGroupId.getSelectedItem().toString(),
 							subjectName.getSelectedItem().toString(),
 							Integer.parseInt(nOfStudents.getValue().toString()),
 							Integer.parseInt(duration.getValue().toString()));
 					
 					if(isSuccess) {
-						JOptionPane.showMessageDialog(null, "Successfull update");
+						
 						ShowData();
+						JOptionPane.showMessageDialog(null, "Successfull update");
 						
 					}else {
 					
@@ -306,6 +328,7 @@ public class Sessionmanage extends JFrame {
 			}
 		});
 	    
+	    //delete buton
 	    btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//validation
@@ -333,25 +356,64 @@ public class Sessionmanage extends JFrame {
 			}
 				
 		});
+	 
+	    //clear buton
+	 btnClear.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				lecturer1.setSelectedIndex(0);
+				lecturer2.setSelectedIndex(0);
+				subjectName.setSelectedIndex(0);
+				groupId.setSelectedIndex(0);
+				subGroupId.setSelectedIndex(0);
+				tag.setSelectedIndex(0);
+				nOfStudents.setValue(0);
+				duration.setValue(0);
+				
+			}
+			
+		});
 	    
 	  //end default
 	}
 	
-	private boolean updateSession(int id, String lecturer1, String lecturer2, String tag, String groupId, String subjectName, int nOfStudents, int duration) {
+	//update
+	private boolean updateSession(int id, String lecturer1, String lecturer2, String tag, String groupid, String subgroupid, String subjectName, int nOfStudents, int duration) {
 		
 		boolean isSuccess = false;
+		
+		String groupidX = null;
+		
+		//check if tag is Lab or Lecture or tutorial
+		if(tag.equals("Lab")) {
+    		
+			groupidX =  subgroupid;
+			
+			
+			
+		}else if(tag.equals("Tutorial") || tag.equals("Lecture")){
+			
+			groupidX = groupid;
+			
+		}
 		
 		java.sql.Connection conn = DBConnect.getConnection();
 		
 		try {
+				//get subcode of the subject
 				String subjectCode = null;
 				String sql1 = "Select scode from Subjects WHERE sname = '"+subjectName+"'";
 				Statement st =  conn.createStatement();
 		        ResultSet rs =  st.executeQuery(sql1);
 		        while(rs.next()) {
-		         subjectCode = rs.getString("scode");
+		        subjectCode = rs.getString("scode");
+		         
 		        }
-				String sql = "UPDATE Sessions SET lecturer1 = '"+lecturer1+"', lecturer2 = '"+lecturer2+"', subjectCode = '"+subjectCode+"', subjectName = '"+subjectName+"', groupId = '"+groupId+"', tag = '"+tag+"', nOfStudents = '"+nOfStudents+"', duration = '"+duration+"' WHERE id = '"+id+"' ";
+		        
+				String sql = "UPDATE Sessions SET lecturer1 = '"+lecturer1+"', lecturer2 = '"+lecturer2+"', subjectCode = '"+subjectCode+"', subjectName = '"+subjectName+"', groupId = '"+groupidX+"', tag = '"+tag+"', nOfStudents = '"+nOfStudents+"', duration = '"+duration+"' WHERE id = '"+id+"' ";
 				Statement st1 = conn.createStatement();
 				int rs1 = st1.executeUpdate(sql);
 				
@@ -368,28 +430,29 @@ public class Sessionmanage extends JFrame {
 		return isSuccess;
 	}
 	
-	private boolean deleteLecturer(int id) {
+		//delete
+		private boolean deleteLecturer(int id) {
 		
-		boolean isSuccess = false;
+			boolean isSuccess = false;
 		
-		java.sql.Connection conn = DBConnect.getConnection();
+			java.sql.Connection conn = DBConnect.getConnection();
 		
-		try {
-			
-			String sql = "DELETE FROM Sessions WHERE id = '"+id+"' ";
-			
-			Statement st2 = conn.createStatement();
-			int rs = st2.executeUpdate(sql);
-			
-			st2.close();
-			conn.close();
-			isSuccess = true;
-			
-		}catch(Exception e) {
-			System.out.println(e.getMessage());
-			isSuccess = false;
-			
-		}	
+				try {
+				
+				String sql = "DELETE FROM Sessions WHERE id = '"+id+"' ";
+				
+				Statement st2 = conn.createStatement();
+				int rs = st2.executeUpdate(sql);
+				
+				st2.close();
+				conn.close();
+				isSuccess = true;
+				
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+				isSuccess = false;
+				
+			}	
 		
 		return isSuccess;
 	}
@@ -403,7 +466,10 @@ public class Sessionmanage extends JFrame {
 	        List<String> list = new ArrayList<>();
 	        
 	        try {
-	          String sql = "SELECT * from Lecturers";
+	        	
+	          //get lecturer names into array list 
+	        	
+	          String sql = "SELECT lname from Lecturers";
 	          Statement st =  conn.createStatement();
 	          ResultSet rs =  st.executeQuery(sql);
 	          
@@ -419,18 +485,18 @@ public class Sessionmanage extends JFrame {
 	          
 	        }
 
-	        
 	        return lecturerNameArray;
-	}
+	
+	 }
 	 	//load data into combo box
-	    private String [] getlecturer1Names() {
+	 /*   private String [] getlecturer1Names() {
 	    	Connection conn = DBConnect.getConnection();
 	    	
 	    	String[] lecturer1NameArray = null;
 	        List<String> list = new ArrayList<>();
 	        
 	        try {
-	          String sql = "SELECT * from Lecturers";
+	          String sql = "SELECT lanme from Lecturers";
 	          Statement st =  conn.createStatement();
 	          ResultSet rs =  st.executeQuery(sql);
 	          
@@ -448,8 +514,9 @@ public class Sessionmanage extends JFrame {
 
 	        
 	        return lecturer1NameArray;
-	}
-	    //load data into combo box
+	}*/
+	   
+	 	//load data into combo box
 	    private String [] gettagNames() {
 	    	java.sql.Connection conn = DBConnect.getConnection();
 	    	
@@ -476,11 +543,12 @@ public class Sessionmanage extends JFrame {
 	        
 	        return tagNameArray;
 	}
+	    
 	    //load data into combo box
-	    private String [] getGroupIDs() {
+	    private String [] getsubGroupIDs() {
 	    	java.sql.Connection conn = DBConnect.getConnection();
 	    	
-	    	String[] groupidArray = null;
+	    	String[] subgroupidArray = null;
 	        List<String> list = new ArrayList<>();
 	        
 	        try {
@@ -494,6 +562,34 @@ public class Sessionmanage extends JFrame {
 	            
 	            list.add(rs.getString("subGroupid"));
 	          }
+	          subgroupidArray = list.toArray(new String[0]);
+	          
+	        }catch (Exception e) {
+	          
+	        }
+
+	        
+	        return subgroupidArray;
+	}
+	    
+	    //load data into combo box
+	    private String [] getGroupIDs() {
+	    	java.sql.Connection conn = DBConnect.getConnection();
+	    	
+	    	String[] groupidArray = null;
+	        List<String> list = new ArrayList<>();
+	        
+	        try {
+	          String sql = "SELECT groupId from StudentGroups";
+	          Statement st = (Statement) conn.createStatement();
+	          ResultSet rs = ((java.sql.Statement) st).executeQuery(sql);
+	          
+	          list.add("");
+	          while(rs.next()) {
+	            
+	            
+	            list.add(rs.getString("groupId"));
+	          }
 	          groupidArray = list.toArray(new String[0]);
 	          
 	        }catch (Exception e) {
@@ -503,6 +599,9 @@ public class Sessionmanage extends JFrame {
 	        
 	        return groupidArray;
 	}
+	    
+	    //load data into combo box
+	    
 	    //load data into combo box
 	    private String [] getSubjects() {
 	    	java.sql.Connection conn = DBConnect.getConnection();
@@ -530,7 +629,7 @@ public class Sessionmanage extends JFrame {
 	        
 	        return subjectArray;
 	}
-	    
+	    //data shows in table and table creat
 	    private void ShowData() {
 			
 	    	java.sql.Connection conn = DBConnect.getConnection();
@@ -589,5 +688,4 @@ public class Sessionmanage extends JFrame {
 	    		}
 	    		
 	    	}
-
 }

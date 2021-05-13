@@ -141,12 +141,17 @@ public class AddSessions extends JFrame {
 	    tag.setBounds(931, 179, 275, 35);
 	    contentPane.add(tag);
 	    
+	  
+	    
 	    JTextPane txtpnSelectGroup = new JTextPane();
-	    txtpnSelectGroup.setText(" Select Group");
+	    txtpnSelectGroup.setEditable(false);
+	    txtpnSelectGroup.setText(" Select Sub Group");
 	    txtpnSelectGroup.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 	    txtpnSelectGroup.setBackground(new Color(153, 204, 255));
-	    txtpnSelectGroup.setBounds(55, 427, 223, 35);
+	    txtpnSelectGroup.setBounds(62, 482, 223, 35);
 	    contentPane.add(txtpnSelectGroup);
+	    txtpnSelectGroup.setVisible(false);
+
 	    
 	    JTextPane txtpnSelectSubject = new JTextPane();
 	    txtpnSelectSubject.setText(" Select Subject");
@@ -160,9 +165,10 @@ public class AddSessions extends JFrame {
 	    nOfStudents.setBounds(1010, 419, 196, 46);
 	    contentPane.add(nOfStudents);
 	    
-	    JComboBox <Object> groupid = new JComboBox <Object> (getGroupIDs());
-	    groupid.setBounds(325, 427, 275, 35);
-	    contentPane.add(groupid);
+	    JComboBox <Object> subGroupId = new JComboBox <Object> (getsubGroupIDs());
+	    subGroupId.setBounds(325, 482, 275, 35);
+	    contentPane.add(subGroupId);
+	    subGroupId.setVisible(false);
 	    
 	    JComboBox <Object> subjectName = new JComboBox <Object> (getSubjects());
 	    subjectName.setBounds(325, 528, 275, 35);
@@ -192,7 +198,7 @@ public class AddSessions extends JFrame {
 	    txtpnSelectGroupAnd.setFont(new Font("Kristen ITC", Font.BOLD, 30));
 	    txtpnSelectGroupAnd.setEditable(false);
 	    txtpnSelectGroupAnd.setBackground(new Color(153, 204, 255));
-	    txtpnSelectGroupAnd.setBounds(435, 343, 413, 83);
+	    txtpnSelectGroupAnd.setBounds(439, 333, 413, 83);
 	    contentPane.add(txtpnSelectGroupAnd);
 	    
 	    JButton btnDone = new JButton("Done");
@@ -209,18 +215,68 @@ public class AddSessions extends JFrame {
 	    txtpnSelectLecturerName_1.setBounds(55, 265, 244, 35);
 	    contentPane.add(txtpnSelectLecturerName_1);
 	    
-	    JComboBox<Object> lecturer2 = new JComboBox <Object> (getlecturer1Names());
+	    JComboBox<Object> lecturer2 = new JComboBox <Object> (getlecturerNames());
 	    lecturer2.setBounds(325, 265, 275, 35);
 	    contentPane.add(lecturer2);
 	    
+	    JTextPane txtpnSelectGroup_2 = new JTextPane();
+	    txtpnSelectGroup_2.setEditable(false);
+	    txtpnSelectGroup_2.setText(" Select Group");
+	    txtpnSelectGroup_2.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    txtpnSelectGroup_2.setBackground(new Color(153, 204, 255));
+	    txtpnSelectGroup_2.setBounds(55, 419, 223, 35);
+	    contentPane.add(txtpnSelectGroup_2);
+	    txtpnSelectGroup_2.setVisible(false);
+
 	    
+	    JComboBox<Object> groupId = new JComboBox <Object> (getGroupIDs());
+	    groupId.setBounds(325, 419, 275, 35);
+	    contentPane.add(groupId);
+	    
+	    JButton btnClear = new JButton("Clear");
+	    btnClear.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+	    btnClear.setFocusable(false);
+	    btnClear.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
+	    btnClear.setBounds(774, 615, 155, 50);
+	    contentPane.add(btnClear);
+	    groupId.setVisible(false);
+	    
+	    tag.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+					if(tag.getSelectedItem().toString().equals("Lab")) {
+				    	
+				    	txtpnSelectGroup.setVisible(true);
+					    subGroupId.setVisible(true);
+					    
+					    txtpnSelectGroup_2.setVisible(false);
+				    	 groupId.setVisible(false);
+
+				    	
+				    }else if (tag.getSelectedItem().toString().equals("Lecturer") || tag.getSelectedItem().toString().equals("Tutorial")) {
+				    	
+				    	 txtpnSelectGroup_2.setVisible(true);
+				    	 groupId.setVisible(true);
+				    	 
+				    	 txtpnSelectGroup.setVisible(false);
+						    subGroupId.setVisible(false);
+						    
+				    }
+				    
+				
+			}
+		});
+	    
+	   
 	    
 	    btnDone.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(lecturer1.getSelectedItem().equals("") || lecturer2.getSelectedItem().equals("") || tag.getSelectedItem().equals("") || groupid.getSelectedItem().equals("") || subjectName.getSelectedItem().equals("")) {
+				if(lecturer1.getSelectedItem().equals("") || lecturer2.getSelectedItem().equals("") || tag.getSelectedItem().equals("") || subjectName.getSelectedItem().equals("")) {
 					
 					JOptionPane.showMessageDialog(null, "Please Fill the Informations");
 					
@@ -231,7 +287,8 @@ public class AddSessions extends JFrame {
 							lecturer1.getSelectedItem().toString(),
 							lecturer2.getSelectedItem().toString(),
 							tag.getSelectedItem().toString(),
-							groupid.getSelectedItem().toString(),
+							groupId.getSelectedItem().toString(),
+							subGroupId.getSelectedItem().toString(),
 							subjectName.getSelectedItem().toString(),
 							Integer.parseInt(nOfStudents.getValue().toString()),
 							Integer.parseInt(duration.getValue().toString()));
@@ -248,45 +305,67 @@ public class AddSessions extends JFrame {
 			}
 	    });
 	    
+	    	btnClear.addActionListener(new ActionListener() {
+			
+	    		@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+					lecturer1.setSelectedIndex(0);
+					lecturer2.setSelectedIndex(0);
+					subjectName.setSelectedIndex(0);
+					groupId.setSelectedIndex(0);
+					subGroupId.setSelectedIndex(0);
+					tag.setSelectedIndex(0);
+					nOfStudents.setValue(0);
+					duration.setValue(0);
+					
+				}
+			
+		});
+	    
 	  //end default
 	    
 	}
 	    
-	    
-	    private String [] getlecturerNames() {
-	    	Connection conn = DBConnect.getConnection();
-	    	
-	    	String[] lecturerNameArray = null;
-	        List<String> list = new ArrayList<>();
-	        
-	        try {
-	          String sql = "SELECT * from Lecturers";
-	          Statement st =  conn.createStatement();
-	          ResultSet rs =  st.executeQuery(sql);
-	          
-	          list.add("");
-	          while(rs.next()) {
-	            
-	            
-	            list.add(rs.getString("lname"));
-	          }
-	          lecturerNameArray = list.toArray(new String[0]);
-	          
-	        }catch (Exception e) {
-	          
-	        }
+			//load data into combo box
+		 private String [] getlecturerNames() {
+		    	Connection conn = DBConnect.getConnection();
+		    	
+		    	String[] lecturerNameArray = null;
+		        List<String> list = new ArrayList<>();
+		        
+		        try {
+		        	
+		          String sql = "SELECT lname from Lecturers";
+		          Statement st =  conn.createStatement();
+		          ResultSet rs =  st.executeQuery(sql);
+		          
+		          list.add("");
+		          while(rs.next()) {
+		            
+		            
+		            list.add(rs.getString("lname"));
+		          }
+		          lecturerNameArray = list.toArray(new String[0]);
+		          
+		        }catch (Exception e) {
+		          
+		        }
 
-	        
-	        return lecturerNameArray;
-	}
-	    private String [] getlecturer1Names() {
+		        
+		        return lecturerNameArray;
+		}
+	    
+		 
+	   /* private String [] getlecturer1Names() {
 	    	Connection conn = DBConnect.getConnection();
 	    	
 	    	String[] lecturer1NameArray = null;
 	        List<String> list = new ArrayList<>();
 	        
 	        try {
-	          String sql = "SELECT * from Lecturers";
+	          String sql = "SELECT lname from Lecturers";
 	          Statement st =  conn.createStatement();
 	          ResultSet rs =  st.executeQuery(sql);
 	          
@@ -304,8 +383,9 @@ public class AddSessions extends JFrame {
 
 	        
 	        return lecturer1NameArray;
-	}
+	}*/
 	    
+		 //load data into combobox
 	    private String [] gettagNames() {
 	    	java.sql.Connection conn = DBConnect.getConnection();
 	    	
@@ -333,10 +413,11 @@ public class AddSessions extends JFrame {
 	        return tagNameArray;
 	}
 	 
-	    private String [] getGroupIDs() {
+	    //load data into combobox
+	    private String [] getsubGroupIDs() {
 	    	java.sql.Connection conn = DBConnect.getConnection();
 	    	
-	    	String[] groupidArray = null;
+	    	String[] subgroupidArray = null;
 	        List<String> list = new ArrayList<>();
 	        
 	        try {
@@ -350,6 +431,34 @@ public class AddSessions extends JFrame {
 	            
 	            list.add(rs.getString("subGroupid"));
 	          }
+	          subgroupidArray = list.toArray(new String[0]);
+	          
+	        }catch (Exception e) {
+	          
+	        }
+
+	        
+	        return subgroupidArray;
+	}
+	    
+	    //load data into combobox
+	    private String [] getGroupIDs() {
+	    	java.sql.Connection conn = DBConnect.getConnection();
+	    	
+	    	String[] groupidArray = null;
+	        List<String> list = new ArrayList<>();
+	        
+	        try {
+	          String sql = "SELECT groupId from StudentGroups";
+	          Statement st = (Statement) conn.createStatement();
+	          ResultSet rs = ((java.sql.Statement) st).executeQuery(sql);
+	          
+	          list.add("");
+	          while(rs.next()) {
+	            
+	            
+	            list.add(rs.getString("groupId"));
+	          }
 	          groupidArray = list.toArray(new String[0]);
 	          
 	        }catch (Exception e) {
@@ -360,6 +469,7 @@ public class AddSessions extends JFrame {
 	        return groupidArray;
 	}
 	    
+	    //load data into combobox
 	    private String [] getSubjects() {
 	    	java.sql.Connection conn = DBConnect.getConnection();
 	    	
@@ -387,9 +497,23 @@ public class AddSessions extends JFrame {
 	        return subjectArray;
 	}
 	    
-	    public boolean addsession(String lecturer1, String lecturer2, String tag, String groupid, String subjectName, int nOfStudent, int duration) {
+	    public boolean addsession(String lecturer1, String lecturer2, String tag, String groupid, String subgroupid, String subjectName, int nOfStudent, int duration) {
 	    	boolean isSuccess = false;
-			java.sql.Connection conn = DBConnect.getConnection();
+	    	
+	    	String groupidX = null;
+			
+	    	java.sql.Connection conn = DBConnect.getConnection();
+			
+	    	if(tag.equals("Lab")) {
+	    		
+				groupidX =  subgroupid;
+				
+			}else if(tag.equals("Tutorial") || tag.equals("Lecture")){
+				
+				groupidX = groupid;
+				
+			}
+	    	
 			try {
 				String subjectCode = null;
 				String sql1 = "Select scode from Subjects WHERE sname = '"+subjectName+"'";
@@ -398,7 +522,7 @@ public class AddSessions extends JFrame {
 		        while(rs.next()) {
 		         subjectCode = rs.getString("scode");
 		        }
-				String sql = "INSERT INTO Sessions(lecturer1,lecturer2,tag,groupId,subjectName,nOfStudents,duration, subjectCode)   VALUES ('"+lecturer1+"', '"+lecturer2+"', '"+tag+"', '"+groupid+"', '"+subjectName+"', '"+nOfStudent+"', '"+duration+"', '"+subjectCode+"')";
+				String sql = "INSERT INTO Sessions(lecturer1,lecturer2,tag,groupId,subjectName,nOfStudents,duration, subjectCode)   VALUES ('"+lecturer1+"', '"+lecturer2+"', '"+tag+"', '"+groupidX+"', '"+subjectName+"', '"+nOfStudent+"', '"+duration+"', '"+subjectCode+"')";
 				Statement st1 = conn.createStatement();
 				int rs1 = st1.executeUpdate(sql);
 				
