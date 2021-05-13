@@ -187,11 +187,11 @@ public class AddNotAvailableTimes extends JFrame {
 		lblRoom.setBounds(33, 569, 128, 50);
 		contentPane.add(lblRoom);
 		
-		String lecturerArray [] = {"",""};
-		String groupArray [] = {"",""};
-		String subgroupArray [] = {"",""};
-		String sessionidArray [] = {"",""};
-		String roomArray [] = {"",""};
+		String lecturerArray [] = {"Nasir Mohomadh","Yasiru Gunasinghe","Nisitha Fernando","Kavindu Gunasinghe","Pasan Abesinghe"};
+		String groupArray [] = {"Y3S1.CS.4","Y2S2.ICS.5","Y3S2.ICS.6","Y2S1.DS.6","Y2S1.ICS.2","Y1S2.IM.3"};
+		String subgroupArray [] = {"Y3S1.CS.4.7","Y2S2.ICS.5.5","Y3S2.ICS.6.5","Y2S1.DS.6.4","Y2S1.ICS.2.2","Y1S2.IM.3.3"};
+		String sessionidArray [] = {"6","7","8","9","10","18"};
+		String roomArray [] = {"B506","B403","A406","CyberSecLab","B501","B502"};
 		
 		JComboBox<Object> lecturer = new JComboBox<Object>(lecturerArray);
 		lecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -254,6 +254,7 @@ public class AddNotAvailableTimes extends JFrame {
 		JButton btnView = new JButton("VIEW");
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
 			}
 		});
 		btnView.setForeground(Color.WHITE);

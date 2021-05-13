@@ -186,8 +186,8 @@ public class AddSpecialRoom extends JFrame {
 		contentPane.add(lblEndTime);
 		
 		//Arrays to store data
-		String roomArray [] = {"",""};
-		String dayArray [] = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+		String roomArray [] = {null,"B506","B403","A406","CyberSecLab","B501","B502"};
+		String dayArray [] = {null,"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
 		
 		JComboBox<Object> room = new JComboBox<Object>(roomArray);
 		room.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -199,22 +199,47 @@ public class AddSpecialRoom extends JFrame {
 		day.setBounds(280, 336, 182, 44);
 		contentPane.add(day);
 		
+		//SAVE details
 		JButton btnAddSession = new JButton("Add Session");
 		btnAddSession.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Connection conn = DBConnect.getConnection();
-					
+										
 					//NEED TO BE UPDATED
-					String sql1 = "insert into SpecialRoom (sroom, sday, stime, setime) values ()";
+					String sql1 = "insert into SpecialRoom (sroom, sday, stime, setime) values ('"+room+"', '"+day+"', '"+stime+"', '"+etime+"')";
 					Statement st = conn.createStatement();
 					int rs = st.executeUpdate(sql1);
+					
+					PreparedStatement pstmt = conn.prepareStatement(sql1);
+					
+					String rm = room.getSelectedItem().toString();
+					pstmt.setString(1, rm);
+					String dy = day.getSelectedItem().toString();
+					pstmt.setString(2, dy);
+					String sti = stime.getText().toString();
+					pstmt.setString(3, sti);
+					String eti = etime.getText().toString();
+					pstmt.setString(4, eti);
+					
+					pstmt.executeUpdate();
+					
+					JOptionPane.showMessageDialog(null, "Insertion Successful");
+					
+					conn.close();
+					
+					//Clear fields after insertion
+					room.setSelectedIndex(0);
+					day.setSelectedIndex(0);
+					stime.setText(null);
+					etime.setText(null);
 				}
 				catch (Exception e1){
 					JOptionPane.showMessageDialog(null, e1);
 				}
 			}
 		});
+		
 		btnAddSession.setForeground(Color.WHITE);
 		btnAddSession.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnAddSession.setFocusable(false);

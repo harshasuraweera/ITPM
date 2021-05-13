@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class ManageNotAvailableTimes extends JFrame {
 
@@ -138,9 +139,18 @@ public class ManageNotAvailableTimes extends JFrame {
 		contentPane.add(btnDelete);
 		
 		table = new JTable();
-		table.setBounds(33, 187, 1197, 277);
+		table.setBounds(124, 185, 871, 253);
 		contentPane.add(table);
 		
-		//end navigation buttons
+		Object[] column = {"ID","Duration","Lecturer","Group ID","Sub Group","SessionID","Room"};
+		Object[] row = new Object[0];
+		DefaultTableModel model = new DefaultTableModel();
+		model.setColumnIdentifiers(column);
+		//scrollPane.setViewportView(table);
+		
+		public static void AddRowToJTable(Object[] dataRow) {
+			DefaultTableModel model = (DefaultTableModel)table.getModel();
+			model.addRow(dataRow);
+		}
 	}
 }
