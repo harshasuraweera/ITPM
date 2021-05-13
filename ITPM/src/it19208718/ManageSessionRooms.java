@@ -200,6 +200,7 @@ public class ManageSessionRooms extends JFrame {
 				contentPane.add(btnChangeRoom);
 				
 				JButton btnUnassignRoom = new JButton("Unassign Room");
+				
 				btnUnassignRoom.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnUnassignRoom.setFocusable(false);
 				btnUnassignRoom.setBounds(650, 607, 214, 50);
@@ -258,7 +259,6 @@ public class ManageSessionRooms extends JFrame {
 							String locationId = String.valueOf( newRoom.charAt(2)) +  String.valueOf(newRoom.charAt(3)) ;
 							
 							//update the new room for existing one
-							//updateAssignedRoom(selectedSessionId, locationId);
 							updateAssignedRoomForConsecutive(selectedSessionId, locationId);
 							
 							showAssignedSessionRooms("consecutive");
@@ -266,6 +266,36 @@ public class ManageSessionRooms extends JFrame {
 							
 						}
 						
+						
+						
+					}
+				});
+				
+				
+				btnUnassignRoom.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String selectedSessionId = assignedSessionRoomTable.getValueAt(assignedSessionRoomTable.getSelectedRow(), 0).toString();
+						
+						int dialogButton = JOptionPane.YES_NO_OPTION;
+						int dialogResult = JOptionPane.showConfirmDialog (null, "Operation cannot be undone! Do you want to continue?","Warning",dialogButton);
+						
+						if(dialogResult == JOptionPane.YES_OPTION) {
+							
+							if(sessionType == "default") {
+								unAssignNormalSessionRoom(selectedSessionId);
+								showAssignedSessionRooms("default");
+								
+							}else if(sessionType == "consecutive") {
+								unAssignConsSessionRoom(selectedSessionId);
+								showAssignedSessionRooms("consecutive");
+							}
+							
+							
+							
+							
+						}else {
+							
+						}
 						
 						
 					}
@@ -514,7 +544,91 @@ public class ManageSessionRooms extends JFrame {
 	}
 	
 	
+	//un-assign normal session room
+	public boolean unAssignNormalSessionRoom(String sessionId) {
+		
+		boolean isSuccess = false;
+		
+		Connection conn = DBConnect.getConnection();
+		
+		try {
+			
+			//delete from assignedSessionRoomTable
+			String deleteQuery = "DELETE FROM AssignedSessionRooms WHERE sessionId= '"+sessionId+"' ";
+			Statement st1 = conn.createStatement();
+			int rs1 = st1.executeUpdate(deleteQuery);
+			
+			
+			
+			//update main session table as not-assigned
+			String sql = "UPDATE Sessions SET roomAssignedStatus = 'not-assigned' "
+					+ "WHERE id = '"+sessionId+"' ";
+			
+			Statement st = conn.createStatement();
+			int rs = st.executeUpdate(sql);
+			
+			st.close();
+			conn.close();
+			isSuccess = true;
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			isSuccess = false;
+			
+		}	
+		
+		return isSuccess;
+		
+	}
 	
+	
+	//un-assign cons session room
+	public boolean unAssignConsSessionRoom(String sessionId) {
+		
+		boolean isSuccess = false;
+		
+		Connection conn = DBConnect.getConnection();
+		
+		try {
+			
+			//get cons group for the selected session
+			String sql2 =  "SELECT consGroup FROM ConsecutiveSession WHERE sessionId = '"+sessionId+"' ";
+			Statement st2 = conn.createStatement();
+			ResultSet rs2 = st2.executeQuery(sql2);
+			String consGroup = null;
+			
+			while(rs2.next()) {
+				consGroup = rs2.getString("consGroup");
+			}
+			
+			
+			//delete from assignedSessionRoomTable
+			String deleteQuery = "DELETE FROM AssignedSessionRooms WHERE sessionId IN (SELECT sessionId FROM ConsecutiveSession WHERE consGroup = '"+consGroup+"') ";
+			Statement st1 = conn.createStatement();
+			int rs1 = st1.executeUpdate(deleteQuery);
+			
+			
+			
+			//update main session table as not-assigned
+			String sql = "UPDATE Sessions SET roomAssignedStatus = 'not-assigned' "
+					+ "WHERE id IN (SELECT sessionId FROM ConsecutiveSession WHERE consGroup = '"+consGroup+"') ";
+			
+			Statement st = conn.createStatement();
+			int rs = st.executeUpdate(sql);
+			
+			st.close();
+			conn.close();
+			isSuccess = true;
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			isSuccess = false;
+			
+		}	
+		
+		return isSuccess;
+		
+	}	
 	
 	
 
