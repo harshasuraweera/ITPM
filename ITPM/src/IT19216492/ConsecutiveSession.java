@@ -261,8 +261,10 @@ public class ConsecutiveSession extends JFrame {
 					row[0] = model.getValueAt(indexs [i], 0);
 					row[1] = model.getValueAt(indexs [i], 1);
 					
-					
-				String query = "DELETE FROM ConsecutiveSession WHERE id = '"+row[0]+"'";      	
+				
+				
+				
+				String query = "DELETE FROM ConsecutiveSession WHERE sessionId IN (SELECT sessionId FROM ConsecutiveSession WHERE consGroup IN (SELECT consGroup FROM ConsecutiveSession WHERE sessionId = '"+row[0]+"'))";      	
 				Statement sta = conn.createStatement();
 				sta.executeUpdate(query);
 				ShowData();

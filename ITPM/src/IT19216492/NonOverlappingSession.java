@@ -261,7 +261,7 @@ public class NonOverlappingSession extends JFrame {
 					row[1] = model.getValueAt(indexs [i], 1);
 					
 					
-				String query = "DELETE FROM NonOverlappingSession WHERE id = '"+row[0]+"'";      	
+				String query = "DELETE FROM ConsecutiveSession WHERE sessionId IN (SELECT sessionId FROM ConsecutiveSession WHERE consGroup IN (SELECT consGroup FROM ConsecutiveSession WHERE sessionId = '"+row[0]+"'))";      	
 				Statement sta = conn.createStatement();
 				sta.executeUpdate(query);
 				ShowData();

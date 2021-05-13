@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -268,12 +269,9 @@ public class DefaultSession extends JFrame {
 					row[0] = model.getValueAt(indexs [i], 0);
 					row[1] = model.getValueAt(indexs [i], 1);
 					
-					int randomId = 0;
-					Random rand = new Random();
-					for (int j=0;j < 5;j++)
-					{
-					randomId =  rand.nextInt();
-					}
+					
+				String randomId = UUID.randomUUID().toString();	
+				
 					
 				String query = "INSERT INTO ConsecutiveSession (consGroup, sessionId) values('"+String.valueOf(randomId)+"','"+row[0]+"')";
 				Statement sta = conn.createStatement();
@@ -332,12 +330,7 @@ public class DefaultSession extends JFrame {
 					row[0] = model.getValueAt(indexs [i], 0);
 					row[1] = model.getValueAt(indexs [i], 1);
 					
-					int randomId = 0;
-					Random rand = new Random();
-					for (int j=0;j < 5;j++)
-					{
-					randomId =  rand.nextInt();
-					}
+				String randomId = UUID.randomUUID().toString();
 					
 				String query = "INSERT INTO ParallelSession (paraGroup, sessionId) values('"+String.valueOf(randomId)+"','"+row[0]+"')";
 				Statement sta = conn.createStatement();
@@ -379,31 +372,26 @@ public class DefaultSession extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-				
-			Connection conn = DBConnect.getConnection();
-			
-			
-			TableModel model = table.getModel();
-			int indexs[] = table.getSelectedRows();
-			
-			
-			Object [] row = new Object[2];
-				
-				for(int i=0; i < indexs.length; i++) 
-				
 					
-				{
+					Connection conn = DBConnect.getConnection();
 					
-					row[0] = model.getValueAt(indexs [i], 0);
-					row[1] = model.getValueAt(indexs [i], 1);
 					
-					int randomId = 0;
-					Random rand = new Random();
-					for (int j=0;j < 5;j++)
-					{
-					randomId =  rand.nextInt();
-					}
+					TableModel model = table.getModel();
+					int indexs[] = table.getSelectedRows();
 					
+					
+					Object [] row = new Object[2];
+						
+						for(int i=0; i < indexs.length; i++) 
+						
+							
+						{
+							
+							row[0] = model.getValueAt(indexs [i], 0);
+							row[1] = model.getValueAt(indexs [i], 1);
+							
+				String randomId = UUID.randomUUID().toString();
+							
 				String query = "INSERT INTO NonOverlappingSession (nonGroup, sessionId) values('"+String.valueOf(randomId)+"','"+row[0]+"')";
 				Statement sta = conn.createStatement();
 				sta.executeUpdate(query);
