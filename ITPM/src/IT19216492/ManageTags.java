@@ -310,7 +310,7 @@ if(textField.getText().equals("") || comboBox_1.getSelectedItem().equals("")) {
 			}
 		});
 		scrollPane.setViewportView(table);
-		table.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
+		
 		
 		
 		

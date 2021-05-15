@@ -411,7 +411,7 @@ public class ManageStudentGroups extends JFrame {
 		
 		
 		scrollPane.setViewportView(table);
-		table.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
+		
 		
 		
 		
@@ -423,12 +423,12 @@ public class ManageStudentGroups extends JFrame {
 			
 			DefaultTableModel model = new DefaultTableModel();
 			model.addColumn("Id");
-			model.addColumn("academicYearSemester");
-			model.addColumn("degreeProgramme");
-			model.addColumn("groupNumbers"); 
-			model.addColumn("subGroupNumbers");
-			model.addColumn("groupId");
-			model.addColumn("subGroupId");
+			model.addColumn("Academic Year Semester");
+			model.addColumn("Degree Programme");
+			model.addColumn("Group Numbers"); 
+			model.addColumn("SubGroup Numbers");
+			model.addColumn("Group Id");
+			model.addColumn("SubGroup Id");
 			
 			try {
 				
