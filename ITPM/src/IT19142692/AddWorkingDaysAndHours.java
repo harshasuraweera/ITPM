@@ -495,7 +495,7 @@ public class AddWorkingDaysAndHours extends JFrame {
 						int rs = st.executeUpdate(sql7);
 						chckbxSunday.setSelected(false);
 					}
-				
+				 //Pop up a dialog box
 				JOptionPane.showMessageDialog(null, "Deletion Successful");
 
 				dailyHours.setSelectedIndex(0);

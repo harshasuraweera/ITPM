@@ -187,11 +187,11 @@ public class AddNotAvailableTimes extends JFrame {
 		lblRoom.setBounds(33, 569, 128, 50);
 		contentPane.add(lblRoom);
 		
-		String lecturerArray [] = {"Nasir Mohomadh","Yasiru Gunasinghe","Nisitha Fernando","Kavindu Gunasinghe","Pasan Abesinghe"};
-		String groupArray [] = {"Y3S1.CS.4","Y2S2.ICS.5","Y3S2.ICS.6","Y2S1.DS.6","Y2S1.ICS.2","Y1S2.IM.3"};
-		String subgroupArray [] = {"Y3S1.CS.4.7","Y2S2.ICS.5.5","Y3S2.ICS.6.5","Y2S1.DS.6.4","Y2S1.ICS.2.2","Y1S2.IM.3.3"};
-		String sessionidArray [] = {"6","7","8","9","10","18"};
-		String roomArray [] = {"B506","B403","A406","CyberSecLab","B501","B502"};
+		String lecturerArray [] = {null,"Nasir Mohomadh","Yasiru Gunasinghe","Nisitha Fernando","Kavindu Gunasinghe","Pasan Abesinghe"};
+		String groupArray [] = {null,"Y3S1.CS.4","Y2S2.ICS.5","Y3S2.ICS.6","Y2S1.DS.6","Y2S1.ICS.2","Y1S2.IM.3"};
+		String subgroupArray [] = {null,"Y3S1.CS.4.7","Y2S2.ICS.5.5","Y3S2.ICS.6.5","Y2S1.DS.6.4","Y2S1.ICS.2.2","Y1S2.IM.3.3"};
+		String sessionidArray [] = {null,"6","7","8","9","10","18"};
+		String roomArray [] = {null,"B506","B403","A406","CyberSecLab","B501","B502"};
 		
 		JComboBox<Object> lecturer = new JComboBox<Object>(lecturerArray);
 		lecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -235,6 +235,17 @@ public class AddNotAvailableTimes extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Connection conn = DBConnect.getConnection();
+					
+					String lec = String.valueOf(lecturer.getSelectedItem());
+					String gr = String.valueOf(group.getSelectedItem());
+					String sg = String.valueOf(subgroup.getSelectedItem());
+					String si = String.valueOf(sessionid.getSelectedItem());
+					//String rm = String.valueOf(room.getText());
+					//String rm = room.getText().toString();
+					
+					String sql1 = "insert into NotAvailableTimes (nlecturer, ngroup, nsubgroup, nsessionid, nroom, ntime) values ('"+lec+"', '"+gr+"', '"+sg+"', '"+si+"')";
+					Statement st = conn.createStatement();
+					int rs = st.executeUpdate(sql1);
 				}
 				catch (Exception e1){
 					JOptionPane.showMessageDialog(null, e1);
@@ -254,7 +265,9 @@ public class AddNotAvailableTimes extends JFrame {
 		JButton btnView = new JButton("VIEW");
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+				//Go to the next page
+				ManageNotAvailableTimes obj = new ManageNotAvailableTimes();
+				obj.setVisible(true);
 			}
 		});
 		btnView.setForeground(Color.WHITE);
@@ -270,6 +283,18 @@ public class AddNotAvailableTimes extends JFrame {
 		JButton btnClear = new JButton("CLEAR");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					lecturer.setSelectedIndex(0);
+					group.setSelectedIndex(0);
+					subgroup.setSelectedIndex(0);
+					sessionid.setSelectedIndex(0);
+					room.setSelectedIndex(0);
+					time.setText(null);
+					
+				}
+				catch(Exception e3) {
+					JOptionPane.showMessageDialog(null, e3);
+				}
 			}
 		});
 		btnClear.setForeground(new Color(255, 255, 255));

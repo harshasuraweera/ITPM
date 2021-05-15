@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -14,8 +17,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import database.DBConnect;
 
 public class ManageNotAvailableTimes extends JFrame {
 
@@ -103,7 +109,24 @@ public class ManageNotAvailableTimes extends JFrame {
 		lblNewLabel.setBounds(395, 95, 346, 42);
 		contentPane.add(lblNewLabel);
 		
+		//Load the Table
 		JButton btnRefresh = new JButton("REFRESH");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Connection conn = DBConnect.getConnection();
+					String query = "Select * from NotAvailableTimes";
+					Statement stmt = conn.createStatement();
+					ResultSet rs1 = stmt.executeQuery(query);
+					
+					//table.setModel(DbUtils.resultSetToTableModel(rs1));
+					
+				}
+				catch(Exception e2) {
+					JOptionPane.showMessageDialog(null, e2);
+				}
+			}
+		});
 		btnRefresh.setForeground(Color.WHITE);
 		btnRefresh.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnRefresh.setFocusable(false);
@@ -139,7 +162,7 @@ public class ManageNotAvailableTimes extends JFrame {
 		contentPane.add(btnDelete);
 		
 		table = new JTable();
-		table.setBounds(124, 185, 871, 253);
+		table.setBounds(184, 185, 811, 253);
 		contentPane.add(table);
 		
 		Object[] column = {"ID","Duration","Lecturer","Group ID","Sub Group","SessionID","Room"};
@@ -147,10 +170,6 @@ public class ManageNotAvailableTimes extends JFrame {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(column);
 		//scrollPane.setViewportView(table);
-		
-		public static void AddRowToJTable(Object[] dataRow) {
-			DefaultTableModel model = (DefaultTableModel)table.getModel();
-			model.addRow(dataRow);
-		}
+	
 	}
 }

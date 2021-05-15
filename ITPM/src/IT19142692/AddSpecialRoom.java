@@ -249,6 +249,24 @@ public class AddSpecialRoom extends JFrame {
 		contentPane.add(btnAddSession);
 		
 		JButton btnClear = new JButton("Clear");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Connection conn = DBConnect.getConnection();
+					
+					String sql2 = "delete from SpecialRoom where ";
+					Statement st = conn.createStatement();
+					int rs = st.executeUpdate(sql2);
+					
+					 //Pop up a dialog box
+					JOptionPane.showMessageDialog(null, "Deletion Successful");
+					
+				}
+				catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, e2);
+				}
+			}
+		});
 		btnClear.setForeground(new Color(0, 0, 0));
 		btnClear.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnClear.setFocusable(false);
@@ -258,11 +276,13 @@ public class AddSpecialRoom extends JFrame {
 		contentPane.add(btnClear);
 		
 		stime = new JTextField();
+		stime.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		stime.setBounds(280, 424, 182, 44);
 		contentPane.add(stime);
 		stime.setColumns(10);
 		
 		etime = new JTextField();
+		etime.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		etime.setColumns(10);
 		etime.setBounds(280, 526, 182, 44);
 		contentPane.add(etime);
