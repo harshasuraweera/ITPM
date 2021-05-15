@@ -19,6 +19,9 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -39,6 +42,7 @@ import javax.swing.JSpinner;
 public class HomeWindow extends JFrame {
 
 	private JPanel contentPane;
+	java.sql.Connection conn = DBConnect.getConnection();
 
 	/**
 	 * Launch the application.
@@ -101,7 +105,7 @@ public class HomeWindow extends JFrame {
 					dispose();
 					addSomething.setVisible(true);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+
 					e1.printStackTrace();
 				}
 				
@@ -130,7 +134,7 @@ public class HomeWindow extends JFrame {
 					dispose();
 					manageExisiting.setVisible(true);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 				
@@ -199,29 +203,30 @@ public class HomeWindow extends JFrame {
 		registeredLecturesText_1_1_1.setBounds(10, 411, 272, 51);
 		panel_1.add(registeredLecturesText_1_1_1);
 		
-		JLabel lblNewLabel = new JLabel("24");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
-		lblNewLabel.setBounds(115, 83, 45, 32);
-		panel_1.add(lblNewLabel);
+		JLabel totalLecturers = new JLabel();
+		totalLecturers.setHorizontalAlignment(SwingConstants.CENTER);
+		totalLecturers.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		totalLecturers.setBounds(115, 83, 45, 32);
+		panel_1.add(totalLecturers);
 		
-		JLabel lblNewLabel_1 = new JLabel("15");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
-		lblNewLabel_1.setBounds(115, 210, 45, 32);
-		panel_1.add(lblNewLabel_1);
+		JLabel totalStudentGroups = new JLabel();
+		totalStudentGroups.setHorizontalAlignment(SwingConstants.CENTER);
+		totalStudentGroups.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		totalStudentGroups.setBounds(115, 210, 45, 32);
+		panel_1.add(totalStudentGroups);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("18");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
-		lblNewLabel_1_1.setBounds(115, 346, 45, 32);
-		panel_1.add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("78");
-		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_2.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
-		lblNewLabel_1_2.setBounds(115, 472, 45, 32);
-		panel_1.add(lblNewLabel_1_2);
+		JLabel totalSubjects = new JLabel();
+		totalSubjects.setHorizontalAlignment(SwingConstants.CENTER);
+		totalSubjects.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		totalSubjects.setBounds(115, 346, 45, 32);
+		panel_1.add(totalSubjects);
+		
+		JLabel totalRooms = new JLabel();
+		totalRooms.setHorizontalAlignment(SwingConstants.CENTER);
+		totalRooms.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		totalRooms.setBounds(115, 472, 45, 32);
+		panel_1.add(totalRooms);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 134, 272, 2);
@@ -234,12 +239,6 @@ public class HomeWindow extends JFrame {
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(10, 397, 272, 2);
 		panel_1.add(separator_2);
-		
-		JLabel lblNewLabel_2 = new JLabel("24");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
-		lblNewLabel_2.setBounds(115, 83, 45, 32);
-		panel_1.add(lblNewLabel_2);
 		
 		
 		
@@ -271,17 +270,17 @@ public class HomeWindow extends JFrame {
 		separator_3.setBounds(29, 139, 789, 2);
 		panel_2.add(separator_3);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("60%");
-		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2_1.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
-		lblNewLabel_2_1.setBounds(50, 67, 100, 32);
-		panel_2.add(lblNewLabel_2_1);
+		JLabel lectureRoomPercentage = new JLabel();
+		lectureRoomPercentage.setHorizontalAlignment(SwingConstants.CENTER);
+		lectureRoomPercentage.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		lectureRoomPercentage.setBounds(50, 67, 100, 32);
+		panel_2.add(lectureRoomPercentage);
 		
-		JLabel lblNewLabel_2_1_1 = new JLabel("40 %");
-		lblNewLabel_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
-		lblNewLabel_2_1_1.setBounds(707, 67, 100, 32);
-		panel_2.add(lblNewLabel_2_1_1);
+		JLabel labRoomPercentage = new JLabel();
+		labRoomPercentage.setHorizontalAlignment(SwingConstants.CENTER);
+		labRoomPercentage.setFont(new Font("Kristen ITC", Font.PLAIN, 25));
+		labRoomPercentage.setBounds(707, 67, 100, 32);
+		panel_2.add(labRoomPercentage);
 		
 		JSeparator separator_3_1 = new JSeparator();
 		separator_3_1.setOrientation(SwingConstants.VERTICAL);
@@ -293,11 +292,416 @@ public class HomeWindow extends JFrame {
 		separator_4.setBounds(421, 139, 2, 364);
 		panel_2.add(separator_4);
 		
+		JLabel numberOfProfessors = new JLabel("Professors - ");
+		numberOfProfessors.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOfProfessors.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOfProfessors.setBounds(39, 151, 311, 51);
+		panel_2.add(numberOfProfessors);
+		
+		
+		JLabel numberOfAssistantProfessors = new JLabel("Assistant Professors - ");
+		numberOfAssistantProfessors.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOfAssistantProfessors.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOfAssistantProfessors.setBounds(39, 211, 311, 51);
+		panel_2.add(numberOfAssistantProfessors);
+		
+		JLabel numberOfSeniorHgLecturers = new JLabel("Senior Lecturers (HG) - ");
+		numberOfSeniorHgLecturers.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOfSeniorHgLecturers.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOfSeniorHgLecturers.setBounds(39, 272, 311, 51);
+		panel_2.add(numberOfSeniorHgLecturers);
+		
+		JLabel numberOfSeniorLecturers = new JLabel("Senior Lecturers - ");
+		numberOfSeniorLecturers.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOfSeniorLecturers.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOfSeniorLecturers.setBounds(39, 333, 311, 51);
+		panel_2.add(numberOfSeniorLecturers);
+		
+		JLabel numberOfLecturers = new JLabel("Lecturers - ");
+		numberOfLecturers.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOfLecturers.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOfLecturers.setBounds(39, 394, 311, 51);
+		panel_2.add(numberOfLecturers);
+		
+		JLabel numberOfAssistantLecturers = new JLabel("Assistant Lecturers - ");
+		numberOfAssistantLecturers.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOfAssistantLecturers.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOfAssistantLecturers.setBounds(39, 454, 311, 51);
+		panel_2.add(numberOfAssistantLecturers);
+		
+		JSeparator separator_3_2 = new JSeparator();
+		separator_3_2.setBounds(421, 333, 395, 2);
+		panel_2.add(separator_3_2);
+		
+		JLabel numberOfConsecutiveSessions = new JLabel("Consecutive Sessions- ");
+		numberOfConsecutiveSessions.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOfConsecutiveSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOfConsecutiveSessions.setBounds(449, 151, 311, 51);
+		panel_2.add(numberOfConsecutiveSessions);
+		
+		JLabel numberOfParallelSessions = new JLabel("Parallel Sessions - ");
+		numberOfParallelSessions.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOfParallelSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOfParallelSessions.setBounds(449, 211, 311, 51);
+		panel_2.add(numberOfParallelSessions);
+		
+		JLabel numberOfNonOverlappingSessions = new JLabel("Non Overlaping Sessions - ");
+		numberOfNonOverlappingSessions.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOfNonOverlappingSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOfNonOverlappingSessions.setBounds(449, 272, 311, 51);
+		panel_2.add(numberOfNonOverlappingSessions);
+		
+		JLabel registeredLecturesText_1_1_1_1_2_4 = new JLabel("Subjects");
+		registeredLecturesText_1_1_1_1_2_4.setHorizontalAlignment(SwingConstants.LEFT);
+		registeredLecturesText_1_1_1_1_2_4.setFont(new Font("Kristen ITC", Font.BOLD, 18));
+		registeredLecturesText_1_1_1_1_2_4.setBounds(592, 343, 83, 51);
+		panel_2.add(registeredLecturesText_1_1_1_1_2_4);
+		
+		JLabel numberOf1stYearSubjects = new JLabel("1st Year - ");
+		numberOf1stYearSubjects.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOf1stYearSubjects.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOf1stYearSubjects.setBounds(459, 392, 169, 51);
+		panel_2.add(numberOf1stYearSubjects);
+		
+		JLabel numberOf2ndYearSubjects = new JLabel("2nd Year - ");
+		numberOf2ndYearSubjects.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOf2ndYearSubjects.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOf2ndYearSubjects.setBounds(459, 452, 169, 51);
+		panel_2.add(numberOf2ndYearSubjects);
+		
+		JLabel numberOf3rdYearSubjects = new JLabel("3rd Year - ");
+		numberOf3rdYearSubjects.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOf3rdYearSubjects.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOf3rdYearSubjects.setBounds(638, 392, 169, 51);
+		panel_2.add(numberOf3rdYearSubjects);
+		
+		JLabel numberOf4thYearSubjects = new JLabel("4th Year - ");
+		numberOf4thYearSubjects.setHorizontalAlignment(SwingConstants.LEFT);
+		numberOf4thYearSubjects.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		numberOf4thYearSubjects.setBounds(638, 450, 169, 51);
+		panel_2.add(numberOf4thYearSubjects);
+		
+		
+		
+		//set values left side bar
+		totalRooms.setText(String.valueOf(getLectureRoomCount(conn) + getLaboratoryRoomCount(conn)));
+		totalStudentGroups.setText(String.valueOf(getStudentGroupsCount(conn)));
+		totalSubjects.setText(String.valueOf(getSubjectsCount(conn)));
+		totalLecturers.setText(String.valueOf(getLecturersCount(conn)));
+		
+		//set values prograss bar
+		lectureRoomPercentage.setText(String.valueOf(generateLectureRoomPrecentage(conn)) + "%");
+		labRoomPercentage.setText(String.valueOf(generateLaboratoryRoomPrecentage(conn)) + "%");
+		progressBar.setValue((int)generateLectureRoomPrecentage(conn));
+		
+		
+		
+		//number of lectuers by count
+		int lecturersCountByCategory[] = getLecturersByCategoryWise( conn);
+		
+		numberOfProfessors.setText(numberOfProfessors.getText() + String.valueOf(lecturersCountByCategory[0]));
+		numberOfAssistantProfessors.setText(numberOfAssistantProfessors.getText() + String.valueOf(lecturersCountByCategory[1]));
+		numberOfSeniorHgLecturers.setText(numberOfSeniorHgLecturers.getText() + String.valueOf(lecturersCountByCategory[2]));
+		numberOfSeniorLecturers.setText(numberOfSeniorLecturers.getText() + String.valueOf(lecturersCountByCategory[3]));
+		numberOfLecturers.setText(numberOfLecturers.getText() + String.valueOf(lecturersCountByCategory[4]));
+		numberOfAssistantLecturers.setText(numberOfAssistantLecturers.getText() + String.valueOf(lecturersCountByCategory[5]));
 		
 		
 		
 		
+		//number of subjects for each year
+		int subjectsCountByYear[] = getSubjectsByYearWise( conn);
+		
+		numberOf1stYearSubjects.setText(numberOf1stYearSubjects.getText() + String.valueOf(subjectsCountByYear[0]));
+		numberOf2ndYearSubjects.setText(numberOf2ndYearSubjects.getText() + String.valueOf(subjectsCountByYear[1]));
+		numberOf3rdYearSubjects.setText(numberOf3rdYearSubjects.getText() + String.valueOf(subjectsCountByYear[2]));
+		numberOf4thYearSubjects.setText(numberOf4thYearSubjects.getText() + String.valueOf(subjectsCountByYear[3]));
 		
 		
 	}
+	
+	
+	
+	//get lecture room count
+	private int getLectureRoomCount(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM Locations WHERE roomType = 'Lecture Hall' ";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}
+	
+
+	//get Laboratory room count
+	private int getLaboratoryRoomCount(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM Locations WHERE roomType = 'Laboratory' ";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}
+	
+	
+	//generate lecture room precentage
+	private double generateLectureRoomPrecentage(Connection conn) {
+		
+		int lecRooms = getLectureRoomCount(conn);
+		int labRooms = getLaboratoryRoomCount(conn);
+		int totRooms = lecRooms + labRooms;
+		
+		//lec room precentage
+		double lecRoomPrecentage = (lecRooms/(double)totRooms) * 100;
+		
+		return round(lecRoomPrecentage, 2);
+		
+	}
+	
+	//generate lab room precentage
+	private double generateLaboratoryRoomPrecentage(Connection conn) {
+		
+		int lecRooms = getLectureRoomCount(conn);
+		int labRooms = getLaboratoryRoomCount(conn);
+		int totRooms = lecRooms + labRooms;
+			
+		//lab room precentage
+		double labRoomPrecentage = (labRooms/(double)totRooms) * 100;
+			
+		return round(labRoomPrecentage, 2); 
+			
+	}
+	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
+	}
+	
+	//get student groups count
+	public int getStudentGroupsCount(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM StudentGroups";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}
+	
+	
+	//get subjects count
+	public int getSubjectsCount(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM Subjects";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}	
+	
+
+	
+	//get total lecturers count
+	public int getLecturersCount(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM Lecturers";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}
+	
+	
+	
+	//get lecturers by category wise
+	public int[] getLecturersByCategoryWise(Connection conn){
+		
+		
+		int[] array = new int[6];
+		
+		try {
+			Statement st = conn.createStatement();
+			
+			//professorCount
+			String sqlProfessor = "SELECT COUNT(id) FROM Lecturers WHERE level = 1 ";
+			ResultSet professorCount = st.executeQuery(sqlProfessor);
+			professorCount.next();
+			array[0] = professorCount.getInt(1);
+			
+			
+			//Assistant Professor count
+			String sqlAssistantProfessor = "SELECT COUNT(id) FROM Lecturers WHERE level = 2 ";
+			ResultSet AssistantProfessorCount = st.executeQuery(sqlAssistantProfessor);
+			AssistantProfessorCount.next(); 
+			array[1] = AssistantProfessorCount.getInt(1);
+			
+			
+			//Senior Lecturer (HG) count
+			String sqlSeniorLecturerHG = "SELECT COUNT(id) FROM Lecturers WHERE level = 3 ";
+			ResultSet SeniorLecturerHGCount = st.executeQuery(sqlSeniorLecturerHG);
+			SeniorLecturerHGCount.next(); 
+			array[2] = SeniorLecturerHGCount.getInt(1);
+			
+			
+			//Senior Lecturer count
+			String sqlSeniorLecturer = "SELECT COUNT(id) FROM Lecturers WHERE level = 4 ";
+			ResultSet SeniorLecturerCount = st.executeQuery(sqlSeniorLecturer);
+			SeniorLecturerCount.next(); 
+			array[3] = SeniorLecturerCount.getInt(1);
+			
+			
+			// Lecturer count
+			String sqlLecturer = "SELECT COUNT(id) FROM Lecturers WHERE level = 5 ";
+			ResultSet LecturerCount = st.executeQuery(sqlLecturer);
+			LecturerCount.next(); 
+			array[4] = LecturerCount.getInt(1);
+			
+			
+			// Assistant Lecturer count
+			String sqlAssistantLecturer = "SELECT COUNT(id) FROM Lecturers WHERE level = 6 ";
+			ResultSet AssistantLecturerCount = st.executeQuery(sqlAssistantLecturer);
+			AssistantLecturerCount.next(); 
+			array[5] = AssistantLecturerCount.getInt(1);	
+			
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return array;
+		
+	}
+	
+	
+	
+	
+	//get subjects by year wise
+	public int[] getSubjectsByYearWise(Connection conn){
+		
+		int[] array = new int[5];
+		
+		try {
+			Statement st = conn.createStatement();
+			
+			//year1
+			String sqlYear1 = "SELECT COUNT(id) FROM Subjects WHERE offyear = 1 ";
+			ResultSet sqlYear1Count = st.executeQuery(sqlYear1);
+			sqlYear1Count.next();
+			array[0] = sqlYear1Count.getInt(1);
+			
+			
+			//year2
+			String sqlYear2 = "SELECT COUNT(id) FROM Subjects WHERE offyear = 2 ";
+			ResultSet sqlYear2Count = st.executeQuery(sqlYear2);
+			sqlYear2Count.next(); 
+			array[1] = sqlYear2Count.getInt(1);
+			
+			
+			//year3
+			String sqlYear3 = "SELECT COUNT(id) FROM Subjects WHERE offyear = 3 ";
+			ResultSet sqlYear3Count = st.executeQuery(sqlYear3);
+			sqlYear3Count.next(); 
+			array[2] = sqlYear3Count.getInt(1);
+			
+			
+			//year4
+			String sqlYear4 = "SELECT COUNT(id) FROM Subjects WHERE offyear = 4 ";
+			ResultSet sqlYear4Count = st.executeQuery(sqlYear4);
+			sqlYear4Count.next(); 
+			array[3] = sqlYear4Count.getInt(1);
+			
+			
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		
+		
+		return array;
+		
+	}
+	
+	
+	
+	
 }

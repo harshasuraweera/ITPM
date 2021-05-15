@@ -12,6 +12,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import IT19142692.AddWorkingDaysAndHours;
+import IT19209258.Smanage;
+import IT19209258.lecturer;
+import IT19209258.subject;
+import IT19216492.AddStudentGroups;
+import IT19216492.AddTags;
+
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +53,7 @@ public class AddSomething extends JFrame {
 	 */
 	public AddSomething() throws IOException {
 		
-		//do these for each and every JFrame
+		// do these for each and every JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setSize(1280, 720);
@@ -82,7 +90,7 @@ public class AddSomething extends JFrame {
 					homeWindow.setVisible(true);
 					
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 			}
@@ -101,11 +109,12 @@ public class AddSomething extends JFrame {
 					dispose();
 					manageExisiting.setVisible(true);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 			}
 		});
+		
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manage.png")));
 		btnNewButton_1_1.setBounds(973, 10, 250, 50);
@@ -118,6 +127,9 @@ public class AddSomething extends JFrame {
 		JButton addWorkingDaysAndHours = new JButton(" Add Working Days And Hours");
 		addWorkingDaysAndHours.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AddWorkingDaysAndHours addWorkingDaysAndHours = new AddWorkingDaysAndHours();
+				dispose();
+				addWorkingDaysAndHours.setVisible(true);
 			}
 		});
 		addWorkingDaysAndHours.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -132,6 +144,9 @@ public class AddSomething extends JFrame {
 		JButton addNewLecturer = new JButton(" Add New Lecturer");
 		addNewLecturer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lecturer lecturer = new lecturer();
+				dispose();
+				lecturer.setVisible(true);
 			}
 		});
 		addNewLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -148,6 +163,9 @@ public class AddSomething extends JFrame {
 		JButton addNewSubject = new JButton(" Add New Subject");
 		addNewSubject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				subject addSubject = new subject();
+				dispose();
+				addSubject.setVisible(true);
 			}
 		});
 		addNewSubject.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -161,6 +179,9 @@ public class AddSomething extends JFrame {
 		JButton addNewStudentGroup = new JButton(" Add Student Group");
 		addNewStudentGroup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AddStudentGroups addStudentGroups = new AddStudentGroups();
+				dispose();
+				addStudentGroups.setVisible(true);
 			}
 		});
 		addNewStudentGroup.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -171,11 +192,12 @@ public class AddSomething extends JFrame {
 		
 		
 		
-		
-		
 		JButton addNewTags = new JButton(" Add Tags");
 		addNewTags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AddTags addTags = new AddTags();
+				dispose();
+				addTags.setVisible(true);
 			}
 		});
 		addNewTags.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -188,6 +210,16 @@ public class AddSomething extends JFrame {
 		JButton addNewLocation = new JButton(" Add Location");
 		addNewLocation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AddLocation addNewLocation = null;
+				try {
+					addNewLocation = new AddLocation();
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+				dispose();
+				addNewLocation.setVisible(true);
+				
 			}
 		});
 		addNewLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -197,6 +229,10 @@ public class AddSomething extends JFrame {
 		contentPane.add(addNewLocation);
 		
 		JButton addNewSession = new JButton(" Add Session");
+		addNewSession.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		addNewSession.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		addNewSession.setFocusable(false);
 		addNewSession.setIcon(new ImageIcon(getClass().getClassLoader().getResource("addSession.png")));
