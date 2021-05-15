@@ -507,8 +507,7 @@ public class AddSessions extends JFrame {
 	    	if(tag.equals("Lab")) {
 	    		
 				groupidX =  subgroupid;
-				
-			}else if(tag.equals("Tutorial") || tag.equals("Lecture")){
+			}else if(tag.equals("Tutorial") || tag.equals("Lecture") || tag.equals("Lecture and Tute")){
 				
 				groupidX = groupid;
 				
