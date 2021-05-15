@@ -211,18 +211,10 @@ public class AddSpecialRoom extends JFrame {
 					Statement st = conn.createStatement();
 					int rs = st.executeUpdate(sql1);
 					
-					PreparedStatement pstmt = conn.prepareStatement(sql1);
-					
 					String rm = room.getSelectedItem().toString();
-					pstmt.setString(1, rm);
 					String dy = day.getSelectedItem().toString();
-					pstmt.setString(2, dy);
 					String sti = stime.getText().toString();
-					pstmt.setString(3, sti);
 					String eti = etime.getText().toString();
-					pstmt.setString(4, eti);
-					
-					pstmt.executeUpdate();
 					
 					JOptionPane.showMessageDialog(null, "Insertion Successful");
 					
