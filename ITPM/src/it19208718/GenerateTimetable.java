@@ -49,7 +49,10 @@ public class GenerateTimetable extends JFrame {
 	public ArrayList<String> timeSlots =  new ArrayList<String>(); 
 	
 	List<String> timeSlotList = Arrays.asList( "08.30 - 09.30", "09.30 - 10.30", "10.30 - 11.30","11.30 - 12.30", "12.30 - 13.30", "13.30 - 14.30",  "14.30 - 15.30", "15.30 - 16.30", "16.30 - 17.30", "17.30 - 18.30", "18.30 - 19.30");
-	  
+	 
+	
+	boolean allSessionsAddedToTheTimeTable = false;
+	
 	
 	/**
 	 * Launch the application.
@@ -183,6 +186,7 @@ public class GenerateTimetable extends JFrame {
 		for(int i=0; i<11 ; i++) {
 			model.addRow(new Object[] {
 					" " + timeSlots.get(i),
+					
 			});;
 		}
 		
@@ -247,12 +251,17 @@ public class GenerateTimetable extends JFrame {
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(" - - -", i, 1);
 					}
-					//System.out.println("mondayAvailability" + mondayAvailability);
+					
 				}else{
+					
+					String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem);
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(null, i, 1);
 					}
-					//System.out.println("mondayAvailability" + mondayAvailability);
+					for(int i=0; i<sessionListArrayForTheLecturer.length ; i++) {
+						timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 1);
+					}
+					
 				}
 				
 				if(!tuesdayAvailability) {
@@ -261,8 +270,12 @@ public class GenerateTimetable extends JFrame {
 					}
 					//System.out.println("tuesdayAvailability" + tuesdayAvailability);
 				}else {
+					String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem);
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(null, i, 2);
+					}
+					for(int i=0; i<sessionListArrayForTheLecturer.length ; i++) {
+						timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 2);
 					}
 					//System.out.println("tuesdayAvailability" + tuesdayAvailability);
 				}
@@ -274,8 +287,12 @@ public class GenerateTimetable extends JFrame {
 					}
 					//System.out.println("wednesdayAvailability" + wednesdayAvailability);
 				}else {
+					String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem);
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(null, i, 3);
+					}
+					for(int i=0; i<sessionListArrayForTheLecturer.length ; i++) {
+						timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 3);
 					}
 					//System.out.println("wednesdayAvailability" + wednesdayAvailability);
 				}
@@ -287,8 +304,12 @@ public class GenerateTimetable extends JFrame {
 					}
 					//System.out.println("thursdayAvailability" + thursdayAvailability);
 				}else {
+					String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem);
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(null, i, 4);
+					}
+					for(int i=0; i<sessionListArrayForTheLecturer.length ; i++) {
+						timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 4);
 					}
 					//System.out.println("thursdayAvailability" + thursdayAvailability);
 				}
@@ -300,8 +321,12 @@ public class GenerateTimetable extends JFrame {
 					}
 					//System.out.println("fridayAvailability" + fridayAvailability);
 				}else {
+					String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem);
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(null, i, 5);
+					}
+					for(int i=0; i<sessionListArrayForTheLecturer.length ; i++) {
+						timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 5);
 					}
 					//System.out.println("fridayAvailability" + fridayAvailability);
 				}
@@ -448,12 +473,41 @@ public class GenerateTimetable extends JFrame {
 		return availability;
 		
 		
-		
-		
-		
 	}
 	
+	
+	//get available sessions for the selected lecturer
+	private String [] getAvailableSessions (String lecturerName) {
+		
+		Connection conn = DBConnect.getConnection();
+		
+		String[] sessionListArrayForTheLecturer = null;
+		List<String> list = new ArrayList<>();
+		String singleSessionSignature;
+		String AIID;
+		
+		try {
+			String sql = "SELECT * from Sessions WHERE lecturer1 = '"+lecturerName+"' or lecturer2 = '"+lecturerName+"' ";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			
+			while(rs.next()) {
+				
+				
+				
+				singleSessionSignature =  lecturerName + ", " + rs.getString("subjectName") + "(" + rs.getString("subjectCode") + "), " + rs.getString("tag") + ", " + rs.getString("nOfStudents") + "("  + rs.getString("duration") + ")";
+				list.add(singleSessionSignature);
+			}
+			sessionListArrayForTheLecturer = list.toArray(new String[0]);
+			
+		}catch (Exception e) {
+			
+		}
 
+		
+		return sessionListArrayForTheLecturer;
+	}
 
 
 
