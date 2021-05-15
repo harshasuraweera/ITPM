@@ -19,7 +19,9 @@ import javax.swing.border.EmptyBorder;
 
 import IT19142692.AddWorkingDaysAndHours;
 import IT19209258.Lmanage;
+import IT19209258.Sessionmanage;
 import IT19209258.Smanage;
+import IT19216492.DefaultSession;
 import IT19216492.ManageStudentGroups;
 import IT19216492.ManageTags;
 
@@ -212,6 +214,14 @@ public class ManageExisiting extends JFrame {
 		contentPane.add(btnManageStudentGroups);
 		
 		JButton btnManageSessions = new JButton(" Manage Sessions");
+		btnManageSessions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Sessionmanage sessionMange = new Sessionmanage();
+				dispose();
+				sessionMange.setVisible(true);
+			}
+		});
 		btnManageSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageSessions.setFocusable(false);
 		btnManageSessions.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manageSessions.png")));
@@ -219,6 +229,14 @@ public class ManageExisiting extends JFrame {
 		contentPane.add(btnManageSessions);
 		
 		JButton btnManageRooms = new JButton(" Manage Rooms");
+		btnManageRooms.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ManageSessionRooms manageSessionRooms = new ManageSessionRooms();
+				dispose();
+				manageSessionRooms.setVisible(true);
+			}
+		});
 		btnManageRooms.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnManageRooms.setFocusable(false);
 		btnManageRooms.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecRoom.png")));
@@ -226,6 +244,14 @@ public class ManageExisiting extends JFrame {
 		contentPane.add(btnManageRooms);
 		
 		JButton btnSessionTypesANTA = new JButton(" Session Types and Not Available Time Allocations");
+		btnSessionTypesANTA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				DefaultSession defaultSessions = new DefaultSession();
+				dispose();
+				defaultSessions.setVisible(true);
+			}
+		});
 		btnSessionTypesANTA.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnSessionTypesANTA.setFocusable(false);
 		btnSessionTypesANTA.setIcon(new ImageIcon(getClass().getClassLoader().getResource("sessionTypes2.png")));

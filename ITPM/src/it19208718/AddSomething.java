@@ -14,11 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import IT19142692.AddWorkingDaysAndHours;
+import IT19209258.AddSessions;
 import IT19209258.Smanage;
 import IT19209258.lecturer;
 import IT19209258.subject;
 import IT19216492.AddStudentGroups;
 import IT19216492.AddTags;
+import IT19216492.DefaultSession;
 
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -231,6 +233,10 @@ public class AddSomething extends JFrame {
 		JButton addNewSession = new JButton(" Add Session");
 		addNewSession.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AddSessions addSession = new AddSessions();
+				dispose();
+				addSession.setVisible(true);
+				
 			}
 		});
 		addNewSession.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -240,6 +246,13 @@ public class AddSomething extends JFrame {
 		contentPane.add(addNewSession);
 		
 		JButton assignNewRooms = new JButton(" Assign Rooms");
+		assignNewRooms.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AssignSessionRoom assignSessionRoom = new AssignSessionRoom();
+				dispose();
+				assignSessionRoom.setVisible(true);
+			}
+		});
 		assignNewRooms.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		assignNewRooms.setFocusable(false);
 		assignNewRooms.setIcon(new ImageIcon(getClass().getClassLoader().getResource("lecRoom2.png")));
@@ -247,6 +260,14 @@ public class AddSomething extends JFrame {
 		contentPane.add(assignNewRooms);
 		
 		JButton sessionTypesANTA = new JButton(" Session Types and Not Available Time Allocations");
+		sessionTypesANTA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				DefaultSession defaultSessions = new DefaultSession();
+				dispose();
+				defaultSessions.setVisible(true);
+			}
+		});
 		sessionTypesANTA.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		sessionTypesANTA.setFocusable(false);
 		sessionTypesANTA.setIcon(new ImageIcon(getClass().getClassLoader().getResource("sessionTypes.png")));

@@ -198,7 +198,7 @@ public class AddSessions extends JFrame {
 	    txtpnSelectGroupAnd.setFont(new Font("Kristen ITC", Font.BOLD, 30));
 	    txtpnSelectGroupAnd.setEditable(false);
 	    txtpnSelectGroupAnd.setBackground(new Color(153, 204, 255));
-	    txtpnSelectGroupAnd.setBounds(439, 333, 413, 83);
+	    txtpnSelectGroupAnd.setBounds(437, 334, 606, 83);
 	    contentPane.add(txtpnSelectGroupAnd);
 	    
 	    JButton btnDone = new JButton("Done");
