@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import database.DBConnect;
 
@@ -23,14 +24,29 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 @SuppressWarnings("serial")
 public class GenerateTimetable extends JFrame {
 
 	private JPanel contentPane;
-
+	String selectedType = null;
+	JComboBox<Object> dropdownList;
+	
+	private JScrollPane scrollPane;
+	private JTable timetable;
+	
+	public ArrayList<String> timeSlots =  new ArrayList<String>(); 
+	
+	List<String> timeSlotList = Arrays.asList( "08.30 - 09.30", "09.30 - 10.30", "10.30 - 11.30","11.30 - 12.30", "12.30 - 13.30", "13.30 - 14.30",  "14.30 - 15.30", "15.30 - 16.30", "16.30 - 17.30", "17.30 - 18.30", "18.30 - 19.30");
+	  
+	
 	/**
 	 * Launch the application.
 	 */
@@ -51,6 +67,12 @@ public class GenerateTimetable extends JFrame {
 	 * Create the frame.
 	 */
 	public GenerateTimetable() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				dropdownList.setModel(new DefaultComboBoxModel<Object>(getlecturerNames ()));
+			}
+		});
 		
 		//do these for each and every JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,7 +134,7 @@ public class GenerateTimetable extends JFrame {
 		btnPrint.setBounds(1086, 10, 150, 50);
 		panel.add(btnPrint);
 		
-		JComboBox<Object> dropdownList = new JComboBox<Object>(new Object[]{});
+		dropdownList = new JComboBox<Object>(new Object[]{});
 		//allTheSessionsDropDownList.setSelectedIndex(0);
 		dropdownList.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		dropdownList.setBackground(Color.WHITE);
@@ -123,13 +145,42 @@ public class GenerateTimetable extends JFrame {
 		btnGenerate.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnGenerate.setFocusable(false);
 		btnGenerate.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-		btnGenerate.setBounds(1080, 94, 150, 50);
+		btnGenerate.setBounds(1087, 89, 150, 50);
 		contentPane.add(btnGenerate);
 		
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(24, 179, 1213, 476);
+		contentPane.add(scrollPane);
 		
-		//end default
+		timetable = new JTable();
+		scrollPane.setViewportView(timetable);
+		timetable.getTableHeader().setFont(new Font("Kristen ITC", Font.BOLD, 12));
 		
+		
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("Time Slots");
+		model.addColumn("Monday");
+		model.addColumn("Tuesday");
+		model.addColumn("Wednesday"); 
+		model.addColumn("Thursday");
+		model.addColumn("Friday");
+		
+		timetable.setModel(model);
+		timetable.setAutoResizeMode(1);
+		timetable.setFillsViewportHeight( true );
+		timetable.setRowHeight(30);
+		timetable.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
+		
+		//insert time slots
+		
+		timeSlots.addAll(timeSlotList);
+		
+		for(int i=0; i<11 ; i++) {
+			model.addRow(new Object[] {
+					" " + timeSlots.get(i),
+			});;
+		}
 		
 		btnLecturer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,8 +189,8 @@ public class GenerateTimetable extends JFrame {
 				btnLecturer.setFont(new Font("Kristen ITC", Font.BOLD, 18));
 				btnStudent.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				
-				
+				selectedType = "Lecturer";
+				dropdownList.setModel(new DefaultComboBoxModel<Object>(getlecturerNames ()));
 			}
 		});
 		
@@ -150,6 +201,9 @@ public class GenerateTimetable extends JFrame {
 				btnStudent.setFont(new Font("Kristen ITC", Font.BOLD, 18));
 				btnLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				selectedType = "StudentGroup";
+				dropdownList.setModel(new DefaultComboBoxModel<Object>(loadStudentGroups ()));
+				
 			}
 		});
 		
@@ -160,9 +214,7 @@ public class GenerateTimetable extends JFrame {
 				btnLocation.setFont(new Font("Kristen ITC", Font.BOLD, 18));
 				btnLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnStudent.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				
-				
-
+				selectedType = "Location";
 				dropdownList.setModel(new DefaultComboBoxModel<Object>(loadLocations ()));
 				
 			}
@@ -170,21 +222,87 @@ public class GenerateTimetable extends JFrame {
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	
 	//load lecturers
-	
+	private String [] getlecturerNames() {
+		
+		Connection conn = DBConnect.getConnection();
+
+		String[] lecturerNameArray = null;
+		List<String> list = new ArrayList<>();
+
+		try {
+
+		String sql = "SELECT lname from Lecturers";
+		Statement st = conn.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+
+		list.add("Select a lecturer on here");
+		while(rs.next()) {
+
+
+		list.add(rs.getString("lname"));
+		}
+		lecturerNameArray = list.toArray(new String[0]);
+
+		}catch (Exception e) {
+
+		}
+
+
+
+
+		return lecturerNameArray;
+	}
 	
 	
 	
 	//load student groups
-	
+	private String[] loadStudentGroups () {
+		
+		Connection conn = DBConnect.getConnection();
+		
+		String[] groupIdArray = null;
+		List<String> list = new ArrayList<>();
+		String singleRoom;
+		
+		try {
+			String sql = "SELECT * from StudentGroups ";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			list.add("Select a student group on here");
+			
+			while(rs.next()) {
+				
+				singleRoom = rs.getString("groupId");
+				
+				list.add(singleRoom);
+			}
+			groupIdArray = list.toArray(new String[0]);
+			
+		}catch (Exception e) {
+			
+		}
+
+		
+		return groupIdArray;
+	}
 	
 	
 	
 	//load locations
-	public String[] loadLocations () {
+	private String[] loadLocations () {
 		
 		Connection conn = DBConnect.getConnection();
 		
@@ -202,7 +320,6 @@ public class GenerateTimetable extends JFrame {
 			while(rs.next()) {
 				
 				singleRoom = rs.getString("roomName");
-				
 				list.add(singleRoom);
 			}
 			locationArray = list.toArray(new String[0]);
@@ -214,26 +331,4 @@ public class GenerateTimetable extends JFrame {
 		
 		return locationArray;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
