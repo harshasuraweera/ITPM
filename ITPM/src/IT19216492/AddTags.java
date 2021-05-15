@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 public class AddTags extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -56,7 +57,7 @@ public class AddTags extends JFrame {
 		setSize(1280, 720);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setTitle("Forza Timetable Management System - Add Location");
+		setTitle("Forza Timetable Management System - Add Tags");
 		
 		//set Icon to the window
 		ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
@@ -80,6 +81,7 @@ public class AddTags extends JFrame {
 		JButton btnNewButton_1 = new JButton(" Back To Home");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				try {
 					HomeWindow homeWindow = new HomeWindow();
 					dispose();
@@ -91,12 +93,22 @@ public class AddTags extends JFrame {
 				}
 			}
 		});
+
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
 		btnNewButton_1.setBounds(24, 10, 225, 50);
 		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton_1_1 = new JButton("Manage Tags");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ManageTags manageTags = new ManageTags();
+				dispose();
+				manageTags.setVisible(true);
+			}
+		});
+		
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1.setFocusable(false);
 		btnNewButton_1_1.setBounds(978, 10, 264, 50);
@@ -119,20 +131,11 @@ public class AddTags extends JFrame {
 		lblTagName.setBounds(296, 241, 172, 46);
 		contentPane.add(lblTagName);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		comboBox.setBounds(598, 241, 323, 37);
-		contentPane.add(comboBox);
-		
-		comboBox.addItem("");
-		comboBox.addItem("");
-		comboBox.addItem("");
-		comboBox.addItem("");
-		comboBox.addItem("");
-		comboBox.addItem("");
-		comboBox.addItem("");
-		comboBox.addItem("");
-		
+		textField = new JTextField();
+		textField.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		textField.setColumns(10);
+		textField.setBounds(598, 241, 323, 37);
+		contentPane.add(textField);
 		
 		
 		JLabel lblRelatedTag = new JLabel("Related Tag");
@@ -146,14 +149,11 @@ public class AddTags extends JFrame {
 		contentPane.add(comboBox_1);
 		
 		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		comboBox_1.addItem("");
-		
+		comboBox_1.addItem("Lecture");
+		comboBox_1.addItem("Lab");
+		comboBox_1.addItem("Tutorial");
+		comboBox_1.addItem("Practical");
+		comboBox_1.addItem("Evaluation");
 		
 		
 		
@@ -161,7 +161,7 @@ public class AddTags extends JFrame {
 		btnNewButton_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				comboBox.setSelectedIndex(0);
+				textField.setText(" ");
 				comboBox_1.setSelectedIndex(0);
 			}
 		});
@@ -174,7 +174,7 @@ public class AddTags extends JFrame {
 		JButton btnNewButton_1_1_1_1 = new JButton("Add");
 		btnNewButton_1_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					if(comboBox.getSelectedItem().equals("") || comboBox_1.getSelectedItem().equals("")) {
+					if(textField.getText().equals("") || comboBox_1.getSelectedItem().equals("")) {
 					
 					JLabel label = new JLabel("Please Fill Complete Information");
  					label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -182,13 +182,13 @@ public class AddTags extends JFrame {
 				}
 				else {
 				
-				String value1 = comboBox.getSelectedItem().toString();
+				String value1 = textField.getText();
 				String value2 = comboBox_1.getSelectedItem().toString();
 try {
 					
 					Connection conn = DBConnect.getConnection();
 					
-					String query = "INSERT INTO StudentGroups values(null, '" + value1 + "','" + value2 + "')";
+					String query = "INSERT INTO Tags values(null, '" + value1 + "','" + value2 + "')";
 					
 					 Statement sta = conn.createStatement();
 	                 int x = sta.executeUpdate(query);

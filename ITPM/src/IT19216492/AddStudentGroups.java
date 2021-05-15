@@ -19,11 +19,13 @@ import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 import com.mysql.cj.result.StringValueFactory;
 
 import database.DBConnect;
+import it19208718.HomeWindow;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,7 +68,7 @@ public class AddStudentGroups extends JFrame {
 		setSize(1280, 720);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setTitle("Forza Timetable Management System - Add Location");
+		setTitle("Forza Timetable Management System - Add Student Groups");
 		
 		//set Icon to the window
 		ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
@@ -88,12 +90,37 @@ public class AddStudentGroups extends JFrame {
 		
 		
 		JButton btnNewButton_1 = new JButton(" Back To Home");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					HomeWindow homeWindow = new HomeWindow();
+					dispose();
+					homeWindow.setVisible(true);
+					
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
 		btnNewButton_1.setBounds(24, 10, 225, 50);
 		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton_1_1 = new JButton("Manage Student Groups");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ManageStudentGroups manageStudentGroups = new ManageStudentGroups();
+				dispose();
+				manageStudentGroups.setVisible(true);
+			}
+			
+		});
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1.setFocusable(false);
 		btnNewButton_1_1.setBounds(978, 10, 264, 50);
@@ -207,6 +234,7 @@ public class AddStudentGroups extends JFrame {
 		
 		
 		
+		
 		JButton btnNewButton_1_1_1 = new JButton("Clear");
 		btnNewButton_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -221,6 +249,7 @@ public class AddStudentGroups extends JFrame {
 				
 			}
 		});
+		
 		
 		
 		btnNewButton_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -277,8 +306,11 @@ public class AddStudentGroups extends JFrame {
 				
 				}	
 			}
-				
+			
+			
 		});
+		
+		
 		
 		
 		btnNewButton_1_1_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -299,12 +331,8 @@ public class AddStudentGroups extends JFrame {
 		btnNewButton_1_1_1_1_1.setFocusable(false);
 		btnNewButton_1_1_1_1_1.setBounds(926, 438, 225, 50);
 		contentPane.add(btnNewButton_1_1_1_1_1);
-		
-		
+	}	
 	
+
 		
-		
-			
-		//end default
-	}
 }

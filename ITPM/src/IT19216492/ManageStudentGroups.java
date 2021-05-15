@@ -19,12 +19,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import database.DBConnect;
+import it19208718.HomeWindow;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -73,7 +75,7 @@ public class ManageStudentGroups extends JFrame {
 		setSize(1280, 720);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setTitle("Forza Timetable Management System - Add Location");
+		setTitle("Forza Timetable Management System - Manage Student Groups");
 		
 		//set Icon to the window
 		ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
@@ -96,15 +98,38 @@ public class ManageStudentGroups extends JFrame {
 		
 		
 		JButton btnNewButton_1 = new JButton(" Add Student Groups");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				AddStudentGroups addStudentGroups = new AddStudentGroups();
+				dispose();
+				addStudentGroups.setVisible(true);
+			
+			}
+		});
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
-		btnNewButton_1.setBounds(24, 10, 225, 50);
+		btnNewButton_1.setBounds(24, 10, 264, 50);
 		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton_1_1 = new JButton(" Back To Home");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					HomeWindow homeWindow = new HomeWindow();
+					dispose();
+					homeWindow.setVisible(true);
+					
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1.setFocusable(false);
-		btnNewButton_1_1.setBounds(978, 10, 264, 50);
+		btnNewButton_1_1.setBounds(948, 10, 294, 50);
 		panel.add(btnNewButton_1_1);
 
 		
@@ -386,7 +411,7 @@ public class ManageStudentGroups extends JFrame {
 		
 		
 		scrollPane.setViewportView(table);
-		table.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
+		
 		
 		
 		
@@ -398,12 +423,12 @@ public class ManageStudentGroups extends JFrame {
 			
 			DefaultTableModel model = new DefaultTableModel();
 			model.addColumn("Id");
-			model.addColumn("academicYearSemester");
-			model.addColumn("degreeProgramme");
-			model.addColumn("groupNumbers"); 
-			model.addColumn("subGroupNumbers");
-			model.addColumn("groupId");
-			model.addColumn("subGroupId");
+			model.addColumn("Academic Year Semester");
+			model.addColumn("Degree Programme");
+			model.addColumn("Group Numbers"); 
+			model.addColumn("SubGroup Numbers");
+			model.addColumn("Group Id");
+			model.addColumn("SubGroup Id");
 			
 			try {
 				
