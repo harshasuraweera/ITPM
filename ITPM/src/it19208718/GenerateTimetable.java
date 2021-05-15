@@ -13,6 +13,8 @@ import database.DBConnect;
 
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -110,12 +112,12 @@ public class GenerateTimetable extends JFrame {
 		btnPrint.setBounds(1086, 10, 150, 50);
 		panel.add(btnPrint);
 		
-		JComboBox<Object> allTheSessionsDropDownList = new JComboBox<Object>(new Object[]{});
+		JComboBox<Object> dropdownList = new JComboBox<Object>(new Object[]{});
 		//allTheSessionsDropDownList.setSelectedIndex(0);
-		allTheSessionsDropDownList.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		allTheSessionsDropDownList.setBackground(Color.WHITE);
-		allTheSessionsDropDownList.setBounds(208, 102, 818, 36);
-		contentPane.add(allTheSessionsDropDownList);
+		dropdownList.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		dropdownList.setBackground(Color.WHITE);
+		dropdownList.setBounds(208, 102, 818, 36);
+		contentPane.add(dropdownList);
 		
 		JButton btnGenerate = new JButton("Generate");
 		btnGenerate.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -138,7 +140,6 @@ public class GenerateTimetable extends JFrame {
 				btnLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				
 				
-				
 			}
 		});
 		
@@ -159,6 +160,11 @@ public class GenerateTimetable extends JFrame {
 				btnLocation.setFont(new Font("Kristen ITC", Font.BOLD, 18));
 				btnLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnStudent.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				
+				
+
+				dropdownList.setModel(new DefaultComboBoxModel<Object>(loadLocations ()));
+				
 			}
 		});
 		
@@ -182,33 +188,31 @@ public class GenerateTimetable extends JFrame {
 		
 		Connection conn = DBConnect.getConnection();
 		
-		String[] sessionListArray = null;
+		String[] locationArray = null;
 		List<String> list = new ArrayList<>();
 		String singleRoom;
-		String AIID;
 		
 		try {
 			String sql = "SELECT * from Locations ";
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			
-			list.add("Select a available session on here");
+			list.add("Select a room on here");
 			
 			while(rs.next()) {
 				
-				String singleRoom = rs.getString("");
+				singleRoom = rs.getString("roomName");
 				
-				singleRoom = "ID"+ AIID + " | " + rs.getString("subjectName") + " (" + rs.getString("subjectCode") + ") for " + rs.getString("groupId") + " by " + rs.getString("lecturer1") + " and " + rs.getString("lecturer2") + " | "  + rs.getString("tag");
 				list.add(singleRoom);
 			}
-			sessionListArray = list.toArray(new String[0]);
+			locationArray = list.toArray(new String[0]);
 			
 		}catch (Exception e) {
 			
 		}
 
 		
-		return sessionListArray;
+		return locationArray;
 	}
 	
 	
