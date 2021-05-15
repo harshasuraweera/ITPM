@@ -393,8 +393,7 @@ public class Sessionmanage extends JFrame {
 			groupidX =  subgroupid;
 			
 			
-			
-		}else if(tag.equals("Tutorial") || tag.equals("Lecture")){
+		}else if(tag.equals("Tutorial") || tag.equals("Lecture") || tag.equals("Lecture and Tute")){
 			
 			groupidX = groupid;
 			

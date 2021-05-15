@@ -173,7 +173,7 @@ public class ManageTags extends JFrame {
 		comboBox_1.addItem("Tutorial");
 		comboBox_1.addItem("Practical");
 		comboBox_1.addItem("Evaluation");
-		
+		comboBox_1.addItem("Lecture and Tute");
 		
 		
 		

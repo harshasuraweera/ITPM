@@ -255,7 +255,7 @@ public class AddSessions extends JFrame {
 				    	 groupId.setVisible(false);
 
 				    	
-				    }else if (tag.getSelectedItem().toString().equals("Lecture") || tag.getSelectedItem().toString().equals("Tutorial")) {
+				    }else if (tag.getSelectedItem().toString().equals("Lecture") || tag.getSelectedItem().toString().equals("Tutorial") || tag.getSelectedItem().toString().equals("Lecture and Tute")) {
 				    	
 				    	 txtpnSelectGroup_2.setVisible(true);
 				    	 groupId.setVisible(true);

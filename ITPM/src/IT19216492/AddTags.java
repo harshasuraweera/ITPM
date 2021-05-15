@@ -157,7 +157,7 @@ public class AddTags extends JFrame {
 		comboBox_1.addItem("Tutorial");
 		comboBox_1.addItem("Practical");
 		comboBox_1.addItem("Evaluation");
-		
+		comboBox_1.addItem("Lecture and Tute");
 		
 		
 		JButton btnNewButton_1_1_1 = new JButton("Clear");
