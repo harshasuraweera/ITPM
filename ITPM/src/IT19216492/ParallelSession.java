@@ -105,7 +105,8 @@ public class ParallelSession extends JFrame {
 		});
 		
 		
-		
+
+		btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
 		
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);

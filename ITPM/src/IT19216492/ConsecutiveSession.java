@@ -106,7 +106,8 @@ public class ConsecutiveSession extends JFrame {
 		});
 		
 		
-		
+
+		btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manage.png")));
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
 		btnNewButton_1.setBounds(24, 10, 225, 50);

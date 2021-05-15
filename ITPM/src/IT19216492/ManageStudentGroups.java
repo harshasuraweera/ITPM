@@ -107,6 +107,8 @@ public class ManageStudentGroups extends JFrame {
 			
 			}
 		});
+
+		btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manage.png")));
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
 		btnNewButton_1.setBounds(24, 10, 264, 50);
@@ -127,8 +129,21 @@ public class ManageStudentGroups extends JFrame {
 				}
 			}
 		});
+
+		btnNewButton_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manage.png")));
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1.setFocusable(false);
+		
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ManageStudentGroups ManageStudentGroups = new ManageStudentGroups();
+				dispose();
+				ManageStudentGroups.setVisible(true);
+			}
+		});
+		
+		
 		btnNewButton_1_1.setBounds(948, 10, 294, 50);
 		panel.add(btnNewButton_1_1);
 

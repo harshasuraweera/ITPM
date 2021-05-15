@@ -102,6 +102,8 @@ public class ManageTags extends JFrame {
 				addTags.setVisible(true);
 			}
 		});
+
+		btnNewButton_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manage.png")));
 		btnNewButton_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1.setFocusable(false);
 		btnNewButton_1.setBounds(24, 10, 225, 50);
@@ -122,6 +124,8 @@ public class ManageTags extends JFrame {
 				}
 			}
 		});
+
+		btnNewButton_1_1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
 		btnNewButton_1_1.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnNewButton_1_1.setFocusable(false);
 		btnNewButton_1_1.setBounds(978, 10, 264, 50);
