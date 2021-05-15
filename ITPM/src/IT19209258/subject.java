@@ -93,10 +93,11 @@ public class subject extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 					
 						try {
+
 							HomeWindow homeWindow = new HomeWindow();
 							dispose();
 							homeWindow.setVisible(true);
-							
+
 						} catch (IOException e1) {
 							
 							e1.printStackTrace();

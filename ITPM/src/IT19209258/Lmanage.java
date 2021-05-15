@@ -24,12 +24,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import database.DBConnect;
-import it19208718.AddSomething;
+import it19208718.HomeWindow;
+
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JScrollBar;
 
 public class Lmanage extends JFrame {
 
@@ -42,6 +44,7 @@ public class Lmanage extends JFrame {
 	private JTextField building;
 	private JTable table;
 	private JTextField level;
+	private JTextField rank;
 
 	/**
 	 * Launch the application.
@@ -104,9 +107,9 @@ public class Lmanage extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 					
 						try {
-							AddSomething addSomething = new AddSomething();
+							HomeWindow homewindow = new HomeWindow();
 							dispose();
-							addSomething.setVisible(true);
+							homewindow.setVisible(true);
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -152,22 +155,15 @@ public class Lmanage extends JFrame {
 				btnUpdate.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnUpdate.setFocusable(false);
 				btnUpdate.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnUpdate.setBounds(772, 122, 250, 50);
+				btnUpdate.setBounds(1094, 156, 155, 50);
 				contentPane.add(btnUpdate);
 				
 				JButton btnDelete = new JButton("Delete");
 				btnDelete.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnDelete.setFocusable(false);
 				btnDelete.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnDelete.setBounds(772, 216, 250, 50);
+				btnDelete.setBounds(1094, 269, 155, 50);
 				contentPane.add(btnDelete);
-				
-				JButton btnDone = new JButton("View");
-				btnDone.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				btnDone.setFocusable(false);
-				btnDone.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnDone.setBounds(772, 303, 250, 50);
-				contentPane.add(btnDone);
 				
 				JTextPane txtpnLecturerName = new JTextPane();
 				txtpnLecturerName.setBackground(new Color(153, 204, 255));
@@ -178,7 +174,6 @@ public class Lmanage extends JFrame {
 				contentPane.add(txtpnLecturerName);
 				
 				lid = new JTextField();
-				lid.setEditable(false);
 				lid.setBounds(363, 423, 177, 29);
 				contentPane.add(lid);
 				lid.setColumns(10);
@@ -249,7 +244,7 @@ public class Lmanage extends JFrame {
 				contentPane.add(building);
 				
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(62, 112, 610, 276);
+				scrollPane.setBounds(62, 112, 995, 285);
 				contentPane.add(scrollPane);
 				
 				table = new JTable();
@@ -266,10 +261,22 @@ public class Lmanage extends JFrame {
 				contentPane.add(txtpnLevel);
 				
 				level = new JTextField();
-				level.setEditable(false);
 				level.setColumns(10);
 				level.setBounds(984, 546, 177, 29);
 				contentPane.add(level);
+				
+				JTextPane txtpnRank = new JTextPane();
+				txtpnRank.setText("Rank");
+				txtpnRank.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
+				txtpnRank.setEditable(false);
+				txtpnRank.setBackground(new Color(153, 204, 255));
+				txtpnRank.setBounds(724, 606, 141, 29);
+				contentPane.add(txtpnRank);
+				
+				rank = new JTextField();
+				rank.setColumns(10);
+				rank.setBounds(984, 610, 177, 29);
+				contentPane.add(rank);
 				
 				//end navignation button 01
 				
@@ -282,9 +289,10 @@ public class Lmanage extends JFrame {
 						lname.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
 						faculty.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
 						department.setText(table.getValueAt(table.getSelectedRow(), 4).toString());
-						center.setText(table.getValueAt(table.getSelectedRow(), 7).toString());
-						building.setText(table.getValueAt(table.getSelectedRow(), 8).toString());
-						level.setText(table.getValueAt(table.getSelectedRow(), 9).toString());
+						center.setText(table.getValueAt(table.getSelectedRow(), 5).toString());
+						building.setText(table.getValueAt(table.getSelectedRow(),6 ).toString());
+						level.setText(table.getValueAt(table.getSelectedRow(), 7).toString());
+						rank.setText(table.getValueAt(table.getSelectedRow(), 8).toString());
 
 					}
 					
@@ -328,7 +336,9 @@ public class Lmanage extends JFrame {
 									faculty.getText().toString(),
 									department.getText().toString(),
 									center.getText().toString(),
-									building.getText().toString());
+									building.getText().toString(),
+									level.getText().toString(),
+									rank.getText().toString());
 						
 							if(isSuccess) {
 								JOptionPane.showMessageDialog(null, "Successfull update");
@@ -376,7 +386,7 @@ public class Lmanage extends JFrame {
 	}
 	
 			//up method
-			private boolean updateLecturer(int id, String lid, String lname, String faculty , String department, String center, String building) {
+			private boolean updateLecturer(int id, String lid, String lname, String faculty , String department, String center, String building, String level, String rank) {
 				
 				boolean isSuccess = false;
 				
@@ -384,9 +394,7 @@ public class Lmanage extends JFrame {
 				
 				try {
 					
-					String sql = "UPDATE Lecturers SET lid = '"+lid+"', lname = '"+lname+"', faculty = '"+faculty+"', department = '"+department+"',"
-							+ " center = '"+center+"',"
-							+ " building = '"+building+"'  WHERE id = '"+id+"' ";
+					String sql = "UPDATE Lecturers SET lid = '"+lid+"', lname = '"+lname+"', faculty = '"+faculty+"', department = '"+department+"',  center = '"+center+"',  building = '"+building+"', level = '"+level+"', rank = '"+rank+"'  WHERE id = '"+id+"' ";
 					
 					Statement st1 = conn.createStatement();
 					int rs = st1.executeUpdate(sql);
@@ -441,12 +449,17 @@ public class Lmanage extends JFrame {
 		model.addColumn("Lecturer Name");
 		model.addColumn("Faculty"); 
 		model.addColumn("Department");
-		model.addColumn("Available Days");
-		model.addColumn("Available Hours");
 		model.addColumn("Center");
 		model.addColumn("Building");
 		model.addColumn("Level");
 		model.addColumn("Rank");
+		model.addColumn("Monday");
+		model.addColumn("Tuesday");
+		model.addColumn("Wednesday");
+		model.addColumn("Thursday");
+		model.addColumn("Friday");
+		model.addColumn("Satureday");
+		model.addColumn("Sunday");
 		
 		try {
 			
@@ -461,12 +474,17 @@ public class Lmanage extends JFrame {
 						rs.getString("lname"),
 						rs.getString("faculty"),
 						rs.getString("department"),
-						rs.getString("adays"),
-						rs.getString("ahours"),
 						rs.getString("center"),
 						rs.getString("building"),
 						rs.getString("level"),
 						rs.getString("rank"),
+						rs.getString("monday"),
+						rs.getString("tuesday"),
+						rs.getString("wednesday"),
+						rs.getString("thursday"),
+						rs.getString("friday"),
+						rs.getString("satureday"),
+						rs.getString("sunday"),
 				});;
 			}
 			
@@ -477,15 +495,15 @@ public class Lmanage extends JFrame {
 			table.setModel(model);
 			table.setAutoResizeMode(1);
 			
-//			table.getColumnModel().getColumn(0).setPreferredWidth(80);
-//			table.getColumnModel().getColumn(1).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(2).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(3).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(4).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(5).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(6).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(7).setPreferredWidth(140);
-//			table.getColumnModel().getColumn(8).setPreferredWidth(140);
+			table.getColumnModel().getColumn(0).setPreferredWidth(80);
+			table.getColumnModel().getColumn(1).setPreferredWidth(140);
+			table.getColumnModel().getColumn(2).setPreferredWidth(140);
+			table.getColumnModel().getColumn(3).setPreferredWidth(140);
+			table.getColumnModel().getColumn(4).setPreferredWidth(140);
+			table.getColumnModel().getColumn(5).setPreferredWidth(140);
+			table.getColumnModel().getColumn(6).setPreferredWidth(140);
+			table.getColumnModel().getColumn(7).setPreferredWidth(140);
+			table.getColumnModel().getColumn(8).setPreferredWidth(140);
 			
 			
 		}catch (Exception e) {

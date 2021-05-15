@@ -89,9 +89,11 @@ public class lecturer extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 					
 						try {
-							HomeWindow home = new HomeWindow();
+              
+							HomeWindow homewindow = new HomeWindow();
 							dispose();
-							home.setVisible(true);
+							homewindow.setVisible(true);
+
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -160,20 +162,12 @@ public class lecturer extends JFrame {
 				txtpnDepartment.setBounds(75, 430, 171, 35);
 				contentPane.add(txtpnDepartment);
 				
-				JTextPane txtpnAvailableDays = new JTextPane();
-				txtpnAvailableDays.setBackground(new Color(153, 204, 255));
-				txtpnAvailableDays.setEditable(false);
-				txtpnAvailableDays.setText("Available Days");
-				txtpnAvailableDays.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnAvailableDays.setBounds(75, 507, 171, 35);
-				contentPane.add(txtpnAvailableDays);
-				
 				JTextPane txtpnAvailableHours = new JTextPane();
 				txtpnAvailableHours.setBackground(new Color(153, 204, 255));
 				txtpnAvailableHours.setEditable(false);
 				txtpnAvailableHours.setText("Available Hours");
 				txtpnAvailableHours.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				txtpnAvailableHours.setBounds(75, 593, 171, 35);
+				txtpnAvailableHours.setBounds(75, 514, 171, 35);
 				contentPane.add(txtpnAvailableHours);
 				
 				JTextPane txtpnCenter = new JTextPane();
@@ -210,7 +204,7 @@ public class lecturer extends JFrame {
 				
 				rank = new JTextField();
 				rank.setEditable(false);
-				rank.setBounds(941, 430, 275, 35);
+				rank.setBounds(941, 430, 96, 35);
 				contentPane.add(rank);
 				rank.setColumns(10);
 				
@@ -224,39 +218,129 @@ public class lecturer extends JFrame {
 				lid.setBounds(397, 182, 275, 35);
 				contentPane.add(lid);
 				
-				String array1 [] = {"A", "B", "C", "D"};
+				String array1 [] = {"", "IT"};
 				JComboBox faculty = new JComboBox(array1);
 				faculty.setBounds(397, 349, 275, 35);
 				contentPane.add(faculty);
 				
-				String array3 [] = {"AA", "BB", "CC", "DD"};
+				String array3 [] = {"", "IT", "DS", "SE"};
 				JComboBox department = new JComboBox(array3);
 				department.setBounds(397, 430, 275, 35);
 				contentPane.add(department);
 				
-				String array4 [] = {"E", "F", "G", "H"};
+				String array4 [] = {"", "Malabe", "Kandy"};
 				JComboBox center = new JComboBox(array4);
 				center.setBounds(941, 182, 275, 35);
 				contentPane.add(center);
 				
-				String array5 [] = {"W", "X", "Y", "Z"};
+				String array5 [] = {"", "Main Building", "New Building", "Enginering Building", "Busciness Building"};
 				JComboBox building = new JComboBox(array5);
 				building.setBounds(941, 262, 275, 35);
 				contentPane.add(building);
 				
-				JSpinner ahours = new JSpinner();
-				ahours.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-				ahours.setBounds(397, 593, 196, 46);
-				contentPane.add(ahours);
+				JSpinner monday = new JSpinner();
+				monday.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				monday.setBounds(410, 551, 35, 32);
+				contentPane.add(monday);
 				
-				JTextArea adays = new JTextArea();
-				adays.setBounds(397, 507, 275, 35);
-				contentPane.add(adays);
-				
-				String array [] = {"Professor 1", "Assistant Professor 2", "Senior Lecturer(HG) 3", "Senior Lecturer 4", "Lecturer 5", "Assistant Lecturer 6"};
+				String array [] = {"","1", "2", "3", "4", "5", " 6"};
 				JComboBox level = new JComboBox(array);
 				level.setBounds(941, 349, 275, 35);
 				contentPane.add(level);
+				
+				JTextPane txtpnAddLecturer = new JTextPane();
+				txtpnAddLecturer.setText("Add New Lecturer");
+				txtpnAddLecturer.setFont(new Font("Kristen ITC", txtpnAddLecturer.getFont().getStyle() | Font.BOLD, txtpnAddLecturer.getFont().getSize() + 30));
+				txtpnAddLecturer.setEditable(false);
+				txtpnAddLecturer.setBackground(new Color(153, 204, 255));
+				txtpnAddLecturer.setBounds(459, 91, 432, 90);
+				contentPane.add(txtpnAddLecturer);
+				
+				JTextPane txtpnMonday = new JTextPane();
+				txtpnMonday.setText("Monday");
+				txtpnMonday.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
+				txtpnMonday.setEditable(false);
+				txtpnMonday.setBackground(new Color(153, 204, 255));
+				txtpnMonday.setBounds(400, 514, 71, 22);
+				contentPane.add(txtpnMonday);
+				
+				JTextPane txtpnTuesday = new JTextPane();
+				txtpnTuesday.setText("Tuesday");
+				txtpnTuesday.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
+				txtpnTuesday.setEditable(false);
+				txtpnTuesday.setBackground(new Color(153, 204, 255));
+				txtpnTuesday.setBounds(476, 514, 71, 22);
+				contentPane.add(txtpnTuesday);
+				
+				JSpinner tuesday = new JSpinner();
+				tuesday.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				tuesday.setBounds(486, 551, 35, 32);
+				contentPane.add(tuesday);
+				
+				JTextPane txtpnWednesday = new JTextPane();
+				txtpnWednesday.setText("Wednesday");
+				txtpnWednesday.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
+				txtpnWednesday.setEditable(false);
+				txtpnWednesday.setBackground(new Color(153, 204, 255));
+				txtpnWednesday.setBounds(548, 514, 77, 22);
+				contentPane.add(txtpnWednesday);
+				
+				JSpinner wednesday = new JSpinner();
+				wednesday.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				wednesday.setBounds(548, 551, 35, 32);
+				contentPane.add(wednesday);
+				
+				JTextPane txtpnThuresday = new JTextPane();
+				txtpnThuresday.setText("Thursday");
+				txtpnThuresday.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
+				txtpnThuresday.setEditable(false);
+				txtpnThuresday.setBackground(new Color(153, 204, 255));
+				txtpnThuresday.setBounds(623, 514, 71, 22);
+				contentPane.add(txtpnThuresday);
+				
+				JSpinner thursday = new JSpinner();
+				thursday.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				thursday.setBounds(633, 551, 35, 32);
+				contentPane.add(thursday);
+				
+				JTextPane txtpnFriday = new JTextPane();
+				txtpnFriday.setText("Friday");
+				txtpnFriday.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
+				txtpnFriday.setEditable(false);
+				txtpnFriday.setBackground(new Color(153, 204, 255));
+				txtpnFriday.setBounds(704, 514, 47, 22);
+				contentPane.add(txtpnFriday);
+				
+				JSpinner friday = new JSpinner();
+				friday.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				friday.setBounds(706, 551, 35, 32);
+				contentPane.add(friday);
+				
+				JTextPane txtpnSatureday = new JTextPane();
+				txtpnSatureday.setText("Satureday");
+				txtpnSatureday.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
+				txtpnSatureday.setEditable(false);
+				txtpnSatureday.setBackground(new Color(153, 204, 255));
+				txtpnSatureday.setBounds(767, 514, 71, 22);
+				contentPane.add(txtpnSatureday);
+				
+				JSpinner satureday = new JSpinner();
+				satureday.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				satureday.setBounds(777, 551, 35, 32);
+				contentPane.add(satureday);
+				
+				JTextPane txtpnSunday = new JTextPane();
+				txtpnSunday.setText("Sunday");
+				txtpnSunday.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
+				txtpnSunday.setEditable(false);
+				txtpnSunday.setBackground(new Color(153, 204, 255));
+				txtpnSunday.setBounds(843, 514, 58, 22);
+				contentPane.add(txtpnSunday);
+				
+				JSpinner sunday = new JSpinner();
+				sunday.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				sunday.setBounds(843, 551, 35, 32);
+				contentPane.add(sunday);
 				
 				JButton btnDone = new JButton("Done");
 				btnDone.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
@@ -265,7 +349,7 @@ public class lecturer extends JFrame {
 				btnDone.setBounds(977, 613, 250, 50);
 				contentPane.add(btnDone);
 				
-				JButton btnGenerate = new JButton("generate");
+				JButton btnGenerate = new JButton("   generate");
 				btnGenerate.setBackground(Color.RED);
 				btnGenerate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -278,21 +362,15 @@ public class lecturer extends JFrame {
 				btnGenerate.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnGenerate.setFocusable(false);
 				btnGenerate.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-				btnGenerate.setBounds(841, 507, 250, 50);
+				btnGenerate.setBounds(1069, 430, 147, 35);
 				contentPane.add(btnGenerate);
 				
-				JTextPane txtpnAddLecturer = new JTextPane();
-				txtpnAddLecturer.setText("Add New Lecturer");
-				txtpnAddLecturer.setFont(new Font("Kristen ITC", txtpnAddLecturer.getFont().getStyle() | Font.BOLD, txtpnAddLecturer.getFont().getSize() + 30));
-				txtpnAddLecturer.setEditable(false);
-				txtpnAddLecturer.setBackground(new Color(153, 204, 255));
-				txtpnAddLecturer.setBounds(459, 91, 432, 90);
-				contentPane.add(txtpnAddLecturer);
+				
 			
 				btnDone.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
-						if(lid.getText().equals("")||lname.getText().equals("")||faculty.getSelectedItem().equals("")||department.getSelectedItem().equals("")||adays.getText().equals("")||ahours.getValue().equals("")) {
+						if(lid.getText().equals("")||lname.getText().equals("")||faculty.getSelectedItem().equals("")||department.getSelectedItem().equals("")) {
 						
 							JOptionPane.showMessageDialog(null, "Please Fill the Informations");
 						}
@@ -304,12 +382,17 @@ public class lecturer extends JFrame {
 								lname.getText().toString(),
 								faculty.getSelectedItem().toString(),
 								department.getSelectedItem().toString(),
-								adays.getText().toString(),
-								Integer.parseInt(ahours.getValue().toString()),
 								center.getSelectedItem().toString(),
 								building.getSelectedItem().toString(),
 								level.getSelectedItem().toString(),
-								rank.getText().toString());
+								rank.getText().toString(),
+								Integer.parseInt(monday.getValue().toString()),
+								Integer.parseInt(tuesday.getValue().toString()),
+								Integer.parseInt(wednesday.getValue().toString()),
+								Integer.parseInt(thursday.getValue().toString()),
+								Integer.parseInt(friday.getValue().toString()),
+								Integer.parseInt(satureday.getValue().toString()),
+								Integer.parseInt(sunday.getValue().toString()));
 						
 							if(isSuccess) {
 							
@@ -326,15 +409,15 @@ public class lecturer extends JFrame {
 				//end navignation button 01
 	}
 	
-	public boolean newlecturer (String lid, String lname, String faculty, String department,String adays, int ahours, String center, String building, String level, String rank) {
+	public boolean newlecturer (String lid, String lname, String faculty, String department, String center, String building, String level, String rank, int monday, int tuesday, int wednesday, int thursday, int friday, int satureday, int sunday) {
 		
 		boolean isSuccess = false;
 		java.sql.Connection conn = DBConnect.getConnection();
 		
 		try {
 			
-			String sql = "INSERT INTO Lecturers (lid, lname, faculty, department, adays, ahours, center, building, level, rank)"
-					+ "VALUES ('"+lid+"', '"+lname+"', '"+faculty+"', '"+department+"', '"+adays+"', '"+ahours+"', '"+center+"', '"+building+"', '"+level+"', '"+rank+"')";
+			String sql = "INSERT INTO Lecturers (lid, lname, faculty, department, center, building, level, rank, monday, tuesday, wednesday, thursday, friday, satureday, sunday)"
+					+ "VALUES ('"+lid+"', '"+lname+"', '"+faculty+"', '"+department+"', '"+center+"', '"+building+"', '"+level+"', '"+rank+"', '"+monday+"', '"+tuesday+"', '"+wednesday+"', '"+thursday+"', '"+friday+"', '"+satureday+"', '"+sunday+"')";
 			
 			Statement st1 = conn.createStatement();
 			int rs = st1.executeUpdate(sql);
