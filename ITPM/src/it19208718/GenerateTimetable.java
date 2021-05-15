@@ -2,6 +2,7 @@ package it19208718;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
@@ -13,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import database.DBConnect;
 
 import javax.swing.JButton;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 
@@ -29,6 +31,8 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeListener;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -222,7 +226,89 @@ public class GenerateTimetable extends JFrame {
 		
 		
 		
-		
+		dropdownList.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String selectedItem = String.valueOf(dropdownList.getSelectedItem());
+				String selectedItemType = selectedType; //lce, stdGrp, location
+				
+				//System.out.println(selectedItem);
+				
+				//is available on monday
+				boolean mondayAvailability = lecturerNotAvailableDays("monday", selectedItem);
+				boolean tuesdayAvailability = lecturerNotAvailableDays("tuesday", selectedItem);
+				boolean wednesdayAvailability = lecturerNotAvailableDays("wednesday", selectedItem);
+				boolean thursdayAvailability = lecturerNotAvailableDays("thursday", selectedItem);
+				boolean fridayAvailability = lecturerNotAvailableDays("friday", selectedItem);
+				
+				if(!mondayAvailability) {
+					for(int i=0; i<11; i++) {
+						timetable.setValueAt(" - - -", i, 1);
+					}
+					//System.out.println("mondayAvailability" + mondayAvailability);
+				}else{
+					for(int i=0; i<11; i++) {
+						timetable.setValueAt(null, i, 1);
+					}
+					//System.out.println("mondayAvailability" + mondayAvailability);
+				}
+				
+				if(!tuesdayAvailability) {
+					for(int i=0; i<11; i++) {
+						timetable.setValueAt(" - - -", i, 2);
+					}
+					//System.out.println("tuesdayAvailability" + tuesdayAvailability);
+				}else {
+					for(int i=0; i<11; i++) {
+						timetable.setValueAt(null, i, 2);
+					}
+					//System.out.println("tuesdayAvailability" + tuesdayAvailability);
+				}
+				
+				
+				if(!wednesdayAvailability) {
+					for(int i=0; i<11; i++) {
+						timetable.setValueAt(" - - -", i, 3);
+					}
+					//System.out.println("wednesdayAvailability" + wednesdayAvailability);
+				}else {
+					for(int i=0; i<11; i++) {
+						timetable.setValueAt(null, i, 3);
+					}
+					//System.out.println("wednesdayAvailability" + wednesdayAvailability);
+				}
+				
+				
+				if(!thursdayAvailability) {
+					for(int i=0; i<11; i++) {
+						timetable.setValueAt(" - - -", i, 4);
+					}
+					//System.out.println("thursdayAvailability" + thursdayAvailability);
+				}else {
+					for(int i=0; i<11; i++) {
+						timetable.setValueAt(null, i, 4);
+					}
+					//System.out.println("thursdayAvailability" + thursdayAvailability);
+				}
+				
+				
+				if(!fridayAvailability) {
+					for(int i=0; i<11; i++) {
+						timetable.setValueAt(" - - -", i, 5);
+					}
+					//System.out.println("fridayAvailability" + fridayAvailability);
+				}else {
+					for(int i=0; i<11; i++) {
+						timetable.setValueAt(null, i, 5);
+					}
+					//System.out.println("fridayAvailability" + fridayAvailability);
+				}
+				
+				
+			}
+		});
 		
 		
 		
@@ -266,7 +352,6 @@ public class GenerateTimetable extends JFrame {
 	}
 	
 	
-	
 	//load student groups
 	private String[] loadStudentGroups () {
 		
@@ -300,9 +385,9 @@ public class GenerateTimetable extends JFrame {
 	}
 	
 	
-	
 	//load locations
 	private String[] loadLocations () {
+
 		
 		Connection conn = DBConnect.getConnection();
 		
@@ -331,4 +416,45 @@ public class GenerateTimetable extends JFrame {
 		
 		return locationArray;
 	}
+
+
+
+	
+	//get lecturer Not Available Days
+	public boolean lecturerNotAvailableDays( String day, String lname ) {
+		
+		Connection conn = DBConnect.getConnection();
+		
+		boolean availability = true; //lecturer is available
+		
+		
+		try {
+			String sql = "SELECT * from Lecturers WHERE "+day+" = '0' and lname = '"+lname+"' ";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			if(rs.next()) {
+				availability = false; //lecturer is not available
+			}
+			
+			
+			
+		}catch (Exception e) {
+			availability = true; //lecturer is available
+			System.out.println(e.getMessage());
+		}
+
+		
+		return availability;
+		
+		
+		
+		
+		
+	}
+	
+
+
+
+
 }
