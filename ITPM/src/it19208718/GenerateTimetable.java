@@ -8,12 +8,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import database.DBConnect;
+
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
@@ -73,24 +81,14 @@ public class GenerateTimetable extends JFrame {
 		contentPane.add(label);
 		
 		JButton btnLecturer = new JButton("Lecturer");
-		btnLecturer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				label.setText("Lecturer");
-			}
-		});
-		btnLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		
+		btnLecturer.setFont(new Font("Kristen ITC", Font.BOLD, 18));
 		btnLecturer.setFocusable(false);
 		btnLecturer.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
 		btnLecturer.setBounds(26, 10, 150, 50);
 		panel.add(btnLecturer);
 		
 		JButton btnStudent = new JButton("Student Group");
-		btnStudent.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				label.setText("Student Group");
-			}
-		});
 		btnStudent.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnStudent.setFocusable(false);
 		btnStudent.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
@@ -98,11 +96,7 @@ public class GenerateTimetable extends JFrame {
 		panel.add(btnStudent);
 		
 		JButton btnLocation = new JButton("Location");
-		btnLocation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				label.setText("Location");
-			}
-		});
+		
 		btnLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnLocation.setFocusable(false);
 		btnLocation.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
@@ -135,19 +129,87 @@ public class GenerateTimetable extends JFrame {
 		//end default
 		
 		
+		btnLecturer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				label.setText("Lecturer");
+				btnLecturer.setFont(new Font("Kristen ITC", Font.BOLD, 18));
+				btnStudent.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				btnLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				
+				
+				
+			}
+		});
 		
 		
+		btnStudent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				label.setText("Student Group");
+				btnStudent.setFont(new Font("Kristen ITC", Font.BOLD, 18));
+				btnLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				btnLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+			}
+		});
 		
 		
-		
-		
+		btnLocation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				label.setText("Location");
+				btnLocation.setFont(new Font("Kristen ITC", Font.BOLD, 18));
+				btnLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+				btnStudent.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+			}
+		});
 		
 		
 		
 	}
 	
 	
-	//
+	//load lecturers
+	
+	
+	
+	
+	//load student groups
+	
+	
+	
+	
+	//load locations
+	public String[] loadLocations () {
+		
+		Connection conn = DBConnect.getConnection();
+		
+		String[] sessionListArray = null;
+		List<String> list = new ArrayList<>();
+		String singleRoom;
+		String AIID;
+		
+		try {
+			String sql = "SELECT * from Locations ";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			list.add("Select a available session on here");
+			
+			while(rs.next()) {
+				
+				String singleRoom = rs.getString("");
+				
+				singleRoom = "ID"+ AIID + " | " + rs.getString("subjectName") + " (" + rs.getString("subjectCode") + ") for " + rs.getString("groupId") + " by " + rs.getString("lecturer1") + " and " + rs.getString("lecturer2") + " | "  + rs.getString("tag");
+				list.add(singleRoom);
+			}
+			sessionListArray = list.toArray(new String[0]);
+			
+		}catch (Exception e) {
+			
+		}
+
+		
+		return sessionListArray;
+	}
 	
 	
 	
