@@ -40,7 +40,7 @@ import javax.swing.JTable;
 public class GenerateTimetable extends JFrame {
 
 	private JPanel contentPane;
-	String selectedType = null;
+	String selectedType = "Lecturer";
 	JComboBox<Object> dropdownList;
 	Connection conn = DBConnect.getConnection();
 	private JScrollPane scrollPane;
