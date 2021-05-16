@@ -42,7 +42,7 @@ public class GenerateTimetable extends JFrame {
 	private JPanel contentPane;
 	String selectedType = null;
 	JComboBox<Object> dropdownList;
-	
+	Connection conn = DBConnect.getConnection();
 	private JScrollPane scrollPane;
 	private JTable timetable;
 	
@@ -176,7 +176,7 @@ public class GenerateTimetable extends JFrame {
 		timetable.setModel(model);
 		timetable.setAutoResizeMode(1);
 		timetable.setFillsViewportHeight( true );
-		timetable.setRowHeight(30);
+		timetable.setRowHeight(41);
 		timetable.setFont(new Font("Kristen ITC", Font.PLAIN, 12));
 		
 		//insert time slots
@@ -186,6 +186,11 @@ public class GenerateTimetable extends JFrame {
 		for(int i=0; i<11 ; i++) {
 			model.addRow(new Object[] {
 					" " + timeSlots.get(i),
+					" - - -",
+					" - - -",
+					" - - -",
+					" - - -",
+					" - - -",
 					
 			});;
 		}
@@ -234,19 +239,25 @@ public class GenerateTimetable extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				Connection conn = DBConnect.getConnection();
 				String selectedItem = String.valueOf(dropdownList.getSelectedItem());
 				String selectedItemType = selectedType; //lce, stdGrp, location
 				
 				//System.out.println(selectedItem);
 				
 				//is available on monday
-				boolean mondayAvailability = lecturerNotAvailableDays("monday", selectedItem);
-				boolean tuesdayAvailability = lecturerNotAvailableDays("tuesday", selectedItem);
-				boolean wednesdayAvailability = lecturerNotAvailableDays("wednesday", selectedItem);
-				boolean thursdayAvailability = lecturerNotAvailableDays("thursday", selectedItem);
-				boolean fridayAvailability = lecturerNotAvailableDays("friday", selectedItem);
+				boolean mondayAvailability = lecturerNotAvailableDays("monday", selectedItem, conn);
+				boolean tuesdayAvailability = lecturerNotAvailableDays("tuesday", selectedItem, conn);
+				boolean wednesdayAvailability = lecturerNotAvailableDays("wednesday", selectedItem, conn);
+				boolean thursdayAvailability = lecturerNotAvailableDays("thursday", selectedItem, conn);
+				boolean fridayAvailability = lecturerNotAvailableDays("friday", selectedItem, conn);
 				
+				
+				String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem, conn);
+				
+				
+				
+				//lecture only
 				if(!mondayAvailability) {
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(" - - -", i, 1);
@@ -254,81 +265,140 @@ public class GenerateTimetable extends JFrame {
 					
 				}else{
 					
-					String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem);
+					
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(null, i, 1);
 					}
 					for(int i=0; i<sessionListArrayForTheLecturer.length ; i++) {
-						timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 1);
+						
+						if(sessionListArrayForTheLecturer[i].contains("Lecture") && !(sessionListArrayForTheLecturer[i].contains("Tute"))) {
+							timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 1);
+						}
+						
+						if(!tuesdayAvailability) {
+							if(sessionListArrayForTheLecturer[i].contains("Lecture and Tute")) {
+								timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 1);
+							}
+						}
+						
+						
 					}
 					
 				}
 				
+				//Lecture and Tute only
 				if(!tuesdayAvailability) {
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(" - - -", i, 2);
 					}
-					//System.out.println("tuesdayAvailability" + tuesdayAvailability);
 				}else {
-					String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem);
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(null, i, 2);
 					}
+					
 					for(int i=0; i<sessionListArrayForTheLecturer.length ; i++) {
-						timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 2);
+						
+						
+						if(sessionListArrayForTheLecturer[i].contains("Lecture and Tute")) {
+							timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 2);
+						}
+						
+						if(!mondayAvailability) {
+							if(sessionListArrayForTheLecturer[i].contains("Lecture")) {
+								timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 2);
+							}
+						}
+						
+						
+						
 					}
-					//System.out.println("tuesdayAvailability" + tuesdayAvailability);
 				}
 				
-				
+				//Tutorial only
 				if(!wednesdayAvailability) {
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(" - - -", i, 3);
 					}
-					//System.out.println("wednesdayAvailability" + wednesdayAvailability);
+					
 				}else {
-					String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem);
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(null, i, 3);
 					}
 					for(int i=0; i<sessionListArrayForTheLecturer.length ; i++) {
-						timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 3);
+						
+						if(sessionListArrayForTheLecturer[i].contains("Tutorial")) {
+							timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 3);
+						}
+						
+						
+						if(!thursdayAvailability) {
+							if(sessionListArrayForTheLecturer[i].contains("Lab")) {
+								timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 4);
+							}
+						}
+						
 					}
-					//System.out.println("wednesdayAvailability" + wednesdayAvailability);
+					
 				}
 				
-				
+				//Lab only
 				if(!thursdayAvailability) {
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(" - - -", i, 4);
 					}
-					//System.out.println("thursdayAvailability" + thursdayAvailability);
+					
 				}else {
-					String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem);
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(null, i, 4);
 					}
 					for(int i=0; i<sessionListArrayForTheLecturer.length ; i++) {
-						timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 4);
+						if(sessionListArrayForTheLecturer[i].contains("Lab")) {
+							timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 4);
+						}
+						
+						
+						if(!wednesdayAvailability) {
+							if(sessionListArrayForTheLecturer[i].contains("Tutorial")) {
+								timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 4);
+							}
+						}
+						
+						if(!fridayAvailability) {
+							if(sessionListArrayForTheLecturer[i].contains("Evaluation")) {
+								timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 4);
+							}
+						}
+						
+						
 					}
-					//System.out.println("thursdayAvailability" + thursdayAvailability);
+					
+					
+					
 				}
 				
-				
+				//Evaluation only
 				if(!fridayAvailability) {
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(" - - -", i, 5);
 					}
-					//System.out.println("fridayAvailability" + fridayAvailability);
+					
 				}else {
-					String[] sessionListArrayForTheLecturer = getAvailableSessions(selectedItem);
 					for(int i=0; i<11; i++) {
 						timetable.setValueAt(null, i, 5);
 					}
 					for(int i=0; i<sessionListArrayForTheLecturer.length ; i++) {
-						timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 5);
+						if(sessionListArrayForTheLecturer[i].contains("Evaluation")) {
+							timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 5);
+						}
+						
+						
+						if(!thursdayAvailability) {
+							if(sessionListArrayForTheLecturer[i].contains("Lab")) {
+								timetable.setValueAt(sessionListArrayForTheLecturer[i], i, 4);
+							}
+						}
 					}
-					//System.out.println("fridayAvailability" + fridayAvailability);
+					
 				}
 				
 				
@@ -446,9 +516,7 @@ public class GenerateTimetable extends JFrame {
 
 	
 	//get lecturer Not Available Days
-	public boolean lecturerNotAvailableDays( String day, String lname ) {
-		
-		Connection conn = DBConnect.getConnection();
+	public boolean lecturerNotAvailableDays( String day, String lname, Connection conn ) {
 		
 		boolean availability = true; //lecturer is available
 		
@@ -477,9 +545,8 @@ public class GenerateTimetable extends JFrame {
 	
 	
 	//get available sessions for the selected lecturer
-	private String [] getAvailableSessions (String lecturerName) {
+	private String [] getAvailableSessions (String lecturerName , Connection conn) {
 		
-		Connection conn = DBConnect.getConnection();
 		
 		String[] sessionListArrayForTheLecturer = null;
 		List<String> list = new ArrayList<>();
