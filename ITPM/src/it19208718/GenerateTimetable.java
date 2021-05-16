@@ -454,9 +454,6 @@ public class GenerateTimetable extends JFrame {
 
 		}
 
-
-
-
 		return lecturerNameArray;
 	}
 	
