@@ -388,7 +388,7 @@ public class Sessionmanage extends JFrame {
 		String groupidX = null;
 		
 		//check if tag is Lab or Lecture or tutorial
-		if(tag.equals("Lab")) {
+		if(tag.equals("Lab") || tag.equals("Evaluation")) {
     		
 			groupidX =  subgroupid;
 			

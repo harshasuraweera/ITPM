@@ -246,7 +246,7 @@ public class AddSessions extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-					if(tag.getSelectedItem().toString().equals("Lab")) {
+					if(tag.getSelectedItem().toString().equals("Lab") || tag.getSelectedItem().toString().equals("Evaluation")) {
 				    	
 				    	txtpnSelectGroup.setVisible(true);
 					    subGroupId.setVisible(true);
@@ -504,10 +504,10 @@ public class AddSessions extends JFrame {
 			
 	    	java.sql.Connection conn = DBConnect.getConnection();
 			
-	    	if(tag.equals("Lab")) {
+	    	if(tag.equals("Lab") || tag.equals("Evaluation")) {
 	    		
 				groupidX =  subgroupid;
-			}else if(tag.equals("Tutorial") || tag.equals("Lecture") || tag.equals("Lecture and Tute")){
+			}else if(tag.equals("Tutorial") || tag.equals("Lecture") || tag.equals("Lecture and Tute") ){
 				
 				groupidX = groupid;
 				

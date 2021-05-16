@@ -115,15 +115,9 @@ public class AssignSessionRoom extends JFrame {
 		JButton btnManageLocation = new JButton("Manage Session Rooms");
 		btnManageLocation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					ManageLocation manageLocation = new ManageLocation();
-					dispose();
-					manageLocation.setVisible(true);
-					
-				} catch (IOException e1) {
-					
-					e1.printStackTrace();
-				}
+				ManageSessionRooms ManageSessionRooms = new ManageSessionRooms();
+				dispose();
+				ManageSessionRooms.setVisible(true);
 			}
 		});
 		btnManageLocation.setIcon(new ImageIcon(getClass().getClassLoader().getResource("manage.png")));
