@@ -333,23 +333,28 @@ public class HomeWindow extends JFrame {
 		separator_3_2.setBounds(421, 333, 395, 2);
 		panel_2.add(separator_3_2);
 		
-		JLabel numberOfConsecutiveSessions = new JLabel("Consecutive Sessions- ");
+		JLabel numberOfConsecutiveSessions = new JLabel("Consecutive Sessions - ");
 		numberOfConsecutiveSessions.setHorizontalAlignment(SwingConstants.LEFT);
 		numberOfConsecutiveSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		numberOfConsecutiveSessions.setBounds(449, 151, 311, 51);
 		panel_2.add(numberOfConsecutiveSessions);
+		
+		numberOfConsecutiveSessions.setText(numberOfConsecutiveSessions.getText().toString() + getConsecutiveSession(conn));
 		
 		JLabel numberOfParallelSessions = new JLabel("Parallel Sessions - ");
 		numberOfParallelSessions.setHorizontalAlignment(SwingConstants.LEFT);
 		numberOfParallelSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		numberOfParallelSessions.setBounds(449, 211, 311, 51);
 		panel_2.add(numberOfParallelSessions);
+		numberOfParallelSessions.setText(numberOfParallelSessions.getText().toString() + getParallelSession(conn));
+		
 		
 		JLabel numberOfNonOverlappingSessions = new JLabel("Non Overlaping Sessions - ");
 		numberOfNonOverlappingSessions.setHorizontalAlignment(SwingConstants.LEFT);
 		numberOfNonOverlappingSessions.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		numberOfNonOverlappingSessions.setBounds(449, 272, 311, 51);
 		panel_2.add(numberOfNonOverlappingSessions);
+		numberOfNonOverlappingSessions.setText(numberOfNonOverlappingSessions.getText().toString() + getNonOverlappingSession(conn));
 		
 		JLabel registeredLecturesText_1_1_1_1_2_4 = new JLabel("Subjects");
 		registeredLecturesText_1_1_1_1_2_4.setHorizontalAlignment(SwingConstants.LEFT);
@@ -702,6 +707,81 @@ public class HomeWindow extends JFrame {
 	}
 	
 	
+	
+	//get ConsecutiveSession count
+	public int getConsecutiveSession(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM ConsecutiveSession";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}
+	
+	
+	//get ParallelSession count
+	public int getParallelSession(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM ParallelSession";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}
+	
+	
+	
+	//get NonOverlappingSession count
+	public int getNonOverlappingSession(Connection conn) {
+		
+		int count = 0;
+		
+		try {
+			
+			String sql = "SELECT COUNT(id) FROM NonOverlappingSession";
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next(); // SELECT count(*) always returns exactly 1 row
+			count = rs.getInt(1); // Get value of first column
+			
+			st.close();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return count;
+	}
 	
 	
 }
