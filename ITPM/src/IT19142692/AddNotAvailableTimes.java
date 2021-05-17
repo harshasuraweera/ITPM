@@ -50,9 +50,6 @@ public class AddNotAvailableTimes extends JFrame {
 	private JPanel contentPane;
 	private JTextField time;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -66,9 +63,6 @@ public class AddNotAvailableTimes extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public AddNotAvailableTimes() {
 		//do these for each and every JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -224,6 +218,7 @@ public class AddNotAvailableTimes extends JFrame {
 		contentPane.add(lblTime);
 		
 		time = new JTextField();
+		time.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		time.setBounds(1056, 215, 183, 44);
 		contentPane.add(time);
 		time.setColumns(10);
@@ -233,19 +228,21 @@ public class AddNotAvailableTimes extends JFrame {
 		JButton btnSubmit = new JButton("SUBMIT");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
+				try {					
+					
+					String lec = lecturer.getSelectedItem().toString();
+					String gr = group.getSelectedItem().toString();
+					String sg = subgroup.getSelectedItem().toString();
+					String si = sessionid.getSelectedItem().toString();
+					String rm = room.getSelectedItem().toString();
+					String ti = time.getText().toString();
+					
 					Connection conn = DBConnect.getConnection();
-					
-					String lec = String.valueOf(lecturer.getSelectedItem());
-					String gr = String.valueOf(group.getSelectedItem());
-					String sg = String.valueOf(subgroup.getSelectedItem());
-					String si = String.valueOf(sessionid.getSelectedItem());
-					//String rm = String.valueOf(room.getText());
-					//String rm = room.getText().toString();
-					
-					String sql1 = "insert into NotAvailableTimes (nlecturer, ngroup, nsubgroup, nsessionid, nroom, ntime) values ('"+lec+"', '"+gr+"', '"+sg+"', '"+si+"')";
+					String sql1 = "insert into NotAvailableTimes values (null, '"+lec+"', '"+gr+"', '"+sg+"', '"+si+"', '"+rm+"', '"+ti+"')";
 					Statement st = conn.createStatement();
 					int rs = st.executeUpdate(sql1);
+					
+					JOptionPane.showMessageDialog(null, "Insertion Successful");
 				}
 				catch (Exception e1){
 					JOptionPane.showMessageDialog(null, e1);
@@ -260,8 +257,7 @@ public class AddNotAvailableTimes extends JFrame {
 		btnSubmit.setBounds(1077, 313, 162, 50);
 		contentPane.add(btnSubmit);
 		
-		//View Button
-		
+		//VIEW Button
 		JButton btnView = new JButton("VIEW");
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -278,8 +274,7 @@ public class AddNotAvailableTimes extends JFrame {
 		btnView.setBounds(1077, 432, 162, 50);
 		contentPane.add(btnView);
 		
-		//Clear button
-		
+		//CLEAR Button
 		JButton btnClear = new JButton("CLEAR");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -289,8 +284,7 @@ public class AddNotAvailableTimes extends JFrame {
 					subgroup.setSelectedIndex(0);
 					sessionid.setSelectedIndex(0);
 					room.setSelectedIndex(0);
-					time.setText(null);
-					
+					time.setText(null);				
 				}
 				catch(Exception e3) {
 					JOptionPane.showMessageDialog(null, e3);

@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,15 +23,20 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import database.DBConnect;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ManageNotAvailableTimes extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private JTextField time;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -44,10 +50,15 @@ public class ManageNotAvailableTimes extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public ManageNotAvailableTimes() {
+	
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+			ShowData();
+			}
+			});
+		
 		//do these for each and every JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -72,8 +83,6 @@ public class ManageNotAvailableTimes extends JFrame {
 		panel.setBounds(0, 0, 1266, 70);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		//end default
 		
 		//navigation buttons
 		JButton btnHome = new JButton("Back to Home");
@@ -109,17 +118,85 @@ public class ManageNotAvailableTimes extends JFrame {
 		lblNewLabel.setBounds(395, 95, 346, 42);
 		contentPane.add(lblNewLabel);
 		
+		JLabel lblLecturer = new JLabel("Select Lecturer");
+		lblLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblLecturer.setBounds(24, 412, 189, 42);
+		contentPane.add(lblLecturer);
+		
+		JComboBox<Object> lect = new JComboBox<Object>(new Object[]{});
+		lect.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lect.setBounds(203, 411, 202, 44);
+		contentPane.add(lect);
+		
+		JLabel lblGroup = new JLabel("Select Group");
+		lblGroup.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblGroup.setBounds(24, 490, 154, 50);
+		contentPane.add(lblGroup);
+		
+		JComboBox<Object> grp = new JComboBox<Object>(new Object[]{});
+		grp.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		grp.setBounds(203, 493, 202, 44);
+		contentPane.add(grp);
+		
+		JLabel lblSubGroup = new JLabel("Select Sub Group");
+		lblSubGroup.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblSubGroup.setBounds(24, 574, 162, 50);
+		contentPane.add(lblSubGroup);
+		
+		JComboBox<Object> subgrp = new JComboBox<Object>(new Object[]{});
+		subgrp.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		subgrp.setBounds(203, 580, 202, 44);
+		contentPane.add(subgrp);
+		
+		JLabel lblSession = new JLabel("Select Session ID");
+		lblSession.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblSession.setBounds(529, 414, 162, 50);
+		contentPane.add(lblSession);
+		
+		JComboBox<Object> sessionId = new JComboBox<Object>(new Object[]{});
+		sessionId.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		sessionId.setBounds(701, 414, 202, 44);
+		contentPane.add(sessionId);
+		
+		JLabel lblRoom = new JLabel("Select Room");
+		lblRoom.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblRoom.setBounds(555, 505, 128, 50);
+		contentPane.add(lblRoom);
+		
+		JComboBox<Object> room = new JComboBox<Object>(new Object[]{});
+		room.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		room.setBounds(700, 508, 202, 44);
+		contentPane.add(room);
+		
+		JLabel lblTime = new JLabel("Time");
+		lblTime.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		lblTime.setBounds(592, 577, 81, 50);
+		contentPane.add(lblTime);
+		
+		time = new JTextField();
+		time.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		time.setColumns(10);
+		time.setBounds(701, 584, 202, 44);
+		contentPane.add(time);
+		
 		//Load the Table
-		JButton btnRefresh = new JButton("REFRESH");
+		JButton btnRefresh = new JButton("UPDATE");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					String lec = lect.getSelectedItem().toString();
+					String gr = grp.getSelectedItem().toString();
+					String sg = subgrp.getSelectedItem().toString();
+					String si = sessionId.getSelectedItem().toString();
+					String rm = room.getSelectedItem().toString();
+					String ti = time.getText().toString();
+									
 					Connection conn = DBConnect.getConnection();
-					String query = "Select * from NotAvailableTimes";
-					Statement stmt = conn.createStatement();
-					ResultSet rs1 = stmt.executeQuery(query);
-					
-					//table.setModel(DbUtils.resultSetToTableModel(rs1));
+					int i=table.getSelectedRow();
+					int selectedRowId = Integer.parseInt(table.getValueAt(i,0).toString());
+					String sql1 = "update NotAvailableTimes set nlecturer='"+lec+"',ngroup='"+gr+"',nsubgroup='"+sg+"',nsessionid='"+si+"',nroom='"+rm+"',ntime='"+ti+"' where id='"+selectedRowId+"'";
+					Statement st = conn.createStatement();
+					int rs = st.executeUpdate(sql1);
 					
 				}
 				catch(Exception e2) {
@@ -132,7 +209,7 @@ public class ManageNotAvailableTimes extends JFrame {
 		btnRefresh.setFocusable(false);
 		btnRefresh.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
 		btnRefresh.setBackground(new Color(30, 144, 255));
-		btnRefresh.setBounds(346, 552, 162, 50);
+		btnRefresh.setBounds(1015, 175, 162, 50);
 		contentPane.add(btnRefresh);
 		
 		JButton btnBack = new JButton("BACK");
@@ -149,27 +226,115 @@ public class ManageNotAvailableTimes extends JFrame {
 		btnBack.setFocusable(false);
 		btnBack.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
 		btnBack.setBackground(new Color(50, 205, 50));
-		btnBack.setBounds(579, 552, 162, 50);
+		btnBack.setBounds(1015, 272, 162, 50);
 		contentPane.add(btnBack);
 		
+		//DELETE Button
 		JButton btnDelete = new JButton("DELETE");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Connection conn = DBConnect.getConnection();
+					int row = table.getSelectedRow();
+					
+					//get table model first
+					DefaultTableModel model = (DefaultTableModel) table.getModel();
+					
+//					//delete row
+					if(table.getSelectedRowCount()==1) {
+						model.removeRow(table.getSelectedRow());	
+						String cell = table.getModel().getValueAt(row, 0).toString();
+						String sql1 = "delete from NotAvailableTimes where nid = " + cell;
+						Statement st = conn.createStatement();
+						int rs = st.executeUpdate(sql1);
+						JOptionPane.showMessageDialog(null, "Deleted from the table.");
+					}
+					else {
+						if(table.getSelectedRowCount()==0) {
+							JOptionPane.showMessageDialog(null, "Select a row to delete.");
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Please select single row at a time to delete.");
+						}
+					}
+					
+					conn.close();
+				}
+				catch (Exception e3) {
+					JOptionPane.showMessageDialog(null, e3);
+				}
+			}
+		});
 		btnDelete.setForeground(Color.WHITE);
 		btnDelete.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnDelete.setFocusable(false);
 		btnDelete.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
 		btnDelete.setBackground(new Color(220, 20, 60));
-		btnDelete.setBounds(812, 552, 162, 50);
+		btnDelete.setBounds(1015, 375, 162, 50);
 		contentPane.add(btnDelete);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(32, 147, 942, 257);
+		contentPane.add(scrollPane);
 		table = new JTable();
-		table.setBounds(184, 185, 811, 253);
-		contentPane.add(table);
-		
-		Object[] column = {"ID","Duration","Lecturer","Group ID","Sub Group","SessionID","Room"};
-		Object[] row = new Object[0];
-		DefaultTableModel model = new DefaultTableModel();
-		model.setColumnIdentifiers(column);
-		//scrollPane.setViewportView(table);
+		table.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+		int i=table.getSelectedRow();
+			lect.setSelectedItem(table.getValueAt(i, 1).toString());
+			grp.setSelectedItem(table.getValueAt(i, 2).toString());
+			subgrp.setSelectedItem(table.getValueAt(i, 3).toString());
+			sessionId.setSelectedItem(table.getValueAt(i, 4).toString());
+			room.setSelectedItem(table.getValueAt(i, 5).toString());
+			time.setText(table.getValueAt(i, 6).toString());
+		}
+		});
+
+		scrollPane.setViewportView(table);
+		table.setFont(new Font("Kristen ITC", Font.PLAIN, 16));
 	
 	}
+	
+	private void ShowData() {
+		Connection conn = DBConnect.getConnection();
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("Id");
+		model.addColumn("Lecturer");
+		model.addColumn("Group");
+		model.addColumn("SubGroup");
+		model.addColumn("SessionId");
+		model.addColumn("Room");
+		model.addColumn("Time");
+		try {
+		String sql = "SELECT * FROM NotAvailableTimes";
+		Statement st = conn.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+		while(rs.next()) {
+		model.addRow(new Object[] {
+		rs.getString("nid"),
+		rs.getString("nlecturer"),
+		rs.getString("ngroup"),
+		rs.getString("nsubgroup"),
+		rs.getString("nsessionid"),
+		rs.getString("nroom"),
+		rs.getString("ntime"),
+		});;
+		}
+		rs.close();
+		st.close();
+		conn.close();
+		table.setModel(model);
+		table.setAutoResizeMode(0);
+		table.getColumnModel().getColumn(0).setPreferredWidth(80);
+		table.getColumnModel().getColumn(1).setPreferredWidth(140);
+		table.getColumnModel().getColumn(2).setPreferredWidth(140);
+		table.getColumnModel().getColumn(3).setPreferredWidth(140);
+		table.getColumnModel().getColumn(4).setPreferredWidth(140);
+		table.getColumnModel().getColumn(5).setPreferredWidth(140);
+		table.getColumnModel().getColumn(6).setPreferredWidth(160);
+
+		}catch (Exception e) {
+		}
+		}
+		
 }

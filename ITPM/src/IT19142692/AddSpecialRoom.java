@@ -41,7 +41,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -51,9 +53,6 @@ public class AddSpecialRoom extends JFrame {
 	private JTextField stime;
 	private JTextField etime;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -67,9 +66,6 @@ public class AddSpecialRoom extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public AddSpecialRoom() {
 		//do these for each and every JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -204,27 +200,20 @@ public class AddSpecialRoom extends JFrame {
 		btnAddSession.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Connection conn = DBConnect.getConnection();
-										
-					//NEED TO BE UPDATED
-					String sql1 = "insert into SpecialRoom (sroom, sday, stime, setime) values ('"+room+"', '"+day+"', '"+stime+"', '"+etime+"')";
-					Statement st = conn.createStatement();
-					int rs = st.executeUpdate(sql1);
-					
 					String rm = room.getSelectedItem().toString();
 					String dy = day.getSelectedItem().toString();
 					String sti = stime.getText().toString();
 					String eti = etime.getText().toString();
 					
+					Connection conn = DBConnect.getConnection();
+					String sql1 = "insert into SpecialRoom values (null, '"+rm+"', '"+dy+"', '"+sti+"', '"+eti+"')";
+					Statement st = conn.createStatement();
+					int rs = st.executeUpdate(sql1);
+					
 					JOptionPane.showMessageDialog(null, "Insertion Successful");
 					
 					conn.close();
 					
-					//Clear fields after insertion
-					room.setSelectedIndex(0);
-					day.setSelectedIndex(0);
-					stime.setText(null);
-					etime.setText(null);
 				}
 				catch (Exception e1){
 					JOptionPane.showMessageDialog(null, e1);
@@ -244,15 +233,11 @@ public class AddSpecialRoom extends JFrame {
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Connection conn = DBConnect.getConnection();
-					
-					String sql2 = "delete from SpecialRoom where ";
-					Statement st = conn.createStatement();
-					int rs = st.executeUpdate(sql2);
-					
-					 //Pop up a dialog box
-					JOptionPane.showMessageDialog(null, "Deletion Successful");
-					
+					//Clear fields after insertion
+					room.setSelectedIndex(0);
+					day.setSelectedIndex(0);
+					stime.setText(null);
+					etime.setText(null);					
 				}
 				catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, e2);
@@ -278,10 +263,6 @@ public class AddSpecialRoom extends JFrame {
 		etime.setColumns(10);
 		etime.setBounds(280, 526, 182, 44);
 		contentPane.add(etime);
-		
-		
-		
-		
 		
 	}
 }
