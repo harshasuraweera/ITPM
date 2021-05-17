@@ -243,7 +243,7 @@ public class GenerateTimetable extends JFrame {
 				String selectedItem = String.valueOf(dropdownList.getSelectedItem());
 				String selectedItemType = selectedType; //lce, stdGrp, location
 				
-				//System.out.println(selectedItem);
+				//System.out.println(selectedItemType);
 				
 				if(selectedType.equals("Lecturer")) {
 					
@@ -408,7 +408,33 @@ public class GenerateTimetable extends JFrame {
 				
 				if(selectedType.equals("Location")) {
 					
+					String[] getSessionsAccordingToSelectedLocation = getSessionsAccordingToSelectedLocation(selectedItem, conn);
 					
+					
+					for(int i=0; i<getSessionsAccordingToSelectedLocation.length ; i++) {
+						
+						if(getSessionsAccordingToSelectedLocation[i].contains("Lecture") && !(getSessionsAccordingToSelectedLocation[i].contains("Tute"))) {
+							timetable.setValueAt(getSessionsAccordingToSelectedLocation[i], i, 1);
+						}
+						
+						if(getSessionsAccordingToSelectedLocation[i].contains("Lecture and Tute")) {
+							timetable.setValueAt(getSessionsAccordingToSelectedLocation[i], i, 2);
+						}
+						
+						if(getSessionsAccordingToSelectedLocation[i].contains("Tutorial")) {
+							timetable.setValueAt(getSessionsAccordingToSelectedLocation[i], i, 3);
+						}
+						
+						if(getSessionsAccordingToSelectedLocation[i].contains("Lab")) {
+							timetable.setValueAt(getSessionsAccordingToSelectedLocation[i], i, 4);
+						}
+						
+						if(getSessionsAccordingToSelectedLocation[i].contains("Evaluation")) {
+							timetable.setValueAt(getSessionsAccordingToSelectedLocation[i], i, 5);
+						}
+						
+						
+					}
 					
 					
 				}
@@ -560,7 +586,7 @@ public class GenerateTimetable extends JFrame {
 		String[] sessionListArrayForTheLecturer = null;
 		List<String> list = new ArrayList<>();
 		String singleSessionSignature;
-		String AIID;
+		
 		
 		try {
 			String sql = "SELECT * from Sessions WHERE lecturer1 = '"+lecturerName+"' or lecturer2 = '"+lecturerName+"' ";
@@ -587,6 +613,33 @@ public class GenerateTimetable extends JFrame {
 
 	
 	//load sessions according to the rooms 
-	
+	public String [] getSessionsAccordingToSelectedLocation(String selectedRoomName, Connection conn) {
+		
+		String[] sessionListArrayForROOM = null;
+		List<String> list = new ArrayList<>();
+		String singleSessionSignature;
+		
+		try {
+			String sql = "SELECT * FROM Sessions WHERE id IN (  SELECT sessionId FROM AssignedSessionRooms WHERE locationId IN ( SELECT id from Locations WHERE roomName = '"+selectedRoomName+"') ) ";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			
+			while(rs.next()) {
+				
+				
+				
+				singleSessionSignature =  rs.getString("lecturer1") + " and " + rs.getString("lecturer2")  + ", " + rs.getString("subjectName") + "(" + rs.getString("subjectCode") + "), " + rs.getString("tag") + ", " + rs.getString("nOfStudents") + "("  + rs.getString("duration") + ")";
+				list.add(singleSessionSignature);
+			}
+			sessionListArrayForROOM = list.toArray(new String[0]);
+			
+		}catch (Exception e) {
+			
+		}
+		
+		return sessionListArrayForROOM;
+		
+	}
 
 }
