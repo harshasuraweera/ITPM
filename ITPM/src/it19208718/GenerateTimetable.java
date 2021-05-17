@@ -108,7 +108,7 @@ public class GenerateTimetable extends JFrame {
 		
 		JLabel label = new JLabel("Lecturer");
 		label.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		label.setBounds(24, 92, 165, 46);
+		label.setBounds(89, 92, 165, 46);
 		contentPane.add(label);
 		
 		JButton btnLecturer = new JButton("Lecturer");
@@ -145,15 +145,8 @@ public class GenerateTimetable extends JFrame {
 		//allTheSessionsDropDownList.setSelectedIndex(0);
 		dropdownList.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		dropdownList.setBackground(Color.WHITE);
-		dropdownList.setBounds(208, 102, 818, 36);
+		dropdownList.setBounds(273, 102, 885, 36);
 		contentPane.add(dropdownList);
-		
-		JButton btnGenerate = new JButton("Generate");
-		btnGenerate.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
-		btnGenerate.setFocusable(false);
-		btnGenerate.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-		btnGenerate.setBounds(1087, 89, 150, 50);
-		contentPane.add(btnGenerate);
 		
 		
 		scrollPane = new JScrollPane();
@@ -186,11 +179,7 @@ public class GenerateTimetable extends JFrame {
 		for(int i=0; i<11 ; i++) {
 			model.addRow(new Object[] {
 					" " + timeSlots.get(i),
-					" - - -",
-					" - - -",
-					" - - -",
-					" - - -",
-					" - - -",
+					
 					
 			});;
 		}
@@ -437,6 +426,40 @@ public class GenerateTimetable extends JFrame {
 					}
 					
 					
+				}//end room wise
+				
+				
+				
+				
+				if(selectedType.equals("StudentGroup")) {
+					
+				//	System.out.println(selectedItem);
+					
+					String[] getSessionsAccordingToSelectedStudentGroup = getSessionsAccordingtoSelectedGroup(selectedItem, conn);
+					
+					for(int i = 0; i<getSessionsAccordingToSelectedStudentGroup.length; i++) {
+						if(getSessionsAccordingToSelectedStudentGroup[i].contains("Lecture") && !(getSessionsAccordingToSelectedStudentGroup[i].contains("Tute"))) {
+							timetable.setValueAt(getSessionsAccordingToSelectedStudentGroup[i], i, 1);
+						}
+						
+						if(getSessionsAccordingToSelectedStudentGroup[i].contains("Lecture and Tute")) {
+							timetable.setValueAt(getSessionsAccordingToSelectedStudentGroup[i], i, 2);
+						}
+						
+						if(getSessionsAccordingToSelectedStudentGroup[i].contains("Tutorial")) {
+							timetable.setValueAt(getSessionsAccordingToSelectedStudentGroup[i], i, 3);
+						}
+						
+						if(getSessionsAccordingToSelectedStudentGroup[i].contains("Lab")) {
+							timetable.setValueAt(getSessionsAccordingToSelectedStudentGroup[i], i, 4);
+						}
+						
+						if(getSessionsAccordingToSelectedStudentGroup[i].contains("Evaluation")) {
+							timetable.setValueAt(getSessionsAccordingToSelectedStudentGroup[i], i, 5);
+						}
+					}
+					
+					
 				}
 				
 
@@ -642,4 +665,43 @@ public class GenerateTimetable extends JFrame {
 		
 	}
 
+	
+	
+	//load timetable according to student group
+	public String[] getSessionsAccordingtoSelectedGroup(String selectedStudentGroup, Connection conn) {
+		
+		String[] sessionListArrayForStudentGroup = null;
+		List<String> list = new ArrayList<>();
+		String singleSessionSignature;
+		
+		try {
+			String sql = "SELECT * FROM Sessions WHERE groupId = '"+selectedStudentGroup+"'  ";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			
+			while(rs.next()) {
+				
+				
+				
+				singleSessionSignature =  rs.getString("lecturer1") + " and " + rs.getString("lecturer2")  + ", " + rs.getString("subjectName") + "(" + rs.getString("subjectCode") + "), " + rs.getString("tag") + ", " + rs.getString("nOfStudents") + "("  + rs.getString("duration") + ")";
+				list.add(singleSessionSignature);
+			}
+			sessionListArrayForStudentGroup = list.toArray(new String[0]);
+			
+		}catch (Exception e) {
+			
+		}
+		
+		return sessionListArrayForStudentGroup;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
