@@ -1,3 +1,6 @@
+//IT19142692
+//Anuththara K.G.S.N
+
 package IT19142692;
 
 import java.awt.BorderLayout;
@@ -181,6 +184,7 @@ public class AddNotAvailableTimes extends JFrame {
 		lblRoom.setBounds(33, 569, 128, 50);
 		contentPane.add(lblRoom);
 		
+		//Storing details in arrays
 		String lecturerArray [] = {null,"Nasir Mohomadh","Yasiru Gunasinghe","Nisitha Fernando","Kavindu Gunasinghe","Pasan Abesinghe"};
 		String groupArray [] = {null,"Y3S1.CS.4","Y2S2.ICS.5","Y3S2.ICS.6","Y2S1.DS.6","Y2S1.ICS.2","Y1S2.IM.3"};
 		String subgroupArray [] = {null,"Y3S1.CS.4.7","Y2S2.ICS.5.5","Y3S2.ICS.6.5","Y2S1.DS.6.4","Y2S1.ICS.2.2","Y1S2.IM.3.3"};
@@ -223,8 +227,7 @@ public class AddNotAvailableTimes extends JFrame {
 		contentPane.add(time);
 		time.setColumns(10);
 		
-		//Submit Button
-		
+		//SUBMIT Button - save the data
 		JButton btnSubmit = new JButton("SUBMIT");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -257,7 +260,7 @@ public class AddNotAvailableTimes extends JFrame {
 		btnSubmit.setBounds(1077, 313, 162, 50);
 		contentPane.add(btnSubmit);
 		
-		//VIEW Button
+		//VIEW Button - navigate to the next page
 		JButton btnView = new JButton("VIEW");
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -274,7 +277,7 @@ public class AddNotAvailableTimes extends JFrame {
 		btnView.setBounds(1077, 432, 162, 50);
 		contentPane.add(btnView);
 		
-		//CLEAR Button
+		//CLEAR Button - clear the fields
 		JButton btnClear = new JButton("CLEAR");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

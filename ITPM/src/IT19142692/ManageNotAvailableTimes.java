@@ -1,3 +1,6 @@
+//IT19142692
+//Anuththara K.G.S.N
+
 package IT19142692;
 
 import java.awt.BorderLayout;
@@ -118,12 +121,20 @@ public class ManageNotAvailableTimes extends JFrame {
 		lblNewLabel.setBounds(395, 95, 346, 42);
 		contentPane.add(lblNewLabel);
 		
+		//Storing details in arrays
+		String lecturerArray [] = {null,"Nasir Mohomadh","Yasiru Gunasinghe","Nisitha Fernando","Kavindu Gunasinghe","Pasan Abesinghe"};
+		String groupArray [] = {null,"Y3S1.CS.4","Y2S2.ICS.5","Y3S2.ICS.6","Y2S1.DS.6","Y2S1.ICS.2","Y1S2.IM.3"};
+		String subgroupArray [] = {null,"Y3S1.CS.4.7","Y2S2.ICS.5.5","Y3S2.ICS.6.5","Y2S1.DS.6.4","Y2S1.ICS.2.2","Y1S2.IM.3.3"};
+		String sessionidArray [] = {null,"6","7","8","9","10","18"};
+		String roomArray [] = {null,"B506","B403","A406","CyberSecLab","B501","B502"};
+		
+		
 		JLabel lblLecturer = new JLabel("Select Lecturer");
 		lblLecturer.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		lblLecturer.setBounds(24, 412, 189, 42);
 		contentPane.add(lblLecturer);
 		
-		JComboBox<Object> lect = new JComboBox<Object>(new Object[]{});
+		JComboBox<Object> lect = new JComboBox<Object>(lecturerArray);
 		lect.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		lect.setBounds(203, 411, 202, 44);
 		contentPane.add(lect);
@@ -133,7 +144,7 @@ public class ManageNotAvailableTimes extends JFrame {
 		lblGroup.setBounds(24, 490, 154, 50);
 		contentPane.add(lblGroup);
 		
-		JComboBox<Object> grp = new JComboBox<Object>(new Object[]{});
+		JComboBox<Object> grp = new JComboBox<Object>(groupArray);
 		grp.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		grp.setBounds(203, 493, 202, 44);
 		contentPane.add(grp);
@@ -143,7 +154,7 @@ public class ManageNotAvailableTimes extends JFrame {
 		lblSubGroup.setBounds(24, 574, 162, 50);
 		contentPane.add(lblSubGroup);
 		
-		JComboBox<Object> subgrp = new JComboBox<Object>(new Object[]{});
+		JComboBox<Object> subgrp = new JComboBox<Object>(subgroupArray);
 		subgrp.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		subgrp.setBounds(203, 580, 202, 44);
 		contentPane.add(subgrp);
@@ -153,7 +164,7 @@ public class ManageNotAvailableTimes extends JFrame {
 		lblSession.setBounds(529, 414, 162, 50);
 		contentPane.add(lblSession);
 		
-		JComboBox<Object> sessionId = new JComboBox<Object>(new Object[]{});
+		JComboBox<Object> sessionId = new JComboBox<Object>(sessionidArray);
 		sessionId.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		sessionId.setBounds(701, 414, 202, 44);
 		contentPane.add(sessionId);
@@ -163,7 +174,7 @@ public class ManageNotAvailableTimes extends JFrame {
 		lblRoom.setBounds(555, 505, 128, 50);
 		contentPane.add(lblRoom);
 		
-		JComboBox<Object> room = new JComboBox<Object>(new Object[]{});
+		JComboBox<Object> room = new JComboBox<Object>(roomArray);
 		room.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		room.setBounds(700, 508, 202, 44);
 		contentPane.add(room);
@@ -194,9 +205,13 @@ public class ManageNotAvailableTimes extends JFrame {
 					Connection conn = DBConnect.getConnection();
 					int i=table.getSelectedRow();
 					int selectedRowId = Integer.parseInt(table.getValueAt(i,0).toString());
-					String sql1 = "update NotAvailableTimes set nlecturer='"+lec+"',ngroup='"+gr+"',nsubgroup='"+sg+"',nsessionid='"+si+"',nroom='"+rm+"',ntime='"+ti+"' where id='"+selectedRowId+"'";
+					String sql1 = "update NotAvailableTimes set nlecturer='"+lec+"',ngroup='"+gr+"',nsubgroup='"+sg+"',nsessionid='"+si+"',nroom='"+rm+"',ntime='"+ti+"' where nid='"+selectedRowId+"'";
 					Statement st = conn.createStatement();
 					int rs = st.executeUpdate(sql1);
+					ShowData();
+					
+					//Show a successful message
+					JOptionPane.showMessageDialog(null, "Successfully updated the table.");
 					
 				}
 				catch(Exception e2) {
@@ -240,13 +255,14 @@ public class ManageNotAvailableTimes extends JFrame {
 					//get table model first
 					DefaultTableModel model = (DefaultTableModel) table.getModel();
 					
-//					//delete row
+					//delete row
 					if(table.getSelectedRowCount()==1) {
-						model.removeRow(table.getSelectedRow());	
+						//model.removeRow(table.getSelectedRow());	
 						String cell = table.getModel().getValueAt(row, 0).toString();
-						String sql1 = "delete from NotAvailableTimes where nid = " + cell;
+						String sql1 = "delete from NotAvailableTimes where nid = '"+cell+"'";
 						Statement st = conn.createStatement();
 						int rs = st.executeUpdate(sql1);
+						ShowData();
 						JOptionPane.showMessageDialog(null, "Deleted from the table.");
 					}
 					else {
@@ -276,10 +292,12 @@ public class ManageNotAvailableTimes extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(32, 147, 942, 257);
 		contentPane.add(scrollPane);
+		
+		//Table
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 		@Override
-		public void mouseClicked(MouseEvent arg0) {
+		public void mouseReleased(MouseEvent e) {
 		int i=table.getSelectedRow();
 			lect.setSelectedItem(table.getValueAt(i, 1).toString());
 			grp.setSelectedItem(table.getValueAt(i, 2).toString());
@@ -295,6 +313,7 @@ public class ManageNotAvailableTimes extends JFrame {
 	
 	}
 	
+	//Show data
 	private void ShowData() {
 		Connection conn = DBConnect.getConnection();
 		DefaultTableModel model = new DefaultTableModel();

@@ -1,3 +1,6 @@
+//IT19142692
+//Anuththara K.G.S.N
+
 package IT19142692;
 
 import java.awt.BorderLayout;
@@ -210,6 +213,7 @@ public class AddSpecialRoom extends JFrame {
 					Statement st = conn.createStatement();
 					int rs = st.executeUpdate(sql1);
 					
+					//Show a Insertion Successful message
 					JOptionPane.showMessageDialog(null, "Insertion Successful");
 					
 					conn.close();
@@ -229,6 +233,7 @@ public class AddSpecialRoom extends JFrame {
 		btnAddSession.setBounds(895, 329, 213, 50);
 		contentPane.add(btnAddSession);
 		
+		//Clear the fields
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
