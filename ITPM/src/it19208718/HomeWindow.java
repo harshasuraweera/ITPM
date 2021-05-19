@@ -154,6 +154,14 @@ public class HomeWindow extends JFrame {
 		
 		
 		JButton btnGenerateTimetable = new JButton(" Generate Timetable");
+		btnGenerateTimetable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				 GenerateTimetable generateTimetable = new GenerateTimetable();
+		         dispose();
+		         generateTimetable.setVisible(true);
+			}
+		});
 		btnGenerateTimetable.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		//btnGenerateTimetable.setIcon(new ImageIcon(ImageIO.read(new File("images/generate.png")).getScaledInstance(40, 40,Image.SCALE_SMOOTH)));
 		btnGenerateTimetable.setIcon(new ImageIcon(getClass().getClassLoader().getResource("generate.png")));

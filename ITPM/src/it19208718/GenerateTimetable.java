@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -116,14 +117,14 @@ public class GenerateTimetable extends JFrame {
 		btnLecturer.setFont(new Font("Kristen ITC", Font.BOLD, 18));
 		btnLecturer.setFocusable(false);
 		btnLecturer.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-		btnLecturer.setBounds(26, 10, 150, 50);
+		btnLecturer.setBounds(290, 10, 150, 50);
 		panel.add(btnLecturer);
 		
 		JButton btnStudent = new JButton("Student Group");
 		btnStudent.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnStudent.setFocusable(false);
 		btnStudent.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-		btnStudent.setBounds(228, 10, 199, 50);
+		btnStudent.setBounds(492, 10, 199, 50);
 		panel.add(btnStudent);
 		
 		JButton btnLocation = new JButton("Location");
@@ -131,7 +132,7 @@ public class GenerateTimetable extends JFrame {
 		btnLocation.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnLocation.setFocusable(false);
 		btnLocation.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
-		btnLocation.setBounds(474, 10, 150, 50);
+		btnLocation.setBounds(738, 10, 150, 50);
 		panel.add(btnLocation);
 		
 		JButton btnPrint = new JButton("Print");
@@ -140,6 +141,26 @@ public class GenerateTimetable extends JFrame {
 		btnPrint.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
 		btnPrint.setBounds(1086, 10, 150, 50);
 		panel.add(btnPrint);
+		
+		JButton btnBackToHome = new JButton(" Back To Home");
+		btnBackToHome.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		btnBackToHome.setFocusable(false);
+		btnBackToHome.setBounds(25, 10, 225, 50);
+		panel.add(btnBackToHome);
+		btnBackToHome.addActionListener(new ActionListener() {
+		      public void actionPerformed(ActionEvent e) {
+		        try {
+		          HomeWindow homeWindow = new HomeWindow();
+		          dispose();
+		          homeWindow.setVisible(true);
+		          
+		        } catch (IOException e1) {
+		          
+		          e1.printStackTrace();
+		        }
+		      }
+		    });
+		btnBackToHome.setIcon(new ImageIcon(getClass().getClassLoader().getResource("homepage.png")));
 		
 		dropdownList = new JComboBox<Object>(new Object[]{});
 		//allTheSessionsDropDownList.setSelectedIndex(0);
@@ -621,7 +642,7 @@ public class GenerateTimetable extends JFrame {
 				
 				
 				
-				singleSessionSignature =  lecturerName + ", " + rs.getString("subjectName") + "(" + rs.getString("subjectCode") + "), " + rs.getString("tag") + ", " + rs.getString("nOfStudents") + "("  + rs.getString("duration") + ")";
+				singleSessionSignature =  lecturerName + ", " + rs.getString("subjectName") + "(" + rs.getString("subjectCode") + "), " + rs.getString("tag") + ", " + rs.getString("groupId") + ", " + rs.getString("nOfStudents") + " ("  + rs.getString("duration") + ")";
 				list.add(singleSessionSignature);
 			}
 			sessionListArrayForTheLecturer = list.toArray(new String[0]);
