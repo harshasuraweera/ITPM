@@ -25,6 +25,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import IT19142692.AddNotAvailableTimes;
+import IT19142692.ManageNotAvailableTimes;
 import database.DBConnect;
 import it19208718.HomeWindow;
 
@@ -221,6 +223,9 @@ public class DefaultSession extends JFrame {
 		JButton btnNewButton_3_1_1 = new JButton("Not Available Times");
 		btnNewButton_3_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Go to AddNotAvailableTimes UI
+				AddNotAvailableTimes obj = new AddNotAvailableTimes();
+				obj.setVisible(true);
 			}
 		});
 		

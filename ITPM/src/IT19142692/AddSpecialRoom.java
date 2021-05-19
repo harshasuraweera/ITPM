@@ -23,6 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import database.DBConnect;
+import it19208718.HomeWindow;
+import it19208718.ManageSessionRooms;
+
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
@@ -99,6 +102,19 @@ public class AddSpecialRoom extends JFrame {
 		
 		//navigation buttons
 		JButton btnHome = new JButton("Back to Home");
+		btnHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					HomeWindow homeWindow = new HomeWindow();
+					dispose();
+					homeWindow.setVisible(true);
+					
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnHome.setForeground(Color.WHITE);
 		btnHome.setBackground(new Color(0, 102, 255));
 		
@@ -113,6 +129,9 @@ public class AddSpecialRoom extends JFrame {
 		JButton btnManage = new JButton("Manage Session Rooms");
 		btnManage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ManageSessionRooms obj = new ManageSessionRooms();
+				obj.setVisible(true);
+				
 			}
 		});
 		btnManage.setForeground(Color.WHITE);
