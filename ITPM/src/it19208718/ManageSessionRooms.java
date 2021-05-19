@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import IT19142692.AddSpecialRoom;
 import database.DBConnect;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -151,6 +152,13 @@ public class ManageSessionRooms extends JFrame {
 				contentPane.add(btnConsecutiveSessions);
 				
 				JButton btnNotAvailableTimes = new JButton("Not Available Times");
+				btnNotAvailableTimes.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						//Go to AdddSpecialRooms UI
+						AddSpecialRoom obj = new AddSpecialRoom();
+						obj.setVisible(true);
+					}
+				});
 				btnNotAvailableTimes.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 				btnNotAvailableTimes.setFocusable(false);
 				btnNotAvailableTimes.setBounds(855, 177, 335, 50);

@@ -24,7 +24,10 @@ import javax.swing.border.EmptyBorder;
 
 import database.DBConnect;
 
+
+
 import it19208718.AddSomething;
+
 import it19208718.HomeWindow;
 
 import javax.swing.JTextPane;
@@ -116,7 +119,9 @@ public class AddWorkingDaysAndHours extends JFrame {
 					HomeWindow homeWindow = new HomeWindow();
 					dispose();
 					homeWindow.setVisible(true);
+
 				} catch (IOException e1) {
+
 					e1.printStackTrace();
 				}
 			}
