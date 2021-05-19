@@ -23,6 +23,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import database.DBConnect;
+
+import it19208718.AddSomething;
+import it19208718.HomeWindow;
+
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
@@ -106,6 +110,17 @@ public class AddWorkingDaysAndHours extends JFrame {
 		
 		//navigation buttons
 		JButton btnHome = new JButton("Back to Home");
+		btnHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					HomeWindow homeWindow = new HomeWindow();
+					dispose();
+					homeWindow.setVisible(true);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnHome.setForeground(Color.WHITE);
 		btnHome.setBackground(new Color(0, 102, 255));
 		
