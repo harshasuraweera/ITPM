@@ -1,3 +1,6 @@
+//IT19142692
+//Anuththara K.G.S.N
+
 package IT19142692;
 
 import java.awt.BorderLayout;
@@ -20,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import database.DBConnect;
+
 import it19208718.AddSomething;
 import it19208718.HomeWindow;
 
@@ -509,7 +513,7 @@ public class AddWorkingDaysAndHours extends JFrame {
 						int rs = st.executeUpdate(sql7);
 						chckbxSunday.setSelected(false);
 					}
-				
+				 //Pop up a dialog box
 				JOptionPane.showMessageDialog(null, "Deletion Successful");
 
 				dailyHours.setSelectedIndex(0);
