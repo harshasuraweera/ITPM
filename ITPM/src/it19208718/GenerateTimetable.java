@@ -21,6 +21,8 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,6 +33,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.print.PrinterException;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
@@ -136,6 +139,11 @@ public class GenerateTimetable extends JFrame {
 		panel.add(btnLocation);
 		
 		JButton btnPrint = new JButton("Print");
+		btnPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printJavaJFrameJTable();
+			}
+		});
 		btnPrint.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		btnPrint.setFocusable(false);
 		btnPrint.setBorder(BorderFactory.createEmptyBorder(4, 4, 2, 20));
@@ -719,7 +727,17 @@ public class GenerateTimetable extends JFrame {
 	
 	
 	
-	
+	public void printJavaJFrameJTable() {
+		 
+        try {
+            boolean print = timetable.print();
+            if (!print) {
+                JOptionPane.showMessageDialog(null, "Unable To Print !!..");
+            }
+        } catch (PrinterException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+}
 	
 	
 	
