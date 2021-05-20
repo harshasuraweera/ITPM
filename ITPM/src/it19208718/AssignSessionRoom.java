@@ -126,6 +126,13 @@ public class AssignSessionRoom extends JFrame {
 		btnManageLocation.setBounds(940, 10, 302, 50);
 		panel.add(btnManageLocation);
 		
+		JButton sutiableRoomsBtn = new JButton("Set Suitable Rooms");
+		sutiableRoomsBtn.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
+		sutiableRoomsBtn.setFocusable(false);
+		sutiableRoomsBtn.setBounds(436, 10, 302, 50);
+		panel.add(sutiableRoomsBtn);
+		sutiableRoomsBtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource("addNew.png")));
+		
 		JTextArea selectedSessions = new JTextArea();
 		selectedSessions.setEditable(false);
 		selectedSessions.setBounds(291, 456, 818, 122);
@@ -611,10 +618,4 @@ public class AssignSessionRoom extends JFrame {
 		
 		return sessionListArray;
 	} 
-	
-	
-	
-	
-	
-	
 }
