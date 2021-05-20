@@ -127,6 +127,13 @@ public class AssignSessionRoom extends JFrame {
 		panel.add(btnManageLocation);
 		
 		JButton sutiableRoomsBtn = new JButton("Set Suitable Rooms");
+		sutiableRoomsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SutiableRoom SutiableRoom = new SutiableRoom();
+				dispose();
+				SutiableRoom.setVisible(true);
+			}
+		});
 		sutiableRoomsBtn.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 		sutiableRoomsBtn.setFocusable(false);
 		sutiableRoomsBtn.setBounds(436, 10, 302, 50);
